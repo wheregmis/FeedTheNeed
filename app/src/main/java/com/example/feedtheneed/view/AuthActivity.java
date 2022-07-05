@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.feedtheneed.MapsActivity;
 import com.example.feedtheneed.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -124,8 +125,13 @@ public class AuthActivity extends AppCompatActivity {
                                             // When task is successful
 //                                            // Redirect to profile activity
                                             startActivity(new Intent(AuthActivity.this
-                                                    ,ProfileActivity.class)
+                                                    , MapsActivity.class)
                                                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+
+                                            // To see the auth section
+//                                            startActivity(new Intent(AuthActivity.this
+//                                                    , ProfileActivity.class)
+//                                                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 //                                            // Display Toast
                                             displayToast("Firebase authentication successful");
                                         }
@@ -145,7 +151,8 @@ public class AuthActivity extends AppCompatActivity {
                 {
                     e.printStackTrace();
                 }
-            } 
+            }
+
         }
     }
 
