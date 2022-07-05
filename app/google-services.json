@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1031451218357",
+    "project_id": "feedthe-243fc",
+    "storage_bucket": "feedthe-243fc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1031451218357:android:5794717707af31f863c9fc",
+        "android_client_info": {
+          "package_name": "com.example.feedtheneed"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1031451218357-2eiim9rjih1jd47gb2r3910sv26b6rln.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.feedtheneed",
+            "certificate_hash": "e64054d42b2cfab22cec852c184856f5fa5b60a6"
+          }
+        },
+        {
+          "client_id": "1031451218357-8r4b7a78ike60i726hhkhs5ah9suevkg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3qOyN5w1wrnaWcRKxfnlGohgDeDBH-Gs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1031451218357-8r4b7a78ike60i726hhkhs5ah9suevkg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
