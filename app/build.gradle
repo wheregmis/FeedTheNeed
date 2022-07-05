@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -50,4 +51,6 @@ dependencies {
 
     // Also declare the dependency for the Google Play services library and specify its version
     implementation 'com.google.android.gms:play-services-auth:20.2.0'
+
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
 }
