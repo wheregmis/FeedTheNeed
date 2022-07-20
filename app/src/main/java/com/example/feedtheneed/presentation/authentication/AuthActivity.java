@@ -151,21 +151,21 @@ public class AuthActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                                     if (task.isSuccessful()) {
-                                                        if (task.getResult().size() == 0){
-                                                            User user = new User(firebaseUser.getDisplayName(), firebaseUser.getEmail());
-
-                                                            UserUseCaseInterface useCase = new UserUserUseCase();
-                                                            useCase.addUserToFirebase(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                                                @Override
-                                                                public void onSuccess(DocumentReference documentReference) {
-                                                                    // TODO: 19/07/2022 Handle On Success
-                                                                }
-                                                            }).addOnFailureListener(new OnFailureListener() {
-                                                                @Override
-                                                                public void onFailure(@NonNull Exception e) {
-                                                                    // TODO: 19/07/2022 Handle failure
-                                                                }
-                                                            });
+                                                        if (task.getResult().size() <1 ){
+//                                                            User user = new User(firebaseUser.getDisplayName(), firebaseUser.getEmail());
+//
+//                                                            UserUseCaseInterface useCase = new UserUserUseCase();
+//                                                            useCase.addUserToFirebase(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                                                                @Override
+//                                                                public void onSuccess(DocumentReference documentReference) {
+//                                                                    // TODO: 19/07/2022 Handle On Success
+//                                                                }
+//                                                            }).addOnFailureListener(new OnFailureListener() {
+//                                                                @Override
+//                                                                public void onFailure(@NonNull Exception e) {
+//                                                                    // TODO: 19/07/2022 Handle failure
+//                                                                }
+//                                                            });
 
                                                             Intent intent = new Intent(AuthActivity.this, AdditionalInformationActivity.class);
                                                             startActivity(intent);
