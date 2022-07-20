@@ -12,4 +12,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MapsActivity" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/float_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:contentDescription="Todo"
+        android:src="@drawable/ic_baseline_add_24"
+        android:backgroundTint="@android:color/white"
+        android:useCompatPadding="true"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:contentDescription="Todo"
+        android:src="@drawable/ic_baseline_chat_24"
+        android:backgroundTint="@android:color/white"
+        android:useCompatPadding="true"/>
+    
 </RelativeLayout>
