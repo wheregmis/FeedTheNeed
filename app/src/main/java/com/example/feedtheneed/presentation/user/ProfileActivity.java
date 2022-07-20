@@ -1,4 +1,4 @@
-package com.example.feedtheneed.view;
+package com.example.feedtheneed.presentation.user;
 
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.feedtheneed.R;
+import com.example.feedtheneed.data.repository.AuthRepoImplementation;
+import com.example.feedtheneed.domain.repository.AuthRepository;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -27,7 +29,6 @@ public class ProfileActivity extends AppCompatActivity {
     TextView tvName;
     Button btLogout;
     FirebaseAuth firebaseAuth;
-    GoogleSignInClient googleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,30 +58,16 @@ public class ProfileActivity extends AppCompatActivity {
             tvName.setText(firebaseUser.getDisplayName());
         }
 
-        // Initialize sign in client
-        googleSignInClient= GoogleSignIn.getClient(ProfileActivity.this
-                , GoogleSignInOptions.DEFAULT_SIGN_IN);
+
 
         btLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Sign out from google
-                googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                AuthRepository authRepository = new AuthRepoImplementation();
+                authRepository.signOut(ProfileActivity.this).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        // Check condition
-                        if(task.isSuccessful())
-                        {
-                            // When task is successful
-                            // Sign out from firebase
-                            firebaseAuth.signOut();
-
-                            // Display Toast
-                            Toast.makeText(getApplicationContext(), "Logout successful", Toast.LENGTH_SHORT).show();
-
-                            // Finish activity
-                            finish();
-                        }
+                        finish();
                     }
                 });
             }

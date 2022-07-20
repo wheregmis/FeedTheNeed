@@ -1,8 +1,6 @@
-package com.example.feedtheneed.view;
+package com.example.feedtheneed.presentation.authentication;
 
-import android.app.Application;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +12,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.feedtheneed.MapsActivity;
 import com.example.feedtheneed.R;
+import com.example.feedtheneed.data.repository.UserRepositoryImplementation;
+import com.example.feedtheneed.domain.model.User;
+import com.example.feedtheneed.domain.repository.UserRepository;
+import com.example.feedtheneed.domain.usecase.user.UserUseCaseInterface;
+import com.example.feedtheneed.domain.usecase.user.UserUserUseCase;
+import com.example.feedtheneed.presentation.user.ProfileActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -21,6 +25,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthCredential;
@@ -28,6 +34,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class AuthActivity extends AppCompatActivity {
 
@@ -77,7 +86,7 @@ public class AuthActivity extends AppCompatActivity {
         {
             // When user already sign in
             // redirect to profile activity
-            startActivity(new Intent(AuthActivity.this,ProfileActivity.class)
+            startActivity(new Intent(AuthActivity.this, ProfileActivity.class)
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }
     }
@@ -124,16 +133,53 @@ public class AuthActivity extends AppCompatActivity {
                                         {
                                             // When task is successful
 //                                            // Redirect to profile activity
-                                            startActivity(new Intent(AuthActivity.this
-                                                    , MapsActivity.class)
-                                                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 
-                                            // To see the auth section
-//                                            startActivity(new Intent(AuthActivity.this
-//                                                    , ProfileActivity.class)
-//                                                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-//                                            // Display Toast
-                                            displayToast("Firebase authentication successful");
+                                            // Initialize firebase auth
+                                            firebaseAuth=FirebaseAuth.getInstance();
+
+                                            // Initialize firebase user
+                                            FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
+
+                                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                                            UserRepository userRepository = new UserRepositoryImplementation();
+
+                                            UserUseCaseInterface useCaseToGetUser = new UserUserUseCase();
+
+                                            useCaseToGetUser.getUserFromFirebase(firebaseUser.getEmail()).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                    if (task.isSuccessful()) {
+                                                        if (task.getResult().size() == 0){
+                                                            User user = new User(firebaseUser.getDisplayName(), firebaseUser.getEmail());
+
+                                                            UserUseCaseInterface useCase = new UserUserUseCase();
+                                                            useCase.addUserToFirebase(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                                                @Override
+                                                                public void onSuccess(DocumentReference documentReference) {
+                                                                    // TODO: 19/07/2022 Handle On Success
+                                                                }
+                                                            }).addOnFailureListener(new OnFailureListener() {
+                                                                @Override
+                                                                public void onFailure(@NonNull Exception e) {
+                                                                    // TODO: 19/07/2022 Handle failure
+                                                                }
+                                                            });
+
+                                                            // TODO: 19/07/2022 Redirect user to new place to get user info
+                                                            startActivity(new Intent(AuthActivity.this
+                                                                    , MapsActivity.class)
+                                                                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                                                        }else{
+                                                            startActivity(new Intent(AuthActivity.this
+                                                                    , MapsActivity.class)
+                                                                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                                                        }
+                                                    } else {
+                                                        Log.w("Retrieval", "Error getting documents.", task.getException());
+                                                    }
+                                                }
+                                            });
                                         }
                                         else
                                         {
