@@ -19,12 +19,12 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
-    <TextView
+    <EditText
         android:id="@+id/tvUserFullName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:text="Lorem Ipsum"
+        android:text="Full Name"
         app:layout_constraintTop_toBottomOf="@id/textViewFullName"
         />
 
@@ -38,7 +38,23 @@
         tools:context=".presentation.user.AdditionalInformationActivity"
         />
 
-    
+    <CheckBox
+        android:id="@+id/cbIsARestaurant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/mvUserCurrentLocation"
+        android:text="Continue as a Restaurant"
+        />
 
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cbIsARestaurant" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
