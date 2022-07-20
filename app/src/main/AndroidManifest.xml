@@ -17,9 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FeedTheNeed"
         tools:targetApi="31">
-        <activity
-            android:name=".AdditionalInformationActivity"
-            android:exported="false" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -37,6 +34,11 @@
 
         <activity
             android:name=".MapsActivity"
+            android:exported="true"
+            android:label="@string/title_activity_maps"></activity>
+
+        <activity
+            android:name=".presentation.user.AdditionalInformationActivity"
             android:exported="true"
             android:label="@string/title_activity_maps"></activity>
         <activity
