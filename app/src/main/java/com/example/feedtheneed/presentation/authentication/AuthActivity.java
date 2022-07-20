@@ -17,6 +17,7 @@ import com.example.feedtheneed.domain.model.User;
 import com.example.feedtheneed.domain.repository.UserRepository;
 import com.example.feedtheneed.domain.usecase.user.UserUseCaseInterface;
 import com.example.feedtheneed.domain.usecase.user.UserUserUseCase;
+import com.example.feedtheneed.presentation.user.AdditionalInformationActivity;
 import com.example.feedtheneed.presentation.user.ProfileActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -166,10 +167,8 @@ public class AuthActivity extends AppCompatActivity {
                                                                 }
                                                             });
 
-                                                            // TODO: 19/07/2022 Redirect user to new place to get user info
-                                                            startActivity(new Intent(AuthActivity.this
-                                                                    , MapsActivity.class)
-                                                                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                                                            Intent intent = new Intent(AuthActivity.this, AdditionalInformationActivity.class);
+                                                            startActivity(intent);
                                                         }else{
                                                             startActivity(new Intent(AuthActivity.this
                                                                     , MapsActivity.class)
