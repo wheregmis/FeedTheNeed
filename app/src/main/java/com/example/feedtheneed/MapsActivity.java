@@ -10,6 +10,9 @@ import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -23,6 +26,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.feedtheneed.databinding.ActivityMapsBinding;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -32,6 +36,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     LocationRequest mLocationRequest;
     private FusedLocationProviderClient fusedLocationClient;
     private double latitude, longitude;
+    private Button btnShowMoreEvents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        btnShowMoreEvents = (Button) findViewById(R.id.btnShowEvents);
+
+        btnShowMoreEvents.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showBottomSheetDialog();
+            }
+        });
+    }
+
+    private void showBottomSheetDialog() {
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        bottomSheetDialog.setContentView(R.layout.bottom_sheet_layout);
+
+        LinearLayout addNewProduct = bottomSheetDialog.findViewById(R.id.lvAddNewProduct);
+        LinearLayout chatWithARestaurant = bottomSheetDialog.findViewById(R.id.lvChatWithARestaurant);
+
+        bottomSheetDialog.show();
     }
 
     /**
