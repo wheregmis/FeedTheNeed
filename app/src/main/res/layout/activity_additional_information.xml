@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="10dp"
     tools:context=".presentation.user.AdditionalInformationActivity">
 
     <TextView
-        android:id="@+id/textViewFullName"
+        android:id="@+id/AdditionalInformationTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Full Name"
+        android:textAlignment="center"
+        android:text="User Additional Information Confirmation"
+        android:layout_marginTop="20dp"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,41 +22,50 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
+    <TextView
+        android:id="@+id/textViewFullName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Display Name"
+        android:layout_marginTop="30dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_below="@id/AdditionalInformationTitle"
+        />
+
     <EditText
         android:id="@+id/tvUserFullName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:text="Full Name"
-        app:layout_constraintTop_toBottomOf="@id/textViewFullName"
+        android:layout_below="@+id/textViewFullName"
         />
 
-    <fragment
-        android:id="@+id/mvUserCurrentLocation"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        app:layout_constraintTop_toBottomOf="@id/tvUserFullName"
-        tools:context=".presentation.user.AdditionalInformationActivity"
-        />
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/cbIsARestaurant"
+        android:layout_above="@id/btnNext"
+        tools:context=".presentation.user.AdditionalInformationActivity"/>
 
     <CheckBox
         android:id="@+id/cbIsARestaurant"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/mvUserCurrentLocation"
+        android:layout_below="@+id/tvUserFullName"
         android:text="Continue as a Restaurant"
         />
 
     <Button
         android:id="@+id/btnNext"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Next"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cbIsARestaurant" />
+        android:layout_alignParentBottom="true" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
