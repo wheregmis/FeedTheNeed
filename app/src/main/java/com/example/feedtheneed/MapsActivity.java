@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +15,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.example.feedtheneed.presentation.authentication.AuthActivity;
+import com.example.feedtheneed.presentation.event.AddEventActivity;
+import com.example.feedtheneed.presentation.user.ProfileActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -28,6 +32,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.feedtheneed.databinding.ActivityMapsBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -38,6 +43,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private FusedLocationProviderClient fusedLocationClient;
     private double latitude, longitude;
     private Button btnShowMoreEvents;
+    private FloatingActionButton floatingActionButtonAddEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         btnShowMoreEvents = (Button) findViewById(R.id.btnShowEvents);
+
+        floatingActionButtonAddEvent = findViewById(R.id.float_add);
+
+        floatingActionButtonAddEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MapsActivity.this, AddEventActivity.class)
+                        );
+            }
+        });
 
         btnShowMoreEvents.setOnClickListener(new View.OnClickListener() {
             @Override

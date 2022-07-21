@@ -1,4 +1,4 @@
-package com.example.feedtheneed.presentation;
+package com.example.feedtheneed.presentation.event;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,7 +19,7 @@ import com.example.feedtheneed.domain.model.Event;
 
 import java.util.Calendar;
 
-public class addEventActivity extends AppCompatActivity {
+public class AddEventActivity extends AppCompatActivity {
 
     private Calendar calendar;
     private TextView dateview;
