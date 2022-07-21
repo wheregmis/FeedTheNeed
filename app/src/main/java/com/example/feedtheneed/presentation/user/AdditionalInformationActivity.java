@@ -80,6 +80,8 @@ public class AdditionalInformationActivity extends AppCompatActivity implements 
         firebaseAuth=FirebaseAuth.getInstance();
         // Initialize firebase user
         firebaseUser=firebaseAuth.getCurrentUser();
+
+        txtDisplayName.setText(firebaseUser.getDisplayName());
         // Check condition
 //        if(firebaseUser==null)
 //        {
