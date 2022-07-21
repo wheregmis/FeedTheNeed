@@ -41,19 +41,22 @@
         map:useCompatPadding="true"/>
 
     <Button
+        android:id="@+id/btnShowEvents"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btnShowEvents"
-        android:backgroundTint="@color/purple_500"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        android:padding="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/purple_500"
         android:fontFamily="serif"
+        android:padding="10dp"
         android:text="More"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        tools:ignore="MissingConstraints"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        />
+        tools:ignore="MissingConstraints" />
 
 </RelativeLayout>
