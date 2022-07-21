@@ -8,14 +8,23 @@ public class User {
     private String userFullName;
     private String userEmail;
     private boolean isRestaurant;
-    private LatLng userLatLng;
+    private String userLat;
+    private String userLong;
 
-    public LatLng getUserLatLng() {
-        return userLatLng;
+    public String getUserLat() {
+        return userLat;
     }
 
-    public void setUserLatLng(LatLng userLatLng) {
-        this.userLatLng = userLatLng;
+    public void setUserLat(String userLat) {
+        this.userLat = userLat;
+    }
+
+    public String getUserLong() {
+        return userLong;
+    }
+
+    public void setUserLong(String userLong) {
+        this.userLong = userLong;
     }
 
     public boolean isRestaurant() {
@@ -62,11 +71,12 @@ public class User {
         this.isRestaurant = isRestaurant;
     }
 
-    public User(String userId, String userFullName, String userEmail, boolean isRestaurant, LatLng userLatLng) {
+    public User(String userId, String userFullName, String userEmail, boolean isRestaurant, String userLat, String userLong) {
         this.userId = userId;
         this.userFullName = userFullName;
         this.userEmail = userEmail;
         this.isRestaurant = isRestaurant;
-        this.userLatLng = userLatLng;
+        this.userLat = userLat;
+        this.userLong = userLong;
     }
 }

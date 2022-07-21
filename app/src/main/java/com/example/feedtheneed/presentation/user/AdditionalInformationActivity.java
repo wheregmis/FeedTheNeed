@@ -120,7 +120,8 @@ public class AdditionalInformationActivity extends AppCompatActivity implements 
                 txtDisplayName.getText().toString(),
                 firebaseUser.getEmail(),
                 isRestaurantVariable,
-                userLatLng
+                String.valueOf(userLatLng.latitude),
+                String.valueOf(userLatLng.longitude)
 
         );
 
