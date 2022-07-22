@@ -2,9 +2,9 @@ package com.example.feedtheneed.domain.usecase.event;
 
 import com.example.feedtheneed.domain.model.Event;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-
-import java.util.HashMap;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class EventUseCase implements EventUseCaseInterface {
 
@@ -24,7 +24,7 @@ public class EventUseCase implements EventUseCaseInterface {
     }
 
     @Override
-    public HashMap<String, String> getAllNearByEvents(LatLng userLatLng) {
-        return new GetAllNearByEvents(userLatLng).getNearbyEventHashMap();
+    public Task<QuerySnapshot> getAllNearByEvents(LatLng userLatLng) {
+        return new GetAllNearByEvents(userLatLng).getNearByEvents();
     }
 }
