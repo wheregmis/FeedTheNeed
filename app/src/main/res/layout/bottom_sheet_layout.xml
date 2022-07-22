@@ -19,59 +19,9 @@
         android:src="@drawable/maximize"
         />
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/pager"
+        android:id="@+id/eventsViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/lvAddNewProduct"
-            android:background="?android:attr/selectableItemBackground"
-            android:padding="8dp">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_launcher_background"
-                android:layout_margin="8dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add New Product"
-                android:layout_gravity="center_vertical"
-                android:padding="8dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/lvChatWithARestaurant"
-            android:background="?android:attr/selectableItemBackground"
-            android:padding="8dp">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_launcher_background"
-                android:layout_margin="8dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Chat with a Restaurant"
-                android:layout_gravity="center_vertical"
-                android:padding="8dp"/>
-        </LinearLayout>
     </androidx.viewpager.widget.ViewPager>
 
 </LinearLayout>

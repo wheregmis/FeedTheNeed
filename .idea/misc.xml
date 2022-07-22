@@ -18,8 +18,10 @@
         <entry key="app/src/main/res/layout/content_home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.10364583333333334" />
+        <entry key="app/src/main/res/layout/layout_backup.xml" value="0.10364583333333334" />
         <entry key="app/src/main/res/layout/layout_test.xml" value="0.1" />
         <entry key="app/src/main/res/layout/test_layout.xml" value="0.13298187255859376" />
+        <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.10364583333333334" />
         <entry key="app/src/main/res/menu/main.xml" value="0.10364583333333334" />
       </map>
     </option>
