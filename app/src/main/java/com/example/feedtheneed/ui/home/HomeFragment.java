@@ -1,5 +1,6 @@
 package com.example.feedtheneed.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.feedtheneed.CustomViewPagerAdapter;
 import com.example.feedtheneed.R;
 import com.example.feedtheneed.databinding.FragmentHomeBinding;
+import com.example.feedtheneed.presentation.event.AddEventActivity;
+import com.example.feedtheneed.presentation.user.AdditionalInformationActivity;
 import com.example.feedtheneed.presentation.user.fragments.BottomSheetFragment;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -41,6 +44,13 @@ public class HomeFragment extends Fragment {
         ivBottomSheet = root.findViewById(R.id.mazimizeBottomSheet);
         eventsViewPager = (ViewPager) root.findViewById(R.id.eventsViewPager);
         eventsViewPager.setAdapter(new CustomViewPagerAdapter(getActivity()));
+
+        binding.floatAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), AddEventActivity.class));
+            }
+        });
 
         sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
