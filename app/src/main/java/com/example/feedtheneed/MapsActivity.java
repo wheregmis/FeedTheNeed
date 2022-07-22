@@ -131,17 +131,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return sortedMap;
     }
 
-    // function to show bottom sheet
-    private void showBottomSheetDialog() {
-        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
-        bottomSheetDialog.setContentView(R.layout.bottom_sheet_layout);
-
-        LinearLayout addNewProduct = bottomSheetDialog.findViewById(R.id.lvAddNewProduct);
-        LinearLayout chatWithARestaurant = bottomSheetDialog.findViewById(R.id.lvChatWithARestaurant);
-
-        bottomSheetDialog.show();
-    }
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
