@@ -11,7 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager.widget.ViewPager;
 
+import com.example.feedtheneed.CustomViewPagerAdapter;
 import com.example.feedtheneed.R;
 import com.example.feedtheneed.databinding.FragmentHomeBinding;
 import com.example.feedtheneed.presentation.user.fragments.BottomSheetFragment;
@@ -25,6 +27,7 @@ public class HomeFragment extends Fragment {
     private LinearLayout bottom_sheet;
     private ImageView ivBottomSheet;
     private BottomSheetDialog dialog;
+    private ViewPager eventsViewPager;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -36,6 +39,8 @@ public class HomeFragment extends Fragment {
         bottom_sheet = root.findViewById(R.id.lvBottomSheetBehaviour);
         sheetBehavior = BottomSheetBehavior.from(bottom_sheet);
         ivBottomSheet = root.findViewById(R.id.mazimizeBottomSheet);
+        eventsViewPager = (ViewPager) root.findViewById(R.id.eventsViewPager);
+        eventsViewPager.setAdapter(new CustomViewPagerAdapter(getActivity()));
 
         sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
