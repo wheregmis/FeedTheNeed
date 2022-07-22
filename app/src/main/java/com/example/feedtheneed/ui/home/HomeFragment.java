@@ -98,8 +98,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         HomeViewModel homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
 
+//        binding = FragmentHomeBinding.inflate(inflater, container, false);
+//        View root = inflater.inflate(R.layout.fragment_home, null, false);
         binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = inflater.inflate(R.layout.fragment_home, null, false);
+        View root = binding.getRoot();
         mMapView = (MapView) root.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();
