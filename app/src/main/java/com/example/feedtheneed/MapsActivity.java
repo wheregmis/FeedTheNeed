@@ -24,6 +24,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.feedtheneed.domain.usecase.event.EventUseCase;
@@ -43,6 +44,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.feedtheneed.databinding.ActivityMapsBinding;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -74,8 +76,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     LocationRequest mLocationRequest;
     private FusedLocationProviderClient fusedLocationClient;
     private double latitude, longitude;
-    private Button btnShowMoreEvents;
-    private FloatingActionButton floatingActionButtonAddEvent;
 
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
@@ -98,25 +98,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        btnShowMoreEvents = (Button) findViewById(R.id.btnShowEvents);
-
-        floatingActionButtonAddEvent = findViewById(R.id.float_add);
-
-        floatingActionButtonAddEvent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MapsActivity.this, AddEventActivity.class)
-                        );
-            }
-        });
-
-        btnShowMoreEvents.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showBottomSheetDialog();
-            }
-        });
-
     }
 
     // function to sort hashmap

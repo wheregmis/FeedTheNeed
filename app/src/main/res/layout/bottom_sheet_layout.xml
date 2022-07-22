@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/lvBottomSheetBehaviour"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="30dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    >
+    <ImageView
+        android:id="@+id/mazimizeBottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:src="@drawable/maximize"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,7 +29,7 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_baseline_share_24"
+            android:src="@drawable/ic_launcher_background"
             android:layout_margin="8dp"/>
 
         <TextView
@@ -39,7 +52,7 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_baseline_chat_24"
+            android:src="@drawable/ic_launcher_background"
             android:layout_margin="8dp"/>
 
         <TextView
