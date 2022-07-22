@@ -103,9 +103,17 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         mMapView = (MapView) root.findViewById(R.id.mapView);
+
+        try {
+            MapsInitializer.initialize(getActivity().getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mMapView.getMapAsync(this);
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();
-        mMapView = (MapView) root.findViewById(R.id.map);
+
         bottom_sheet = root.findViewById(R.id.lvBottomSheetBehaviour);
         sheetBehavior = BottomSheetBehavior.from(bottom_sheet);
         ivBottomSheet = root.findViewById(R.id.mazimizeBottomSheet);
@@ -157,12 +165,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
         // Initialize firebase user
         firebaseUser=firebaseAuth.getCurrentUser();
-
-        try {
-            MapsInitializer.initialize(getActivity().getApplicationContext());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         return root;
     }
@@ -436,5 +438,26 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
         // Set the paint for that size.
         paint.setTextSize(desiredTextSize);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+    }
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
     }
 }
