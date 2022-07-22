@@ -3,12 +3,24 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable-v24/baseline_menu.xml" value="0.115" />
+        <entry key="app/src/main/res/drawable/ic_android_black_24dp.xml" value="0.1145" />
         <entry key="app/src/main/res/drawable/ic_baseline_share_24.xml" value="0.115" />
         <entry key="app/src/main/res/layout/activity_additional_information.xml" value="0.21433715820312502" />
         <entry key="app/src/main/res/layout/activity_auth.xml" value="0.33229166666666665" />
-        <entry key="app/src/main/res/layout/activity_maps.xml" value="0.25608520507812493" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.10364583333333334" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_maps.xml" value="0.125" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.15425531914893617" />
+        <entry key="app/src/main/res/layout/app_bar_home.xml" value="0.10364583333333334" />
         <entry key="app/src/main/res/layout/bottom_sheet_layout.xml" value="0.4488560994466146" />
+        <entry key="app/src/main/res/layout/bottom_sheet_main_content.xml" value="0.10364583333333334" />
+        <entry key="app/src/main/res/layout/content_home.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/content_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.10364583333333334" />
+        <entry key="app/src/main/res/layout/layout_test.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/test_layout.xml" value="0.13298187255859376" />
+        <entry key="app/src/main/res/menu/main.xml" value="0.10364583333333334" />
       </map>
     </option>
   </component>
