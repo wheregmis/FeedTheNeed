@@ -7,14 +7,35 @@ public class Event {
     private String eventDescription;
     private String eventDate;
     private String eventTime;
+    private String eventLat;
+    private String eventLong;
 
-    public Event(String eventId, String eventName, String eventHost, String eventDescription, String eventDate, String eventTime) {
+    public Event(String eventId, String eventName, String eventHost, String eventDescription, String eventDate, String eventTime, String eventLat, String eventLong) {
         this.eventId = eventId;
         this.eventName = eventName;
         this.eventHost = eventHost;
         this.eventDescription = eventDescription;
         this.eventDate = eventDate;
         this.eventTime = eventTime;
+        this.eventLat = eventLat;
+        this.eventLong = eventLong;
+
+    }
+
+    public String getEventLat() {
+        return eventLat;
+    }
+
+    public void setEventLat(String eventLat) {
+        this.eventLat = eventLat;
+    }
+
+    public String getEventLong() {
+        return eventLong;
+    }
+
+    public void setEventLong(String eventLong) {
+        this.eventLong = eventLong;
     }
 
     public String getEventId() {
