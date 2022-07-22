@@ -106,6 +106,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 showBottomSheetDialog();
             }
         });
+
+
+
     }
 
 
@@ -210,6 +213,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 longitude = location.getLongitude();
                                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 11));
                                 fusedLocationClient.removeLocationUpdates(mLocationCallback);
+
+                                // Getting nearby Events
+                                EventUseCaseInterface eventUseCase = new EventUseCase();
+                                eventUseCase.getAllNearByEvents(new LatLng(latitude, longitude));
                             });
 
                         }
