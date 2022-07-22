@@ -9,6 +9,7 @@ import com.example.feedtheneed.domain.repository.EventRepository;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -46,5 +47,17 @@ public class EventRepositoryImplementation implements EventRepository {
     @Override
     public void addParticipantsToEvent() {
 
+    }
+
+    @Override
+    public CollectionReference getAllEvents() {
+//        return db.collection("event").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//            @Override
+//            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//
+//            }
+//        });
+
+        return db.collection("event");
     }
 }

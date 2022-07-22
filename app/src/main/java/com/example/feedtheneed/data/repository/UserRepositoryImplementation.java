@@ -39,12 +39,12 @@ public class UserRepositoryImplementation implements UserRepository {
     @Override
     public Task<QuerySnapshot> getUser(String userEmail) {
         return db.collection("users")
-                .whereEqualTo("email", userEmail).get()
+                .whereEqualTo("userEmail", userEmail).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            Log.d("Getting User", "Successfully retrieved the user information");
+                            Log.d("Getting User", "Successfully retrieved the user information"+task.getResult().size());
 
 
                         } else {
