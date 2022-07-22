@@ -17,6 +17,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -44,6 +45,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.feedtheneed.databinding.ActivityMapsBinding;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -56,7 +59,14 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -90,8 +100,38 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
     }
 
+    // function to sort hashmap
+    public LinkedHashMap<Double, String> sortHashMapByValues(
+            HashMap<Double, String> passedMap) {
+        List<Double> mapKeys = new ArrayList<>(passedMap.keySet());
+        List<String> mapValues = new ArrayList<>(passedMap.values());
+        Collections.sort(mapValues);
+        Collections.sort(mapKeys);
 
+        LinkedHashMap<Double, String> sortedMap =
+                new LinkedHashMap<>();
 
+        Iterator<String> valueIt = mapValues.iterator();
+        while (valueIt.hasNext()) {
+            String val = valueIt.next();
+            Iterator<Double> keyIt = mapKeys.iterator();
+
+            while (keyIt.hasNext()) {
+                Double key = keyIt.next();
+                String comp1 = passedMap.get(key);
+                String comp2 = val;
+
+                if (comp1.equals(comp2)) {
+                    keyIt.remove();
+                    sortedMap.put(key, val);
+                    break;
+                }
+            }
+        }
+        return sortedMap;
+    }
+
+    // function to show bottom sheet
     private void showBottomSheetDialog() {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
         bottomSheetDialog.setContentView(R.layout.bottom_sheet_layout);
@@ -118,6 +158,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         checkPermissionAndEnableLocation();
     }
 
+    // function to set markers for events
     public void setMarkers(){
         EventUseCaseInterface eventUseCase = new EventUseCase();
 
@@ -192,6 +233,43 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 longitude = location.getLongitude();
                                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 11));
                                 fusedLocationClient.removeLocationUpdates(mLocationCallback);
+
+
+                                HashMap<String, String> nearbyEventHashMap = new HashMap<String, String>();
+
+                                // Getting nearby Events
+                                EventUseCaseInterface eventUseCase = new EventUseCase();
+                                eventUseCase.getAllNearByEvents(new LatLng(latitude, longitude)).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @RequiresApi(api = Build.VERSION_CODES.N)
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        Log.d("Nearby Event", "Nearby Event"+task.getResult().getDocuments().toString());
+
+                                        List<DocumentSnapshot> listEvents = task.getResult().getDocuments();
+                                        float[] distanceBetweenUserAndEvent = new float[1];
+
+                                        for (DocumentSnapshot documentSnapshot: listEvents) {
+                                            LatLng eventLocation = new LatLng(Double.valueOf(documentSnapshot.get("eventLat").toString()), Double.valueOf(documentSnapshot.get("eventLong").toString()));
+
+                                            Location.distanceBetween(latitude, longitude,
+                                                    eventLocation.latitude, eventLocation.longitude,
+                                                    distanceBetweenUserAndEvent);
+
+                                            // Putting value in nearby event Hashmap
+                                            nearbyEventHashMap.put(documentSnapshot.getString("eventId"), String.valueOf(distanceBetweenUserAndEvent[0]));
+
+                                            // Creating new hashmap with distance (double) key so it will be easy to sort
+                                            HashMap<Double,String> newMap = new HashMap<>();
+                                            // filling new hashmap
+                                            for(Map.Entry<String,String> entry : nearbyEventHashMap.entrySet())
+                                                newMap.put(Double.valueOf(entry.getValue()), entry.getKey());
+
+                                            // Printing nearby events in debug console
+                                            Log.d("Nearby Events", "Nearby Events "+sortHashMapByValues(newMap).toString());
+
+                                        }
+                                    }
+                                });
                             });
 
                         }
@@ -201,6 +279,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    // function to set marker in a co cordinate
     private void setMarkerInCoordinate(LatLng latLng, String text){
         Log.i("MapsActivity", "setMarkerInCoordinate: "+latLng);
         Bitmap bitmap = null;
@@ -222,6 +301,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+
+    // creating a BitMapDescriptor from a text
     public BitmapDescriptor createPureTextIcon(String text) {
 
         Paint textPaint = new Paint(); // Adapt to your needs
@@ -247,6 +328,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return icon;
     }
 
+    // function to add text below
     private BitmapDescriptor addStampToImage(Bitmap originalBitmap) {
 
         int extraHeight = (int) (originalBitmap.getHeight() * 2.15);
@@ -267,7 +349,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         setTextSizeForWidth(pText,(int) (originalBitmap.getHeight() * 0.10),text);
 
-
         Rect bounds = new Rect();
         pText.getTextBounds(text, 0, text.length(), bounds);
 
@@ -282,6 +363,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return icon;
     }
 
+    // function to set Text size for width
     private void setTextSizeForWidth(Paint paint, float desiredHeight,
                                      String text) {
 
