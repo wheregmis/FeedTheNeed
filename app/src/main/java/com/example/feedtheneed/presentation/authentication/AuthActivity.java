@@ -87,7 +87,7 @@ public class AuthActivity extends AppCompatActivity {
         {
             // When user already sign in
             // redirect to profile activity
-            startActivity(new Intent(AuthActivity.this, ProfileActivity.class)
+            startActivity(new Intent(AuthActivity.this, MapsActivity.class)
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }
     }

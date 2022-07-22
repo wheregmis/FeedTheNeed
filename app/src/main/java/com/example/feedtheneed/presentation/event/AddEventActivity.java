@@ -1,5 +1,6 @@
 package com.example.feedtheneed.presentation.event;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -16,6 +17,17 @@ import android.widget.Toast;
 
 import com.example.feedtheneed.R;
 import com.example.feedtheneed.domain.model.Event;
+import com.example.feedtheneed.domain.usecase.event.EventUseCase;
+import com.example.feedtheneed.domain.usecase.event.EventUseCaseInterface;
+import com.example.feedtheneed.domain.usecase.user.UserUseCaseInterface;
+import com.example.feedtheneed.domain.usecase.user.UserUserUseCase;
+import com.example.feedtheneed.presentation.authentication.AuthActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Calendar;
 
@@ -28,6 +40,8 @@ public class AddEventActivity extends AppCompatActivity {
     private TextView eventHost;
     private TextView eventDescription;
     private int year, month, day,hour,minute;
+    FirebaseAuth firebaseAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +62,22 @@ public class AddEventActivity extends AppCompatActivity {
       minute = calendar.get(Calendar.MINUTE);
         showDate(year, month+1, day);
         showTime(hour, minute);
+
+        FirebaseApp.initializeApp(AddEventActivity.this);
+
+        // Initialize firebase auth
+        firebaseAuth=FirebaseAuth.getInstance();
+        // Initialize firebase user
+        FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
+
+        UserUseCaseInterface userUseCase = new UserUserUseCase();
+        userUseCase.getUserFromFirebase(firebaseUser.getEmail()).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                eventHost.setText(task.getResult().getDocuments().get(0).get("userFullName").toString());
+                eventHost.setEnabled(false);
+            }
+        });
     }
     @SuppressWarnings("deprecation")
     public void setDate(View view) {
@@ -97,18 +127,6 @@ public class AddEventActivity extends AppCompatActivity {
                     showTime(i,i1);
                 }
             };
-//    private TimePickerDialog.OnTimeSetListener myTimeListener = new
-//            TimePickerDialog.OnTimeSetListener(){
-//                @Override
-//                public void onTimeSet(TimePicker arg0,
-//                                      int arg1, int arg2, int arg3) {
-//                    // TODO Auto-generated method stub
-//                    // arg1 = year
-//                    // arg2 = month
-//                    // arg3 = day
-//                    showDate(arg1, arg2+1, arg3);
-//                }
-//            };
     private void showDate(int year, int month, int day) {
         dateview.setText(new StringBuilder().append(day).append("/")
                 .append(month).append("/").append(year));
@@ -118,8 +136,12 @@ public class AddEventActivity extends AppCompatActivity {
                 .append(minutes));
     }
     public void createEvent(View view){
-        Event events =
+        Event event =
         new Event("testEventID",eventName.getText().toString(),eventHost.getText().toString(), eventDescription.getText().toString(),
                 dateview.getText().toString(),timeview.getText().toString());
+
+
+        EventUseCaseInterface eventUseCase = new EventUseCase();
+        eventUseCase.addEventToFirebase(event);
     }
 }
