@@ -4,8 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/ic_baseline_share_24.xml" value="0.115" />
+        <entry key="app/src/main/res/layout/activity_add_event.xml" value="0.155792236328125" />
         <entry key="app/src/main/res/layout/activity_additional_information.xml" value="0.21433715820312502" />
-        <entry key="app/src/main/res/layout/activity_auth.xml" value="0.33229166666666665" />
+        <entry key="app/src/main/res/layout/activity_auth.xml" value="0.2516245524088542" />
         <entry key="app/src/main/res/layout/activity_maps.xml" value="0.25608520507812493" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.15425531914893617" />
         <entry key="app/src/main/res/layout/bottom_sheet_layout.xml" value="0.4488560994466146" />
