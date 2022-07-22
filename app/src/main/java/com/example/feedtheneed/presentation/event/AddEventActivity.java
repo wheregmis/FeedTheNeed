@@ -3,6 +3,7 @@ package com.example.feedtheneed.presentation.event;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -15,6 +16,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.feedtheneed.HomeActivity;
 import com.example.feedtheneed.R;
 import com.example.feedtheneed.domain.model.Event;
 import com.example.feedtheneed.domain.usecase.event.EventUseCase;
@@ -172,6 +174,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
 
         EventUseCaseInterface eventUseCase = new EventUseCase();
         eventUseCase.addEventToFirebase(event);
+        startActivity(new Intent(this, HomeActivity.class));
     }
 
     @Override
