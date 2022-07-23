@@ -157,8 +157,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
-        BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
-        bottomSheetFragment.show(getActivity().getSupportFragmentManager(), bottomSheetFragment.getTag());
+//        BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
+//        bottomSheetFragment.show(getActivity().getSupportFragmentManager(), bottomSheetFragment.getTag());
 
         // Initialize firebase auth
         firebaseAuth=FirebaseAuth.getInstance();

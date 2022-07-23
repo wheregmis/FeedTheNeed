@@ -84,7 +84,7 @@ public class AuthActivity extends AppCompatActivity {
         // Initialize firebase user
         FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
         // Check condition
-        if(firebaseUser!=null)
+//        if(firebaseUser!=null)
         {
             // When user already sign in
             // redirect to profile activity
