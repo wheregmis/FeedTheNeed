@@ -58,6 +58,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -91,6 +92,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
+    HashMap<Integer, String> tabs;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -117,8 +119,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         bottom_sheet = root.findViewById(R.id.lvBottomSheetBehaviour);
         sheetBehavior = BottomSheetBehavior.from(bottom_sheet);
         ivBottomSheet = root.findViewById(R.id.mazimizeBottomSheet);
-        eventsViewPager = (ViewPager) root.findViewById(R.id.eventsViewPager);
-        eventsViewPager.setAdapter(new CustomViewPagerAdapter(getActivity()));
 
         binding.floatAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,6 +165,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
         // Initialize firebase user
         firebaseUser=firebaseAuth.getCurrentUser();
+
+        TabLayout tabLayout = root.findViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(eventsViewPager);
+        tabs = MyTabbedView.getInstance().getTabs();
+        eventsViewPager = (ViewPager) root.findViewById(R.id.eventsViewPager);
+        eventsViewPager.setAdapter(new CustomViewPagerAdapter(getActivity(), tabs));
 
         return root;
     }
@@ -459,5 +465,29 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     public void onLowMemory() {
         super.onLowMemory();
         mMapView.onLowMemory();
+    }
+
+    public static class MyTabbedView {
+        private static HashMap<Integer, String> tabs;
+        static MyTabbedView instance;
+
+        public MyTabbedView () {
+            tabs = new HashMap<>();
+        }
+
+        public static HashMap<Integer, String> getTabs () {
+            tabs.put(0, "Nearby Events");
+            tabs.put(1, "Involved Events");
+
+            return tabs;
+        }
+
+        public static MyTabbedView getInstance () {
+            if (tabs == null) {
+                instance = new MyTabbedView();
+            }
+
+            return instance;
+        }
     }
 }
