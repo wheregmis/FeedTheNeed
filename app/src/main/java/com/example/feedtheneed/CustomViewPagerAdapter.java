@@ -7,12 +7,16 @@ import android.view.ViewGroup;
 
 import androidx.viewpager.widget.PagerAdapter;
 
+import java.util.HashMap;
+
 public class CustomViewPagerAdapter extends PagerAdapter {
 
     private Context mContext;
+    private HashMap<Integer, String> tabs;
 
-    public CustomViewPagerAdapter(Context context) {
+    public CustomViewPagerAdapter(Context context, HashMap<Integer, String> tabs) {
         mContext = context;
+        this.tabs = tabs;
     }
 
     @Override
@@ -30,7 +34,7 @@ public class CustomViewPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return tabs.size();
     }
 
     @Override
@@ -41,7 +45,7 @@ public class CustomViewPagerAdapter extends PagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
 
-        return mContext.getString(R.id.bt_sign_in);
+        return tabs.get(position);
     }
 
 }
