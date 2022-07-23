@@ -172,7 +172,7 @@ public class AuthActivity extends AppCompatActivity {
                                                             startActivity(intent);
                                                         }else{
                                                             startActivity(new Intent(AuthActivity.this
-                                                                    , MapsActivity.class)
+                                                                    , HomeActivity.class)
                                                                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                                                         }
                                                     } else {

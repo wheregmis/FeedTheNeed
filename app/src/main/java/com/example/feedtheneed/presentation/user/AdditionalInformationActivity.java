@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.example.feedtheneed.HomeActivity;
 import com.example.feedtheneed.MapsActivity;
 import com.example.feedtheneed.R;
 import com.example.feedtheneed.databinding.ActivityMapsBinding;
@@ -99,7 +100,7 @@ public class AdditionalInformationActivity extends AppCompatActivity implements 
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         // Redirect user to dashboard
                         startActivity(new Intent(AdditionalInformationActivity.this
-                                , MapsActivity.class)
+                                , HomeActivity.class)
                                 );
                     }
                 });
