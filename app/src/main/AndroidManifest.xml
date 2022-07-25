@@ -45,6 +45,16 @@
             android:name=".presentation.event.AddEventActivity"
             android:exported="true"
             android:label="@string/title_activity_maps"></activity>
+        <activity
+            android:name=".presentation.addEventActivity"
+            android:exported="true"
+            android:label="@string/add_event">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".presentation.user.AdditionalInformationActivity"
@@ -54,11 +64,11 @@
             android:name=".presentation.authentication.AuthActivity"
             android:exported="true"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".presentation.user.ProfileActivity"
