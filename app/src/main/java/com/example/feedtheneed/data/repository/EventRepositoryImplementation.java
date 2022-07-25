@@ -6,12 +6,18 @@ import androidx.annotation.NonNull;
 
 import com.example.feedtheneed.domain.model.Event;
 import com.example.feedtheneed.domain.repository.EventRepository;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class EventRepositoryImplementation implements EventRepository {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -59,5 +65,24 @@ public class EventRepositoryImplementation implements EventRepository {
 //        });
 
         return db.collection("event");
+    }
+
+    @Override
+    public void participateInEvent(String userEmail, String eventId) {
+        ArrayList<String> participants = new ArrayList<String>(); // TODO: 25/07/2022 Get Current Event Participants
+        participants.add(userEmail);
+//        db.collection("event").document(eventId).update("eventParticipants", participants).addOnCompleteListener(new OnCompleteListener<Void>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Void> task) {
+//                Log.d("Participants Added", "Participants Added Successfully"+task.getResult().toString());
+//            }
+//        });
+
+        db.collection("event").document(eventId).update("eventParticipants", participants).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Log.d("Participants Added", "Participants Added Successfully"+task.getResult().toString());
+            }
+        });
     }
 }

@@ -170,7 +170,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     public void createEvent(View view){
         Event event =
         new Event(UUID.randomUUID().toString(),eventName.getText().toString(),eventHost.getText().toString(), eventDescription.getText().toString(),
-                dateview.getText().toString(),timeview.getText().toString(), String.valueOf(eventLocation.latitude), String.valueOf(eventLocation.longitude));
+                dateview.getText().toString(),timeview.getText().toString(), String.valueOf(eventLocation.latitude), String.valueOf(eventLocation.longitude), null);
 
         EventUseCaseInterface eventUseCase = new EventUseCase();
         eventUseCase.addEventToFirebase(event);

@@ -27,4 +27,9 @@ public class EventUseCase implements EventUseCaseInterface {
     public Task<QuerySnapshot> getAllNearByEvents(LatLng userLatLng) {
         return new GetAllNearByEvents(userLatLng).getNearByEvents();
     }
+
+    @Override
+    public void participateInEvent(String userEmail, String eventId) {
+        new ParticipateInEvent(userEmail).participateInEvent(eventId);
+    }
 }

@@ -17,4 +17,6 @@ public interface EventRepository {
 
     CollectionReference getAllEvents();
 
+    void participateInEvent(String userEmail, String eventId);
+
 }
