@@ -226,10 +226,19 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     public void createEvent(View view){
         Event event =
         new Event(UUID.randomUUID().toString(),eventName.getText().toString(),eventHost.getText().toString(), eventDescription.getText().toString(),
-                dateview.getText().toString(),timeview.getText().toString(), String.valueOf(eventLocation.latitude), String.valueOf(eventLocation.longitude));
+                dateview.getText().toString(),timeview.getText().toString(), String.valueOf(eventLocation.latitude), String.valueOf(eventLocation.longitude), null);
 
         EventUseCaseInterface eventUseCase = new EventUseCase();
         eventUseCase.addEventToFirebase(event);
+
+
+//        //         TODO: 25/07/2022  Just for testing user participants in event
+//        eventUseCase.participateInEvent("get2sabin@gmail.com", "0cd3cefb-b439-4338-a267-d694ca67aa09").addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                Log.d("Document Ref", ""+task.getResult().size());
+//            }
+//        });
 
         StorageReference riversRef = storageRef.child("images/"+imageUri.getLastPathSegment());
         UploadTask uploadTask = riversRef.putFile(imageUri);

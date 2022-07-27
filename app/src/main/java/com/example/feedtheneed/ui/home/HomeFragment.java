@@ -172,6 +172,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         eventsViewPager = (ViewPager) root.findViewById(R.id.eventsViewPager);
         eventsViewPager.setAdapter(new CustomViewPagerAdapter(getActivity(), tabs));
 
+
         return root;
     }
 
@@ -305,6 +306,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                     @Override
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         Log.d("Nearby Event", "Nearby Event"+task.getResult().getDocuments().toString());
+
+//
+
 
                                         List<DocumentSnapshot> listEvents = task.getResult().getDocuments();
                                         float[] distanceBetweenUserAndEvent = new float[1];

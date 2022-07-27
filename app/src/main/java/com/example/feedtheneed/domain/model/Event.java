@@ -1,5 +1,8 @@
 package com.example.feedtheneed.domain.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Event {
     private String eventId;
     private String eventName;
@@ -9,8 +12,9 @@ public class Event {
     private String eventTime;
     private String eventLat;
     private String eventLong;
+    private ArrayList<String> eventParticipants;
 
-    public Event(String eventId, String eventName, String eventHost, String eventDescription, String eventDate, String eventTime, String eventLat, String eventLong) {
+    public Event(String eventId, String eventName, String eventHost, String eventDescription, String eventDate, String eventTime, String eventLat, String eventLong, ArrayList<String> eventParticipants) {
         this.eventId = eventId;
         this.eventName = eventName;
         this.eventHost = eventHost;
@@ -19,7 +23,15 @@ public class Event {
         this.eventTime = eventTime;
         this.eventLat = eventLat;
         this.eventLong = eventLong;
+        this.eventParticipants = eventParticipants;
+    }
 
+    public List<String> getEventParticipants() {
+        return eventParticipants;
+    }
+
+    public void setEventParticipants(ArrayList<String> eventParticipants) {
+        this.eventParticipants = eventParticipants;
     }
 
     public String getEventLat() {
