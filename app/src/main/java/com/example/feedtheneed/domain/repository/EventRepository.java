@@ -4,6 +4,7 @@ import com.example.feedtheneed.domain.model.Event;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public interface EventRepository {
     
@@ -17,6 +18,6 @@ public interface EventRepository {
 
     CollectionReference getAllEvents();
 
-    void participateInEvent(String userEmail, String eventId);
+    Task<QuerySnapshot> participateInEvent(String userEmail, String eventId);
 
 }

@@ -9,6 +9,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.app.Dialog;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TimePicker;
@@ -174,6 +175,16 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
 
         EventUseCaseInterface eventUseCase = new EventUseCase();
         eventUseCase.addEventToFirebase(event);
+
+
+//        //         TODO: 25/07/2022  Just for testing user participants in event
+//        eventUseCase.participateInEvent("get2sabin@gmail.com", "0cd3cefb-b439-4338-a267-d694ca67aa09").addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                Log.d("Document Ref", ""+task.getResult().size());
+//            }
+//        });
+
         startActivity(new Intent(this, HomeActivity.class));
     }
 

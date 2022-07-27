@@ -29,7 +29,7 @@ public class EventUseCase implements EventUseCaseInterface {
     }
 
     @Override
-    public void participateInEvent(String userEmail, String eventId) {
-        new ParticipateInEvent(userEmail).participateInEvent(eventId);
+    public Task<QuerySnapshot> participateInEvent(String userEmail, String eventId) {
+        return new ParticipateInEvent(userEmail).participateInEvent(eventId);
     }
 }

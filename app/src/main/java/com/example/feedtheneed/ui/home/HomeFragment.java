@@ -185,10 +185,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
-////         TODO: 25/07/2022  Just for testing user participants in event
-//        EventUseCaseInterface eventUseCase = new EventUseCase();
-//        eventUseCase.participateInEvent(firebaseUser.getEmail(), "\n" +
-//                "6KIQvygkepBpqPpLEWYZ");
         setMarkers();
         checkPermissionAndEnableLocation();
     }

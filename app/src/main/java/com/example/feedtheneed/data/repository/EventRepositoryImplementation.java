@@ -13,10 +13,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class EventRepositoryImplementation implements EventRepository {
@@ -68,21 +68,23 @@ public class EventRepositoryImplementation implements EventRepository {
     }
 
     @Override
-    public void participateInEvent(String userEmail, String eventId) {
+    public Task<QuerySnapshot> participateInEvent(String userEmail, String eventId) {
+
         ArrayList<String> participants = new ArrayList<String>(); // TODO: 25/07/2022 Get Current Event Participants
         participants.add(userEmail);
-//        db.collection("event").document(eventId).update("eventParticipants", participants).addOnCompleteListener(new OnCompleteListener<Void>() {
-//            @Override
-//            public void onComplete(@NonNull Task<Void> task) {
-//                Log.d("Participants Added", "Participants Added Successfully"+task.getResult().toString());
-//            }
-//        });
 
-        db.collection("event").document(eventId).update("eventParticipants", participants).addOnCompleteListener(new OnCompleteListener<Void>() {
+        return db.collection("event").whereEqualTo("eventId", "1").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                Log.d("Participants Added", "Participants Added Successfully"+task.getResult().toString());
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                Log.d("EventsSize","Size is "+task.getResult().size());
+                String docId = task.getResult().getDocuments().get(0).getId();
+                ArrayList<String> obj = (ArrayList<String>) task.getResult().getDocuments().get(0).get("eventParticipants");
+                if (obj != null){
+                    participants.addAll(obj);
+                }
+                db.collection("event").document(docId).update("eventParticipants", participants);
             }
         });
+
     }
 }
