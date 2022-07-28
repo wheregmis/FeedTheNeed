@@ -17,4 +17,6 @@ public interface EventUseCaseInterface {
     Task<QuerySnapshot> getAllNearByEvents(LatLng userLatLng);
 
     Task<QuerySnapshot> participateInEvent(String userEmail, String eventId);
+
+    Task<QuerySnapshot> addUserToVolunteerEvent(String userEmail, String eventId);
 }

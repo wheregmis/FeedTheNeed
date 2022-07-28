@@ -32,4 +32,9 @@ public class EventUseCase implements EventUseCaseInterface {
     public Task<QuerySnapshot> participateInEvent(String userEmail, String eventId) {
         return new ParticipateInEvent(userEmail).participateInEvent(eventId);
     }
+
+    @Override
+    public Task<QuerySnapshot> addUserToVolunteerEvent(String userEmail, String eventId) {
+        return new VolunteerInEvent(userEmail).addUserToVolunteerEvent(eventId);
+    }
 }

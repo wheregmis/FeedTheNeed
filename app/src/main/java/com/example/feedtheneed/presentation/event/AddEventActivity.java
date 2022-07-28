@@ -240,24 +240,33 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
 //            }
 //        });
 
-        StorageReference riversRef = storageRef.child("images/"+imageUri.getLastPathSegment());
-        UploadTask uploadTask = riversRef.putFile(imageUri);
-
-// Register observers to listen for when the download is done or if it fails
-        uploadTask.addOnFailureListener(new OnFailureListener() {
+        eventUseCase.addUserToVolunteerEvent("testing@gmail.com", "1").addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle unsuccessful uploads
-                Log.d("failure to upload","failed " + exception.toString());
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                Log.d("success to upload","success");
-                // ...
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                Log.d("Document Ref", ""+task.getResult().size());
             }
         });
+
+        // TODO: 27/07/2022 Uncomment Below line to add image upload feature 
+
+//        StorageReference riversRef = storageRef.child("images/"+imageUri.getLastPathSegment());
+//        UploadTask uploadTask = riversRef.putFile(imageUri);
+//
+//// Register observers to listen for when the download is done or if it fails
+//        uploadTask.addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception exception) {
+//                // Handle unsuccessful uploads
+//                Log.d("failure to upload","failed " + exception.toString());
+//            }
+//        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+//                Log.d("success to upload","success");
+//                // ...
+//            }
+//        });
         startActivity(new Intent(this, HomeActivity.class));
     }
 
