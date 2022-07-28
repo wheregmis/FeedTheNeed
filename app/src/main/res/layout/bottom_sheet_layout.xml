@@ -15,10 +15,12 @@
     <ImageView
         android:id="@+id/mazimizeBottomSheet"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:src="@drawable/maximize"
+        android:layout_height="@dimen/_30sdp"
+        android:src="@drawable/homenav_icn"
+        android:paddingBottom="@dimen/_5sdp"
         />
     <androidx.viewpager.widget.ViewPager
+        android:layout_marginTop="@dimen/_10sdp"
         android:id="@+id/eventsViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
