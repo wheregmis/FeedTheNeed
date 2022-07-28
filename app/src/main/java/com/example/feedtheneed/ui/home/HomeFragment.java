@@ -244,6 +244,17 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
+        // TODO: 28/07/2022 Getting Involved Projects
+
+        eventUseCase.getInvolvedEvents("get2sabin@gmail.com").addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                List<DocumentSnapshot> listEvents = task.getResult().getDocuments();
+                Log.d("Involved Events", "Events"+listEvents.toString());
+            }
+        });
+
     }
 
     @SuppressLint("MissingPermission")
