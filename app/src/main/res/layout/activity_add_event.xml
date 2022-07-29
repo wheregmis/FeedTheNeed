@@ -100,7 +100,7 @@
             android:layout_weight="0"
             android:onClick="setTime"
             app:srcCompat="@android:drawable/ic_lock_idle_alarm"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
         <TextView
             android:id="@+id/timeview"
@@ -131,9 +131,9 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginTop="8dp"
         android:layout_above="@id/button"
-        tools:context=".presentation.user.AdditionalInformationActivity"/>
+        android:layout_marginTop="8dp"
+        tools:context=".presentation.user.AdditionalInformationActivity" />
 
 
     <Button
