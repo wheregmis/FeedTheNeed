@@ -14,4 +14,6 @@
     <string name="title_activity_home">HomeActivity</string>
 
     <string name="add_event">Add Event</string>
+    <string name="submit">Submit</string>
+    <string name="event_host">Event Host</string>
 </resources>
