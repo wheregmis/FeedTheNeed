@@ -19,18 +19,14 @@
         <androidx.viewpager.widget.ViewPager
             android:layout_width="match_parent"
             android:layout_height="@dimen/_180sdp"
-            android:id="@+id/view_pager">
-        <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/dot2"
-            android:layout_marginTop="10dp"
-            app:dotsColor="@android:color/holo_orange_light"
-            app:selectedDotColor="@android:color/holo_orange_dark"
-            app:dotsSize="15dp"
-            app:dotsSpacing="5dp"
-            app:stiffness="300"/>
-        </androidx.viewpager.widget.ViewPager>
+            android:id="@+id/view_pager"/>
+        <LinearLayout
+            android:id="@+id/SliderDots"
+            android:layout_below="@+id/view_pager"
+            android:orientation="horizontal"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     <TextView
         android:id="@+id/event_name"
         android:layout_width="match_parent"
