@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".presentation.event.AddEventActivity"
+    >
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical"
     android:padding="10dp"
@@ -12,7 +18,7 @@
         android:id="@+id/eventlay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_3sdp"
+        android:layout_marginTop="@dimen/_5sdp"
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,7 +32,7 @@
             <EditText
                 android:id="@+id/eventHost"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_35sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:ems="10"
                 android:hint="Event Host"
                 android:inputType="textPersonName"
@@ -47,110 +53,288 @@
             android:text="@string/event_host"
             android:textColor="@color/black" />
     </RelativeLayout>
-
-    <EditText
-        android:id="@+id/eventName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:ems="10"
+    <RelativeLayout
+        android:id="@+id/eventlay2"
         android:layout_below="@id/eventlay"
-        android:hint="Event Name"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:textColor="@color/black"
-        android:background="@drawable/input_background"
-        android:textColorHint="@color/grey"
-        android:textSize="@dimen/_12ssp" />
-
-    <EditText
-        android:id="@+id/eventDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/eventName"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:background="@drawable/input_background"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="Description"
-        android:inputType="textMultiLine"
-        android:minHeight="48dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/grey"
-        android:textSize="@dimen/_12ssp" />
+        android:layout_marginTop="@dimen/_5sdp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_margin="@dimen/_3sdp"
+            android:orientation="horizontal"
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/input_background"
+            tools:ignore="UselessParent">
 
-    <LinearLayout
-        android:id="@+id/linearLayoutDateView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:background="@drawable/input_background"
-        android:layout_below="@id/eventDescription">
-
-        <ImageView
-            android:id="@+id/imageButton"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:onClick="setDate"
-            app:srcCompat="@drawable/calendar"
-            tools:ignore="SpeakableTextPresentCheck" />
+            <EditText
+                android:id="@+id/eventName"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:ems="10"
+                android:hint="@string/event_name"
+                android:inputType="textPersonName"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey"
+                android:textSize="@dimen/_12ssp" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/dateview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@color/black"
-            android:textColorHint="@color/grey"
-            android:backgroundTintMode="add"
-            android:textSize="@dimen/_12ssp"
-            android:fontFamily="sans-serif"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:background="@drawable/input_background"
-        android:id="@+id/linearLayout"
+            android:layout_marginLeft="@dimen/_9sdp"
+            android:layout_marginTop="-5dp"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/_3sdp"
+            android:paddingRight="@dimen/_3sdp"
+            android:text="@string/event_name"
+            android:textColor="@color/black" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/eventlay3"
+        android:layout_below="@id/eventlay2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:layout_below="@id/linearLayoutDateView">
+        android:layout_marginTop="@dimen/_5sdp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_margin="@dimen/_3sdp"
+            android:orientation="horizontal"
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/input_background"
+            tools:ignore="UselessParent">
 
-        <ImageView
-            android:id="@+id/imageButton2"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:onClick="setTime"
-            app:srcCompat="@drawable/alarm"
-            tools:ignore="SpeakableTextPresentCheck" />
+            <EditText
+                android:id="@+id/eventDescription"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_80sdp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="@string/enter_description_here"
+                android:inputType="textMultiLine"
+                android:minHeight="48dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey"
+                android:textSize="@dimen/_12ssp" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/timeview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@color/black"
-            android:textColorHint="@color/grey"
-            android:backgroundTintMode="add"
-            android:fontFamily="sans-serif"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:textSize="@dimen/_12ssp" />
-    </LinearLayout>
+            android:layout_marginLeft="@dimen/_9sdp"
+            android:layout_marginTop="-5dp"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/_3sdp"
+            android:paddingRight="@dimen/_3sdp"
+            android:text="@string/description"
+            android:textColor="@color/black" />
+    </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/eventlay4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/eventlay3"
+        android:layout_marginTop="@dimen/_5sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_margin="@dimen/_3sdp"
+            android:background="@drawable/input_background"
+            android:orientation="horizontal"
+            android:padding="@dimen/_5sdp"
+            tools:ignore="UselessParent">
+
+            <LinearLayout
+                android:id="@+id/linearLayoutDateView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageButton"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:onClick="setDate"
+                    app:srcCompat="@drawable/calendar"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/dateview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:backgroundTintMode="add"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey"
+                    android:textSize="@dimen/_12ssp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_9sdp"
+            android:layout_marginTop="-5dp"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/_3sdp"
+            android:paddingRight="@dimen/_3sdp"
+            android:text="@string/event_date"
+            android:textColor="@color/black" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/eventlay5"
+        android:layout_below="@id/eventlay4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_margin="@dimen/_3sdp"
+            android:orientation="horizontal"
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/input_background"
+            tools:ignore="UselessParent">
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageButton2"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:onClick="setTime"
+                    app:srcCompat="@drawable/alarm"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/timeview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey"
+                    android:backgroundTintMode="add"
+                    android:fontFamily="sans-serif"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:textSize="@dimen/_12ssp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_9sdp"
+            android:layout_marginTop="-5dp"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/_3sdp"
+            android:paddingRight="@dimen/_3sdp"
+            android:text="@string/event_date"
+            android:textColor="@color/black" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/eventlay6"
+        android:layout_below="@id/eventlay5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_margin="@dimen/_3sdp"
+            android:orientation="horizontal"
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/input_background"
+            tools:ignore="UselessParent">
+
+            <EditText
+                android:id="@+id/food_type"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="@string/food_type_here"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey"
+                android:textSize="@dimen/_12ssp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_9sdp"
+            android:layout_marginTop="-5dp"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/_3sdp"
+            android:paddingRight="@dimen/_3sdp"
+            android:text="@string/food_type"
+            android:textColor="@color/black" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/eventlay7"
+        android:layout_below="@id/eventlay6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_margin="@dimen/_3sdp"
+            android:orientation="horizontal"
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/input_background"
+            tools:ignore="UselessParent">
+
+            <EditText
+                android:id="@+id/participants_number"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="@string/enter_number_of_participants"
+                android:inputType="number"
+                android:minHeight="48dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey"
+                android:textSize="@dimen/_12ssp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_9sdp"
+            android:layout_marginTop="-5dp"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/_3sdp"
+            android:paddingRight="@dimen/_3sdp"
+            android:text="@string/parti_no"
+            android:textColor="@color/black" />
+    </RelativeLayout>
     <LinearLayout
         android:id="@+id/lay_upimg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/map"
-        android:layout_below="@id/linearLayout"
+        android:layout_below="@id/eventlay7"
         android:layout_marginTop="@dimen/_10sdp"
         android:gravity="center"
         android:orientation="horizontal">
@@ -173,21 +357,29 @@
             android:textSize="@dimen/_12ssp" />
 
     </LinearLayout>
-
+    <RelativeLayout
+        android:id="@+id/eventlay8"
+        android:layout_below="@id/lay_upimg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        >
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_200sdp"
         android:layout_marginTop="8dp"
-        android:layout_above="@id/button"
         tools:context=".presentation.user.AdditionalInformationActivity"/>
+    </RelativeLayout>
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button"
+        android:layout_below="@+id/eventlay8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
         android:background="@drawable/button_bg"
         android:onClick="createEvent"
         android:text="@string/submit"
@@ -196,3 +388,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 </RelativeLayout>
+</ScrollView>
