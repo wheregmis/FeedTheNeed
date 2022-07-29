@@ -44,7 +44,7 @@
         <activity
             android:name=".presentation.event.AddEventActivity"
             android:exported="true"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/add_event"></activity>
         <activity
             android:name=".presentation.authentication.AuthActivity"
             android:exported="true"
@@ -64,6 +64,7 @@
         <activity
             android:name=".presentation.user.ProfileActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".presentation.event.ViewEventActivity" />
     </application>
 
 </manifest>
