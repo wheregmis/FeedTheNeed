@@ -24,4 +24,7 @@
     <string name="enter_description_here">Enter Description here</string>
     <string name="food_type_here">Enter Food Type</string>
     <string name="enter_number_of_participants">Enter number of participants</string>
+    <string name="resturant">Restaurant</string>
+    <string name="volunteer">Volunteer</string>
+    <string name="participate">Participate</string>
 </resources>
