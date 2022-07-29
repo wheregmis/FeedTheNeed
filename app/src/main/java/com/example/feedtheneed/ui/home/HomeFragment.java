@@ -33,6 +33,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.feedtheneed.CustomViewPagerAdapter;
 import com.example.feedtheneed.R;
+import com.example.feedtheneed.data.repository.LeaderboardRepoImplementation;
 import com.example.feedtheneed.databinding.FragmentHomeBinding;
 import com.example.feedtheneed.domain.usecase.event.EventUseCase;
 import com.example.feedtheneed.domain.usecase.event.EventUseCaseInterface;
@@ -255,6 +256,16 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
+        // TODO: 29/07/2022 Leaderboard Testing
+        // TODO: 29/07/2022 please handle the return type of those function as per need
+
+        LeaderboardRepoImplementation implementation = new LeaderboardRepoImplementation();
+        implementation.getTopRestaurantsBasedOnEventHosted();
+
+        // TODO: 29/07/2022 Leaderboard Testing
+        // TODO: 29/07/2022 Please handle the return types as per the need
+        implementation.getTopUserBasedOnVolunteerEvent();
+
     }
 
     @SuppressLint("MissingPermission")
@@ -317,9 +328,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                     @Override
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         Log.d("Nearby Event", "Nearby Event"+task.getResult().getDocuments().toString());
-
-//
-
 
                                         List<DocumentSnapshot> listEvents = task.getResult().getDocuments();
                                         float[] distanceBetweenUserAndEvent = new float[1];
