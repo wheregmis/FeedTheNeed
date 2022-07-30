@@ -19,9 +19,15 @@
         tools:targetApi="31">
         <activity
             android:name=".HomeActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_home"
-            android:theme="@style/Theme.FeedTheNeed.NoActionBar" />
+            android:theme="@style/Theme.FeedTheNeed.NoActionBar" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -44,16 +50,11 @@
         <activity
             android:name=".presentation.event.AddEventActivity"
             android:exported="true"
-            android:label="@string/add_event"></activity>
+            android:label="@string/add_event" />
         <activity
             android:name=".presentation.authentication.AuthActivity"
             android:exported="true"
-            android:label="@string/add_event">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:label="@string/app_name">
         </activity>
 
         <activity

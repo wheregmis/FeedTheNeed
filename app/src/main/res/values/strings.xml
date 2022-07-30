@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FeedTheNeed</string>
+    <string name="app_name">Feed The Need</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -27,4 +27,7 @@
     <string name="resturant">Restaurant</string>
     <string name="volunteer">Volunteer</string>
     <string name="participate">Participate</string>
+    <string name="home">Home</string>
+    <string name="leaderboard">Leaderboard</string>
+    <string name="events">Events</string>
 </resources>
