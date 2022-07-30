@@ -19,7 +19,7 @@ public class ViewEventActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_viewevent);
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
 
