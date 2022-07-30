@@ -8,25 +8,28 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_margin="@dimen/_5sdp"
-    android:padding="@dimen/_10sdp">
+    android:orientation="vertical">
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_180sdp"
+        android:id="@+id/view_pager"/>
+    <LinearLayout
+        android:layout_marginTop="@dimen/_5sdp"
+        android:id="@+id/SliderDots"
+        android:layout_below="@+id/view_pager"
+        android:orientation="horizontal"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <LinearLayout
         android:id="@+id/lay1"
+        android:layout_below="@+id/SliderDots"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-        <androidx.viewpager.widget.ViewPager
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_180sdp"
-            android:id="@+id/view_pager"/>
-        <LinearLayout
-            android:id="@+id/SliderDots"
-            android:layout_below="@+id/view_pager"
-            android:orientation="horizontal"
-            android:gravity="center_vertical|center_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        android:orientation="vertical"
+        android:layout_margin="@dimen/_5sdp"
+        android:padding="@dimen/_10sdp">
+
     <TextView
         android:id="@+id/event_name"
         android:layout_width="match_parent"
@@ -82,6 +85,8 @@
         android:orientation="vertical"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/_5sdp"
+        android:padding="@dimen/_10sdp"
         >
         <LinearLayout
             android:layout_width="match_parent"
