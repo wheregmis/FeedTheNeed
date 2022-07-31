@@ -30,4 +30,5 @@
     <string name="home">Home</string>
     <string name="leaderboard">Leaderboard</string>
     <string name="events">Events</string>
+    <string name="search_here">Search here</string>
 </resources>
