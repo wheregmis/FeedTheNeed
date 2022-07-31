@@ -29,6 +29,8 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarHome.toolbar);
+        // todo have to check default action bar meny icon and setting icon
+        //getSupportActionBar().setHomeAsUpIndicator(R.drawable.menubar);
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
