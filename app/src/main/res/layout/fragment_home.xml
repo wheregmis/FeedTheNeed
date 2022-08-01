@@ -39,7 +39,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="10dp"
         android:padding="10dp"
-        android:contentDescription="Todo"
+        android:contentDescription="Chat"
         android:src="@drawable/ic_baseline_chat_24"
         android:backgroundTint="@android:color/white"
 

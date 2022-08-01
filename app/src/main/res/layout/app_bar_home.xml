@@ -16,7 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Theme.FeedTheNeed.PopupOverlay" />
+            app:popupTheme="@style/Theme.FeedTheNeed.PopupOverlay"
+            app:collapseIcon = "@drawable/baseline_menu"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
