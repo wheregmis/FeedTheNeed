@@ -68,11 +68,6 @@
         </activity>
 
         <activity
-            android:name=".presentation.user.AdditionalInformationActivity"
-            android:exported="true"
-            android:label="@string/title_activity_maps" />
-
-        <activity
             android:name=".presentation.user.ProfileActivity"
             android:screenOrientation="portrait" />
     </application>
