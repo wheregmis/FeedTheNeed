@@ -18,6 +18,12 @@
         android:theme="@style/Theme.FeedTheNeed"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.chat.ChatActivity"
+            android:exported="true" />
+        <activity
+            android:name=".presentation.chat.ChatListActivity"
+            android:exported="true" />
+        <activity
             android:name=".HomeActivity"
             android:exported="false"
             android:label="@string/title_activity_home"
@@ -35,7 +41,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="${MAPS_API_KEY}" />
+            android:value="AIzaSyBGx7fGc6cYOR4tVHN51l5WHW3FuWXZTMI" />
 
         <activity
             android:name=".MapsActivity"
@@ -45,6 +51,11 @@
             android:name=".presentation.event.AddEventActivity"
             android:exported="true"
             android:label="@string/title_activity_maps"></activity>
+
+        <activity
+            android:name=".presentation.user.AdditionalInformationActivity"
+            android:exported="true"
+            android:label="@string/title_activity_maps" />
         <activity
             android:name=".presentation.authentication.AuthActivity"
             android:exported="true"
