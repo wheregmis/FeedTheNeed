@@ -6,8 +6,9 @@ import java.util.ArrayList;
 public class Chat {
     private String fromUser;
     private String toUser;
-    private ArrayList<ChatHistory> chatHistory;
+    private ArrayList<ChatHistory> chatHistory = new ArrayList<>();
 
+    public Chat(){}
     public Chat(String fromUser, String toUser, ArrayList<ChatHistory> chatHistory) {
         this.fromUser = fromUser;
         this.toUser = toUser;
@@ -42,20 +43,22 @@ public class Chat {
         this.chatHistory = chatHistory;
     }
     public void addToChatHistory(String message, int owner){
+        if(chatHistory == null){
+           chatHistory = new ArrayList<>();
+        }
         long ts = System.currentTimeMillis()/1000;
         chatHistory.add(new ChatHistory(ts, message, owner));
 
     }
-}
 
-class ChatHistory{
-    private long timestamp;
-    private String message;
-    private int owner;
-
-    public ChatHistory(long timestamp, String message, int owner) {
-        this.timestamp = timestamp;
-        this.message = message;
-        this.owner = owner;
+    @Override
+    public String toString() {
+        return "Chat{" +
+                "fromUser='" + fromUser + '\'' +
+                ", toUser='" + toUser + '\'' +
+                ", chatHistory=" + chatHistory +
+                '}';
     }
 }
+
+
