@@ -25,26 +25,6 @@ public class GetAllNearByEvents {
     }
 
     Task<QuerySnapshot> getNearByEvents(){
-//        eventRepository.getAllEvents().addSnapshotListener(new EventListener<QuerySnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-//                List<DocumentSnapshot> listEvents = value.getDocuments();
-//                float[] distanceBetweenUserAndEvent = new float[1];
-//
-//                for (DocumentSnapshot documentSnapshot: listEvents) {
-//                    Log.d("Getting Events", "Events"+documentSnapshot.toString());
-//                    LatLng eventLocation = new LatLng(Double.valueOf(documentSnapshot.get("eventLat").toString()), Double.valueOf(documentSnapshot.get("eventLong").toString()));
-//
-//                    Location.distanceBetween(userLatLng.latitude, userLatLng.longitude,
-//                            eventLocation.latitude, eventLocation.longitude,
-//                            distanceBetweenUserAndEvent);
-//
-//                    nearbyEventHashMap.put(documentSnapshot.getString("eventId"), String.valueOf(distanceBetweenUserAndEvent[0]));
-//
-//                }
-//            }
-//        });
-
         return eventRepository.getAllEvents().get();
     }
 

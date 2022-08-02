@@ -41,7 +41,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDDqHH7cDDp4J8eM1zb6SbYFa1Npi474yE" />
+            android:value="${MAPS_API_KEY}" />
 
         <activity
             android:name=".MapsActivity"
@@ -50,7 +50,8 @@
         <activity
             android:name=".presentation.event.AddEventActivity"
             android:exported="true"
-            android:label="@string/title_activity_maps" />
+            android:label="@string/title_activity_maps"></activity>
+
         <activity
             android:name=".presentation.user.AdditionalInformationActivity"
             android:exported="true"
@@ -58,13 +59,19 @@
         <activity
             android:name=".presentation.authentication.AuthActivity"
             android:exported="true"
-            android:screenOrientation="portrait">
+            android:label="@string/add_event">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".presentation.user.AdditionalInformationActivity"
+            android:exported="true"
+            android:label="@string/title_activity_maps" />
+
         <activity
             android:name=".presentation.user.ProfileActivity"
             android:screenOrientation="portrait" />

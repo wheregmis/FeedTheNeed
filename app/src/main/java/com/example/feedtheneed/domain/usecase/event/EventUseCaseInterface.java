@@ -15,4 +15,8 @@ public interface EventUseCaseInterface {
     CollectionReference getAllEventsFromFirebase();
 
     Task<QuerySnapshot> getAllNearByEvents(LatLng userLatLng);
+
+    Task<QuerySnapshot> participateInEvent(String userEmail, String eventId);
+
+    Task<QuerySnapshot> addUserToVolunteerEvent(String userEmail, String eventId);
 }

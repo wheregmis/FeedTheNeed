@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -42,7 +43,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public class AuthActivity extends AppCompatActivity {
 
-    SignInButton btSignIn;
+    Button btSignIn;
     GoogleSignInClient googleSignInClient;
     FirebaseAuth firebaseAuth;
 
@@ -153,20 +154,6 @@ public class AuthActivity extends AppCompatActivity {
                                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                                     if (task.isSuccessful()) {
                                                         if (task.getResult().size() <1 ){
-//                                                            User user = new User(firebaseUser.getDisplayName(), firebaseUser.getEmail());
-//
-//                                                            UserUseCaseInterface useCase = new UserUserUseCase();
-//                                                            useCase.addUserToFirebase(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                                                                @Override
-//                                                                public void onSuccess(DocumentReference documentReference) {
-//                                                                    // TODO: 19/07/2022 Handle On Success
-//                                                                }
-//                                                            }).addOnFailureListener(new OnFailureListener() {
-//                                                                @Override
-//                                                                public void onFailure(@NonNull Exception e) {
-//                                                                    // TODO: 19/07/2022 Handle failure
-//                                                                }
-//                                                            });
 
                                                             Intent intent = new Intent(AuthActivity.this, AdditionalInformationActivity.class);
                                                             startActivity(intent);

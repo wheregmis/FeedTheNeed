@@ -6,12 +6,18 @@ import androidx.annotation.NonNull;
 
 import com.example.feedtheneed.domain.model.Event;
 import com.example.feedtheneed.domain.repository.EventRepository;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EventRepositoryImplementation implements EventRepository {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -59,5 +65,42 @@ public class EventRepositoryImplementation implements EventRepository {
 //        });
 
         return db.collection("event");
+    }
+
+    @Override
+    public Task<QuerySnapshot> participateInEvent(String userEmail, String eventId) {
+
+        ArrayList<String> participants = new ArrayList<String>(); // TODO: 25/07/2022 Get Current Event Participants
+        participants.add(userEmail);
+
+        return db.collection("event").whereEqualTo("eventId", "1").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                Log.d("EventsSize","Size is "+task.getResult().size());
+                String docId = task.getResult().getDocuments().get(0).getId();
+                ArrayList<String> obj = (ArrayList<String>) task.getResult().getDocuments().get(0).get("eventParticipants");
+                if (obj != null){
+                    participants.addAll(obj);
+                }
+                db.collection("event").document(docId).update("eventParticipants", participants);
+            }
+        });
+
+    }
+
+    @Override
+    public Task<QuerySnapshot> addUserToVolunteerEvent(String userEmail, String eventId) {
+        return db.collection("event").whereEqualTo("eventId", "1").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                Log.d("EventsSize","Size is "+task.getResult().size());
+                String docId = task.getResult().getDocuments().get(0).getId();
+                String volunteer = (String) task.getResult().getDocuments().get(0).get("eventVolunteer");
+                if (volunteer == null){
+                    db.collection("event").document(docId).update("eventVolunteer", userEmail);
+                }
+
+            }
+        });
     }
 }

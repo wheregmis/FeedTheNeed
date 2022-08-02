@@ -14,4 +14,14 @@
     <string name="title_activity_home">HomeActivity</string>
 
     <string name="add_event">Add Event</string>
+    <string name="submit">Submit</string>
+    <string name="event_host">Event Host</string>
+    <string name="event_name">Event Name</string>
+    <string name="description">Description</string>
+    <string name="event_date">Event Date</string>
+    <string name="food_type">Type of food</string>
+    <string name="parti_no">No of Participants</string>
+    <string name="enter_description_here">Enter Description here</string>
+    <string name="food_type_here">Enter Food Type</string>
+    <string name="enter_number_of_participants">Enter number of participants</string>
 </resources>
