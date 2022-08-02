@@ -38,11 +38,6 @@ class ChatActivity : AppCompatActivity() {
         // TODO: Start a new Chat entry if the chat does not exist
 
         // Adding recycle view
-        val recyclerView = findViewById<RecyclerView>(R.id.rv_messages)
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        adapter = ChatViewAdapter( currentChat.chatHistory)
-//        adapter.setClickListener(this)
-        recyclerView.adapter = adapter
 
 
 
@@ -60,6 +55,11 @@ class ChatActivity : AppCompatActivity() {
             }
 
         }
+
+        val recyclerView = findViewById<RecyclerView>(R.id.rv_messages)
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        adapter = ChatViewAdapter( this.currentChat.chatHistory)
+        recyclerView.adapter = adapter
     }
 
     private fun connectWithFireBase(){
@@ -94,6 +94,8 @@ class ChatActivity : AppCompatActivity() {
                     if (this.currentChat != null) {
                         Log.d(TAG, "DocumentSnapshot data obj: ${currentChat.fromUser}")
                         Log.d(TAG, "DocumentSnapshot data chat history obj: ${currentChat.chatHistory}")
+                        adapter?.dataSet  = this.currentChat.chatHistory
+                        adapter?.notifyDataSetChanged()
                     }
                 } else {
                     Log.d(TAG, "No such document")
@@ -109,13 +111,14 @@ class ChatActivity : AppCompatActivity() {
         this.currentChat.addToChatHistory(etMessageBody.text.toString(), owner)
         Log.d(TAG, this.currentChat.toString())
         etMessageBody.text.clear()
-        adapter?.dataSet  = this.currentChat.chatHistory
-        adapter?.notifyDataSetChanged()
+
         mFirestore.collection("chat").document(this.currentChatId)
             .set(this.currentChat)
             .addOnSuccessListener {
-                Toast.makeText(this, "Message sent Success!", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Message sent Success!", Toast.LENGTH_SHORT).show()
                 Log.d(TAG, "DocumentSnapshot successfully written!")
+                adapter?.dataSet  = this.currentChat.chatHistory
+                adapter?.notifyDataSetChanged()
 
                 //initListView()
             }.addOnFailureListener {
