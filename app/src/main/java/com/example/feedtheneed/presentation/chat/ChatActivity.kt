@@ -45,6 +45,7 @@ class ChatActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
 
 
+
     }
 
 
