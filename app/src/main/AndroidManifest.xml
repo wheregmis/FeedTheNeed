@@ -66,6 +66,7 @@
             android:name=".presentation.user.ProfileActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".presentation.event.ViewEventActivity" />
+        <activity android:name=".SplashActivity" />
     </application>
 
 </manifest>
