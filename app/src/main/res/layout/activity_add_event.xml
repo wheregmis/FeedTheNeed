@@ -364,27 +364,29 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp"
         >
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_200sdp"
-        android:layout_marginTop="8dp"
-        tools:context=".presentation.user.AdditionalInformationActivity"/>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            android:layout_marginTop="8dp"
+            tools:context=".presentation.user.AdditionalInformationActivity" />
     </RelativeLayout>
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button"
-        android:layout_below="@+id/eventlay8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/eventlay8"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginBottom="@dimen/_5sdp"
         android:background="@drawable/button_bg"
         android:onClick="createEvent"
         android:text="@string/submit"
-        android:textSize="@dimen/_16sdp"
         android:textColor="@color/mainbg"
+        android:textSize="@dimen/_16sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 </RelativeLayout>

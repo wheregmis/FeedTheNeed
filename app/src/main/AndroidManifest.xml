@@ -11,17 +11,28 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.FeedTheNeed"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.chat.ChatActivity"
-            android:exported="true" />
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.FeedTheNeed.NoActionBar" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity
             android:name=".presentation.chat.ChatListActivity"
+            android:exported="true" />
+        <activity
+            android:name=".presentation.chat.ChatActivity"
             android:exported="true" />
         <activity
             android:name=".HomeActivity"
@@ -41,8 +52,13 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBGx7fGc6cYOR4tVHN51l5WHW3FuWXZTMI" />
+            android:value="@string/MAPS_API_KEY" />
 
+        <activity
+            android:name=".presentation.authentication.AuthActivity"
+            android:exported="true"
+            android:label="@string/app_name">
+        </activity>
         <activity
             android:name=".MapsActivity"
             android:exported="true"
@@ -50,26 +66,18 @@
         <activity
             android:name=".presentation.event.AddEventActivity"
             android:exported="true"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/add_event" />
 
         <activity
             android:name=".presentation.user.AdditionalInformationActivity"
             android:exported="true"
             android:label="@string/title_activity_maps" />
-        <activity
-            android:name=".presentation.authentication.AuthActivity"
-            android:exported="true"
-            android:label="@string/add_event">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
 
         <activity
             android:name=".presentation.user.ProfileActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".presentation.event.ViewEventActivity" />
+
     </application>
 
 </manifest>

@@ -267,6 +267,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
 //                // ...
 //            }
 //        });
+        //ViewEventActivity -> to check view event
         startActivity(new Intent(this, HomeActivity.class));
     }
 

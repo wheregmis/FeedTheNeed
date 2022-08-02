@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">FeedTheNeed</string>
+   <!-- //MAPS_API_KEY=AIzaSyDDqHH7cDDp4J8eM1zb6SbYFa1Npi474yE-->
+    <string name="app_name">Feed The Need</string>
+    <string name="MAPS_API_KEY">AIzaSyBGx7fGc6cYOR4tVHN51l5WHW3FuWXZTMI</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -24,4 +26,11 @@
     <string name="enter_description_here">Enter Description here</string>
     <string name="food_type_here">Enter Food Type</string>
     <string name="enter_number_of_participants">Enter number of participants</string>
+    <string name="resturant">Restaurant</string>
+    <string name="volunteer">Volunteer</string>
+    <string name="participate">Participate</string>
+    <string name="home">Home</string>
+    <string name="leaderboard">Leaderboard</string>
+    <string name="events">Events</string>
+    <string name="search_here">Search here</string>
 </resources>
