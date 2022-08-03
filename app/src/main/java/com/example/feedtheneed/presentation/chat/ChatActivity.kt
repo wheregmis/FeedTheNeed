@@ -17,7 +17,7 @@ import com.google.firebase.firestore.ktx.toObject
 
 
 class ChatActivity : AppCompatActivity() {
-    var currentChatId = "umrwI8BQstxUW4WGkJL6"
+    var currentChatId = "newchat"
     var currentUserId = ""
     var currentChat: Chat = Chat("user1", "user2")
     private var mFirestore = FirebaseFirestore.getInstance()
@@ -33,7 +33,8 @@ class ChatActivity : AppCompatActivity() {
         setContentView(com.example.feedtheneed.R.layout.chat_layout)
         connectWithUI()
         connectWithFireBase()
-        readChatById()
+        //readChatById()
+        initiateANewChat()
 
         // TODO: Start a new Chat entry if the chat does not exist
 
@@ -70,11 +71,11 @@ class ChatActivity : AppCompatActivity() {
         var chat = Chat("user1", "user2")
 
 
-        mFirestore.collection("chat").document()
+        mFirestore.collection("chat").document(currentChatId)
             .set(chat)
             .addOnSuccessListener {
-                Toast.makeText(this, "DocumentSnapshot successfully written!", Toast.LENGTH_SHORT).show()
-                Log.d(TAG, "DocumentSnapshot successfully written!")
+                //Toast.makeText(this, "DocumentSnapshot successfully written!", Toast.LENGTH_SHORT).show()
+                //Log.d(TAG, "New Chat initiated: ${documentRef.id}")
 
                 //initListView()
             }.addOnFailureListener {
