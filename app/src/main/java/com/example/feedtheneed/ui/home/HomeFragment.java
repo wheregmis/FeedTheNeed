@@ -20,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,18 +27,18 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.feedtheneed.presentation.chat.ChatActivity;
 import com.example.feedtheneed.CustomViewPagerAdapter;
 import com.example.feedtheneed.R;
+import com.example.feedtheneed.data.repository.LeaderboardRepoImplementation;
 import com.example.feedtheneed.databinding.FragmentHomeBinding;
 import com.example.feedtheneed.domain.model.Event;
 import com.example.feedtheneed.domain.usecase.event.EventUseCase;
 import com.example.feedtheneed.domain.usecase.event.EventUseCaseInterface;
 import com.example.feedtheneed.presentation.event.AddEventActivity;
-import com.example.feedtheneed.presentation.user.AdditionalInformationActivity;
-import com.example.feedtheneed.presentation.user.fragments.BottomSheetFragment;
+import com.example.feedtheneed.presentation.event.ViewEventActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -50,10 +49,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -130,6 +129,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
+        binding.fabList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), ChatActivity.class));
+            }
+        });
         sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View view, int newState) {
@@ -246,6 +251,27 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
+        // TODO: 28/07/2022 Getting Involved Projects
+
+        eventUseCase.getInvolvedEvents("get2sabin@gmail.com").addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                List<DocumentSnapshot> listEvents = task.getResult().getDocuments();
+                Log.d("Involved Events", "Events"+listEvents.toString());
+            }
+        });
+
+        // TODO: 29/07/2022 Leaderboard Testing
+        // TODO: 29/07/2022 please handle the return type of those function as per need
+
+        LeaderboardRepoImplementation implementation = new LeaderboardRepoImplementation();
+        implementation.getTopRestaurantsBasedOnEventHosted();
+
+        // TODO: 29/07/2022 Leaderboard Testing
+        // TODO: 29/07/2022 Please handle the return types as per the need
+        implementation.getTopUserBasedOnVolunteerEvent();
+
     }
 
     @SuppressLint("MissingPermission")
@@ -309,9 +335,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         Log.d("Nearby Event", "Nearby Event"+task.getResult().getDocuments().toString());
 
-//
-
-
                                         List<DocumentSnapshot> listEvents = task.getResult().getDocuments();
                                         float[] distanceBetweenUserAndEvent = new float[1];
 
@@ -372,6 +395,14 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 );
 
         mMap.addMarker(options);
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(@NonNull Marker marker) {
+                startActivity(new Intent(getActivity(), ViewEventActivity.class));
+                return true;
+            }
+        });
 
 
     }
