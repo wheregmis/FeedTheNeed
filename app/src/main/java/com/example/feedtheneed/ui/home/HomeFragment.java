@@ -34,6 +34,7 @@ import com.example.feedtheneed.CustomViewPagerAdapter;
 import com.example.feedtheneed.R;
 import com.example.feedtheneed.data.repository.LeaderboardRepoImplementation;
 import com.example.feedtheneed.databinding.FragmentHomeBinding;
+import com.example.feedtheneed.domain.model.Event;
 import com.example.feedtheneed.domain.usecase.event.EventUseCase;
 import com.example.feedtheneed.domain.usecase.event.EventUseCaseInterface;
 import com.example.feedtheneed.presentation.event.AddEventActivity;
@@ -88,6 +89,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     LocationRequest mLocationRequest;
     private FusedLocationProviderClient fusedLocationClient;
     private double latitude, longitude;
+    private ArrayList<Event> nearbyEvents;
 
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
@@ -104,6 +106,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         mMapView = (MapView) root.findViewById(R.id.mapView);
+        nearbyEvents = new ArrayList<>();
 
         try {
             MapsInitializer.initialize(getActivity().getApplicationContext());
@@ -175,7 +178,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         tabLayout.setupWithViewPager(eventsViewPager);
         tabs = MyTabbedView.getInstance().getTabs();
         eventsViewPager = (ViewPager) root.findViewById(R.id.eventsViewPager);
-        eventsViewPager.setAdapter(new CustomViewPagerAdapter(getActivity(), tabs));
 
 
         return root;
@@ -339,6 +341,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                         for (DocumentSnapshot documentSnapshot: listEvents) {
                                             LatLng eventLocation = new LatLng(Double.valueOf(documentSnapshot.get("eventLat").toString()), Double.valueOf(documentSnapshot.get("eventLong").toString()));
 
+                                            nearbyEvents.add(documentSnapshot.toObject(Event.class));
                                             Location.distanceBetween(latitude, longitude,
                                                     eventLocation.latitude, eventLocation.longitude,
                                                     distanceBetweenUserAndEvent);
@@ -352,10 +355,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                             for(Map.Entry<String,String> entry : nearbyEventHashMap.entrySet())
                                                 newMap.put(Double.valueOf(entry.getValue()), entry.getKey());
 
-                                            // Printing nearby events in debug console
-                                            Log.d("Nearby Events", "Nearby Events "+sortHashMapByValues(newMap).toString());
+                                            newMap = sortHashMapByValues(newMap);
 
+                                            // Printing nearby events in debug console
+                                            Log.d("Nearby Events", "Nearby Events "+newMap.toString());
                                         }
+
+                                        updateNearbyEvents();
                                     }
                                 });
                             });
@@ -365,6 +371,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 })
                 .addOnFailureListener(e -> e.printStackTrace());
 
+    }
+
+    private void updateNearbyEvents() {
+        eventsViewPager.setAdapter(new CustomViewPagerAdapter(getActivity(), tabs, nearbyEvents));
     }
 
     // function to set marker in a co cordinate

@@ -1,9 +1,10 @@
 package com.example.feedtheneed.domain.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Event {
+public class Event implements Serializable {
     private String eventId;
     private String eventName;
     private String eventHost;
@@ -24,6 +25,10 @@ public class Event {
         this.eventLat = eventLat;
         this.eventLong = eventLong;
         this.eventParticipants = eventParticipants;
+    }
+
+    public Event () {
+
     }
 
     public List<String> getEventParticipants() {

@@ -11,33 +11,10 @@
     tools:showIn="@layout/activity_maps"
     >
 
-    <Button
-        android:id="@+id/btnBottomSheet"
-        android:layout_width="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvNearbyEvent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:text="Show Bottom Sheet"
-        android:textColor="@color/white" />
-
-    <Button
-        android:id="@+id/btn_bottom_sheet_dialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:text="Show Bottom Sheet Dialog"
-        android:visibility="gone" />
-
-    <Button
-        android:id="@+id/btn_bottom_sheet_dialog_fragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:text="Show Bottom Sheet Dialog Fragment"
-        android:visibility="gone" />
+        />
 
 </LinearLayout>
