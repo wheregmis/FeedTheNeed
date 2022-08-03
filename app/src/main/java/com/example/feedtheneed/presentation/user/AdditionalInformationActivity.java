@@ -118,6 +118,8 @@ public class AdditionalInformationActivity extends AppCompatActivity implements 
             isRestaurantVariable = false;
         }
 
+        userLatLng = new LatLng(43.6532, -79.38);
+
         User user = new User(
                 firebaseUser.getUid(),
                 txtDisplayName.getText().toString(),

@@ -36,6 +36,7 @@ import com.example.feedtheneed.databinding.FragmentHomeBinding;
 import com.example.feedtheneed.domain.usecase.event.EventUseCase;
 import com.example.feedtheneed.domain.usecase.event.EventUseCaseInterface;
 import com.example.feedtheneed.presentation.event.AddEventActivity;
+import com.example.feedtheneed.presentation.event.ViewEventActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -49,6 +50,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -364,6 +366,14 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 );
 
         mMap.addMarker(options);
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(@NonNull Marker marker) {
+                startActivity(new Intent(getActivity(), ViewEventActivity.class));
+                return true;
+            }
+        });
 
 
     }
