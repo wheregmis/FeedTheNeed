@@ -33,8 +33,8 @@ class ChatActivity : AppCompatActivity() {
         setContentView(com.example.feedtheneed.R.layout.chat_layout)
         connectWithUI()
         connectWithFireBase()
-        //readChatById()
-        initiateANewChat()
+        readChatById()
+        //initiateANewChat()
 
         // TODO: Start a new Chat entry if the chat does not exist
 
