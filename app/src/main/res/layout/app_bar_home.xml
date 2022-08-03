@@ -18,20 +18,25 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@drawable/actionbar_bg"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:theme="@style/ToolbarTheme">
+            app:popupTheme="@style/MaterialAlertDialog.MaterialComponents.Title.Icon"
+            app:theme="@style/ToolbarTheme"
+            >
+          <!--  <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+                <ImageView
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:src="@drawable/menubar"
+                    />
+            </RelativeLayout>-->
             <LinearLayout
                 android:id="@+id/menuImg"
                 android:padding="5dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <ImageView
-                    android:layout_width="@dimen/_35sdp"
-                    android:layout_height="@dimen/_35sdp"
-                    android:src="@drawable/menubar"
-                    />
 
                 <EditText
                     android:id="@+id/search"
