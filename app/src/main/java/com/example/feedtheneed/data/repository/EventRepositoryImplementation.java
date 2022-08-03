@@ -73,7 +73,7 @@ public class EventRepositoryImplementation implements EventRepository {
         ArrayList<String> participants = new ArrayList<String>(); // TODO: 25/07/2022 Get Current Event Participants
         participants.add(userEmail);
 
-        return db.collection("event").whereEqualTo("eventId", "1").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        return db.collection("event").whereEqualTo("eventId", eventId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 Log.d("EventsSize","Size is "+task.getResult().size());
@@ -90,7 +90,7 @@ public class EventRepositoryImplementation implements EventRepository {
 
     @Override
     public Task<QuerySnapshot> addUserToVolunteerEvent(String userEmail, String eventId) {
-        return db.collection("event").whereEqualTo("eventId", "1").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        return db.collection("event").whereEqualTo("eventId", eventId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 Log.d("EventsSize","Size is "+task.getResult().size());
@@ -102,5 +102,10 @@ public class EventRepositoryImplementation implements EventRepository {
 
             }
         });
+    }
+
+    @Override
+    public Task<QuerySnapshot> getInvolvedEvents(String userEmail) {
+        return db.collection("event").whereArrayContains("eventParticipants", userEmail).get();
     }
 }

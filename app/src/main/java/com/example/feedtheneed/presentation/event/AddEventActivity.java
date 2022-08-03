@@ -247,7 +247,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
 
-        // TODO: 27/07/2022 Uncomment Below line to add image upload feature 
+        // TODO: 27/07/2022 Uncomment Below line to add image upload feature
 
 //        StorageReference riversRef = storageRef.child("images/"+imageUri.getLastPathSegment());
 //        UploadTask uploadTask = riversRef.putFile(imageUri);
