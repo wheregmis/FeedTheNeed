@@ -1,8 +1,10 @@
 package com.example.feedtheneed;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Button;
 
 import com.bumptech.glide.Glide;
 import com.example.feedtheneed.presentation.user.ProfileActivity;
@@ -29,6 +31,7 @@ public class HomeActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     CircularImageView imageView;
     Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +73,8 @@ public class HomeActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+
     }
 
    /* @Override
@@ -85,4 +90,6 @@ public class HomeActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+
 }
