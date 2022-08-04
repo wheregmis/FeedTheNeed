@@ -70,13 +70,6 @@
             android:text="@string/description"
             android:textColor="@color/grey"
             android:textSize="@dimen/_14ssp" />
-
-        <ImageView
-            android:id="@+id/event_image"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_150sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/button_bg"/>
     </LinearLayout>
     <LinearLayout
         android:layout_below="@+id/lay1"
@@ -147,12 +140,17 @@
                     android:text="@string/resturant"/>
             </LinearLayout>
         </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
         <LinearLayout
             android:layout_margin="@dimen/_5sdp"
             android:id="@+id/event_participant"
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_width="@dimen/_200sdp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp"
@@ -173,6 +171,34 @@
                 android:layout_height="wrap_content"
                 android:text="@string/participate"/>
         </LinearLayout>
+        <LinearLayout
+            android:layout_margin="@dimen/_5sdp"
+            android:id="@+id/bevolunteer"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/button_bg"
+            >
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/group"/>
+            <TextView
+                android:gravity="center"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:textColor="@color/mainbg"
+                android:textSize="@dimen/_16sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Be Volunteer"/>
+        </LinearLayout>
+    </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
 </ScrollView>

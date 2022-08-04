@@ -40,16 +40,15 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         setSupportActionBar(binding.appBarHome.toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menubar);
+        //getSupportActionBar().setHomeAsUpIndicator(R.drawable.menubar);
         toolbar = findViewById(R.id.toolbar);
         //toolbar.setTitle("Add Activity");
+        toolbar.setNavigationIcon(R.drawable.menubar);
         setSupportActionBar(toolbar);
-       /* imageView.findViewById(R.id.imageView);
+        imageView = toolbar.findViewById(R.id.imageView);
         firebaseAuth= FirebaseAuth.getInstance();
-
         // Initialize firebase user
         FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
-
         // Check condition
         if(firebaseUser!=null)
         {
@@ -58,7 +57,7 @@ public class HomeActivity extends AppCompatActivity {
             Glide.with(HomeActivity.this)
                     .load(firebaseUser.getPhotoUrl())
                     .into(imageView);
-        }*/
+        }
         // todo have to check default action bar meny icon and setting icon
         //getSupportActionBar().setHomeAsUpIndicator(R.drawable.menubar);
 

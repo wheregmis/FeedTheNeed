@@ -10,11 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.feedtheneed.R
-import com.example.feedtheneed.domain.model.Chat
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.firestore.ktx.toObject
 
+import com.example.feedtheneed.domain.model.Chat
+import com.google.firebase.firestore.FirebaseFirestore
 
 class ChatActivity : AppCompatActivity() {
     var currentChatId = "umrwI8BQstxUW4WGkJL6"
@@ -33,7 +33,8 @@ class ChatActivity : AppCompatActivity() {
         setContentView(com.example.feedtheneed.R.layout.chat_layout)
         connectWithUI()
         connectWithFireBase()
-        readChatById()
+        //readChatById()
+        initiateANewChat()
 
         // TODO: Start a new Chat entry if the chat does not exist
 
@@ -72,9 +73,10 @@ class ChatActivity : AppCompatActivity() {
 
         mFirestore.collection("chat").document()
             .set(chat)
-            .addOnSuccessListener {
+            .addOnSuccessListener { documentRef ->
+               // currentChatId = documentRef.id
                 Toast.makeText(this, "DocumentSnapshot successfully written!", Toast.LENGTH_SHORT).show()
-                Log.d(TAG, "DocumentSnapshot successfully written!")
+               // Log.d(TAG, "DocumentSnapshot successfully written! ${documentRef.id}")
 
                 //initListView()
             }.addOnFailureListener {
