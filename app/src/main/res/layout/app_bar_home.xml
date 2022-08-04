@@ -21,21 +21,8 @@
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             >
-            <!--app:theme="@style/ToolbarTheme"-->
-
-          <!--  <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="@dimen/_35sdp"
-                    android:layout_height="@dimen/_35sdp"
-                    android:src="@drawable/menubar"
-                    />
-            </RelativeLayout>-->
             <LinearLayout
                 android:id="@+id/menuImg"
-                android:padding="5dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -44,7 +31,6 @@
                     android:id="@+id/search"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_5sdp"
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="@string/search_here"
