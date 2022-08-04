@@ -365,50 +365,16 @@
         android:layout_marginTop="@dimen/_5sdp"
         >
 
-        <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:onClick="setTime"
-            app:srcCompat="@android:drawable/ic_lock_idle_alarm"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            android:layout_marginTop="8dp"
+            tools:context=".presentation.user.AdditionalInformationActivity" />
+    </RelativeLayout>
 
-        <TextView
-            android:id="@+id/timeview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#DAD6E1"
-            android:backgroundTint="#2B1357"
-            android:backgroundTintMode="add"
-            android:fontFamily="sans-serif"
-            android:textSize="27sp" />
-    </LinearLayout>
-
-    <ImageButton
-        android:id="@+id/imageButton3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="176dp"
-        android:layout_marginTop="20dp"
-        android:onClick="addImages"
-        android:layout_below="@id/linearLayout"
-        android:layout_above="@id/map"
-        app:srcCompat="@android:drawable/ic_menu_camera"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_above="@id/button"
-        android:layout_marginTop="8dp"
-        tools:context=".presentation.user.AdditionalInformationActivity" />
-
-
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

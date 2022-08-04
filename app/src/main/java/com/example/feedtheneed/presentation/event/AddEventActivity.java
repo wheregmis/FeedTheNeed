@@ -11,6 +11,7 @@ import android.app.TimePickerDialog;
 import android.app.Dialog;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.TimePicker;
 import android.widget.DatePicker;
@@ -25,6 +26,7 @@ import com.example.feedtheneed.domain.usecase.event.EventUseCase;
 import com.example.feedtheneed.domain.usecase.event.EventUseCaseInterface;
 import com.example.feedtheneed.domain.usecase.user.UserUseCaseInterface;
 import com.example.feedtheneed.domain.usecase.user.UserUserUseCase;
+import com.example.feedtheneed.presentation.authentication.AuthActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -32,18 +34,22 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
+import android.os.Bundle;
 import android.provider.MediaStore;
-
+import com.example.feedtheneed.R;
+import com.example.feedtheneed.domain.model.Event;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -59,8 +65,6 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     private TextView timeview;
     private TextView eventName;
     private TextView eventHost;
-    ArrayList<Uri> imagesEncodedList = new ArrayList<>();
-    ArrayList<String> imagesUploaded = new ArrayList<String>();
     StorageReference childRef, imagesRef,storageRef;
     Uri imageUri;
     private TextView eventDescription;
@@ -176,14 +180,14 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         Log.d("image","selected");
         if(resultCode == RESULT_OK && data!=null){
             String[] filePathColumn = { MediaStore.Images.Media.DATA };
-
+            ArrayList<String> imagesEncodedList = new ArrayList<String>();
             String imageEncoded;
             if(data.getClipData() != null) {
                 int count = data.getClipData().getItemCount(); //evaluate the count before the for loop --- otherwise, the count is evaluated every loop.
                 for(int i = 0; i < count; i++) {
                    imageUri = data.getClipData().getItemAt(i).getUri();
 
-                imagesEncodedList.add(imageUri);
+//                imagesEncodedList.add(imageUri);
                     //do something with the image (save it to some directory or whatever you need to do with it here)
                 }
             }
@@ -245,28 +249,6 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
 
         // TODO: 27/07/2022 Uncomment Below line to add image upload feature
 
-        for(int i=0;i<imagesEncodedList.size();i++){
-            StorageReference riversRef = storageRef.child("images/"+imagesEncodedList.get(i).getLastPathSegment());
-            imagesUploaded.add(riversRef.getRoot().toString()+riversRef.getPath());
-            Log.d("iamge List",imagesUploaded.toString());
-        UploadTask uploadTask = riversRef.putFile(imageUri);
-
-// Register observers to listen for when the download is done or if it fails
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle unsuccessful uploads
-                Log.d("failure to upload","failed " + exception.toString());
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                Log.d("success to upload","success");
-                // ...
-            }
-        });
-        }
 //        StorageReference riversRef = storageRef.child("images/"+imageUri.getLastPathSegment());
 //        UploadTask uploadTask = riversRef.putFile(imageUri);
 //
