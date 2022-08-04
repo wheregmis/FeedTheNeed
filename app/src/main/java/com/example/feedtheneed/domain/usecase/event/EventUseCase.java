@@ -42,4 +42,9 @@ public class EventUseCase implements EventUseCaseInterface {
     public Task<QuerySnapshot> getInvolvedEvents(String userEmail) {
         return new GetInvolvedEvents().getInvolvedEventsFromFirebase(userEmail);
     }
+
+    @Override
+    public Task<QuerySnapshot> getEventDetails(String eventId) {
+        return new GetEventDetails(eventId).getEventDetailsFromFirebase();
+    }
 }

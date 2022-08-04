@@ -54,6 +54,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.UUID;
@@ -65,6 +67,8 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     private TextView timeview;
     private TextView eventName;
     private TextView eventHost;
+    private TextView eventFoodType;
+    private TextView eventTotalParticipants;
     StorageReference childRef, imagesRef,storageRef;
     Uri imageUri;
     private TextView eventDescription;
@@ -83,6 +87,8 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         eventHost = (TextView) findViewById(R.id.eventHost);
         eventDescription = (TextView) findViewById(R.id.eventDescription);
         timeview = (TextView) findViewById(R.id.timeview);
+        eventFoodType = (TextView) findViewById(R.id.food_type);
+        eventTotalParticipants = (TextView) findViewById(R.id.participants_number);
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
         // Create a child reference
@@ -224,28 +230,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
                 .append(minutes));
     }
     public void createEvent(View view){
-        Event event =
-        new Event(UUID.randomUUID().toString(),eventName.getText().toString(),eventHost.getText().toString(), eventDescription.getText().toString(),
-                dateview.getText().toString(),timeview.getText().toString(), String.valueOf(eventLocation.latitude), String.valueOf(eventLocation.longitude), null);
 
-        EventUseCaseInterface eventUseCase = new EventUseCase();
-        eventUseCase.addEventToFirebase(event);
-
-
-//        //         TODO: 25/07/2022  Just for testing user participants in event
-//        eventUseCase.participateInEvent("get2sabin@gmail.com", "0cd3cefb-b439-4338-a267-d694ca67aa09").addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                Log.d("Document Ref", ""+task.getResult().size());
-//            }
-//        });
-
-        eventUseCase.addUserToVolunteerEvent("testing@gmail.com", "1").addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                Log.d("Document Ref", ""+task.getResult().size());
-            }
-        });
 
         // TODO: 27/07/2022 Uncomment Below line to add image upload feature
 
@@ -267,6 +252,20 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
 //                // ...
 //            }
 //        });
+
+        // TODO: 04/08/2022 Please update the image urls below 
+        ArrayList<String> imageUrls = new ArrayList<String>();
+
+        // TODO: 04/08/2022 Append value inside
+        
+        Event event =
+                new Event(UUID.randomUUID().toString(),eventName.getText().toString(),eventHost.getText().toString(), eventDescription.getText().toString(),
+                        dateview.getText().toString(),timeview.getText().toString(), String.valueOf(eventLocation.latitude), String.valueOf(eventLocation.longitude), null, eventFoodType.getText().toString(), eventTotalParticipants.getText().toString(), imageUrls);
+
+        EventUseCaseInterface eventUseCase = new EventUseCase();
+        eventUseCase.addEventToFirebase(event);
+
+
         //ViewEventActivity -> to check view event
         startActivity(new Intent(this, HomeActivity.class));
     }

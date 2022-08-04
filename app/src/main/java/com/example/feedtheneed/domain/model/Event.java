@@ -13,9 +13,13 @@ public class Event implements Serializable {
     private String eventTime;
     private String eventLat;
     private String eventLong;
+    private String eventFoodType;
+    private String eventParticipantsCount;
     private ArrayList<String> eventParticipants;
+    private ArrayList<String> eventImageUrls;
 
-    public Event(String eventId, String eventName, String eventHost, String eventDescription, String eventDate, String eventTime, String eventLat, String eventLong, ArrayList<String> eventParticipants) {
+
+    public Event(String eventId, String eventName, String eventHost, String eventDescription, String eventDate, String eventTime, String eventLat, String eventLong, ArrayList<String> eventParticipants, String eventFoodType, String eventParticipantsCount, ArrayList<String> eventImageUrls) {
         this.eventId = eventId;
         this.eventName = eventName;
         this.eventHost = eventHost;
@@ -25,10 +29,37 @@ public class Event implements Serializable {
         this.eventLat = eventLat;
         this.eventLong = eventLong;
         this.eventParticipants = eventParticipants;
+        this.eventFoodType = eventFoodType;
+        this.eventParticipantsCount = eventParticipantsCount;
+        this.eventImageUrls = eventImageUrls;
     }
 
     public Event () {
 
+    }
+
+    public ArrayList<String> getEventImageUrls() {
+        return eventImageUrls;
+    }
+
+    public void setEventImageUrls(ArrayList<String> eventImageUrls) {
+        this.eventImageUrls = eventImageUrls;
+    }
+
+    public String getEventFoodType() {
+        return eventFoodType;
+    }
+
+    public void setEventFoodType(String eventFoodType) {
+        this.eventFoodType = eventFoodType;
+    }
+
+    public String getEventParticipantsCount() {
+        return eventParticipantsCount;
+    }
+
+    public void setEventParticipantsCount(String eventParticipantsCount) {
+        this.eventParticipantsCount = eventParticipantsCount;
     }
 
     public List<String> getEventParticipants() {
