@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.widget.Button;
 
 import com.bumptech.glide.Glide;
+import com.example.feedtheneed.presentation.event.AddEventActivity;
 import com.example.feedtheneed.presentation.user.ProfileActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -74,6 +75,14 @@ public class HomeActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        imageView = findViewById(R.id.imageView);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
+            }
+        });
 
     }
 
