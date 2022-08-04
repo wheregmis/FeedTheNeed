@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.widget.Button;
 
 import com.bumptech.glide.Glide;
+import com.example.feedtheneed.presentation.event.AddEventActivity;
 import com.example.feedtheneed.presentation.user.ProfileActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -29,6 +30,7 @@ public class HomeActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomeBinding binding;
     FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
     CircularImageView imageView;
     Toolbar toolbar;
 
@@ -40,24 +42,26 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         setSupportActionBar(binding.appBarHome.toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
-        //getSupportActionBar().setHomeAsUpIndicator(R.drawable.menubar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menubar);
         toolbar = findViewById(R.id.toolbar);
         //toolbar.setTitle("Add Activity");
-        toolbar.setNavigationIcon(R.drawable.menubar);
         setSupportActionBar(toolbar);
-        imageView = toolbar.findViewById(R.id.imageView);
+
+//        imageView.findViewById(R.id.imageView);
         firebaseAuth= FirebaseAuth.getInstance();
+
         // Initialize firebase user
-        FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
-        // Check condition
-        if(firebaseUser!=null)
-        {
-            // When firebase user is not equal to null
-            // Set image on image view
-            Glide.with(HomeActivity.this)
-                    .load(firebaseUser.getPhotoUrl())
-                    .into(imageView);
-        }
+        firebaseUser=firebaseAuth.getCurrentUser();
+
+//        // Check condition
+//        if(firebaseUser!=null)
+//        {
+//            // When firebase user is not equal to null
+//            // Set image on image view
+//            Glide.with(HomeActivity.this)
+//                    .load(firebaseUser.getPhotoUrl())
+//                    .into(imageView);
+//        }
         // todo have to check default action bar meny icon and setting icon
         //getSupportActionBar().setHomeAsUpIndicator(R.drawable.menubar);
 
@@ -73,6 +77,17 @@ public class HomeActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        imageView = findViewById(R.id.imageView);
+        Glide.with(HomeActivity.this)
+                .load(firebaseUser.getPhotoUrl())
+                .into(imageView);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
+            }
+        });
 
     }
 

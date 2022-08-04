@@ -5,25 +5,40 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.example.feedtheneed.domain.model.Event;
+import com.example.feedtheneed.presentation.user.adapters.NearbyEventAdapter;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CustomViewPagerAdapter extends PagerAdapter {
 
     private Context mContext;
     private HashMap<Integer, String> tabs;
+    private ArrayList<Event> nearbyEvents;
+    RecyclerView rvNearbyEvents;
 
-    public CustomViewPagerAdapter(Context context, HashMap<Integer, String> tabs) {
+    public CustomViewPagerAdapter(Context context, HashMap<Integer, String> tabs, ArrayList<Event> nearbyEvents) {
         mContext = context;
         this.tabs = tabs;
+        this.nearbyEvents = nearbyEvents;
     }
 
     @Override
     public Object instantiateItem(ViewGroup collection, int position) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.layout_backup, collection, false);
+        ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.bottom_sheet_main_content, collection, false);
         collection.addView(layout);
+
+        rvNearbyEvents = (RecyclerView) layout.findViewById(R.id.rvNearbyEvent);
+        rvNearbyEvents.setLayoutManager(new LinearLayoutManager(mContext));
+
+        rvNearbyEvents.setAdapter(new NearbyEventAdapter(mContext, nearbyEvents));
+
         return layout;
     }
 
@@ -44,7 +59,6 @@ public class CustomViewPagerAdapter extends PagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-
         return tabs.get(position);
     }
 

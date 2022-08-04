@@ -22,4 +22,7 @@ public interface EventRepository {
 
     Task<QuerySnapshot> addUserToVolunteerEvent(String userEmail, String eventId);
 
+    Task<QuerySnapshot> getInvolvedEvents(String userEmail);
+
+    Task<QuerySnapshot> getEventDetails(String eventId);
 }

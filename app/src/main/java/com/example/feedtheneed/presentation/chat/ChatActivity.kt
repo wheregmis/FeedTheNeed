@@ -10,14 +10,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.feedtheneed.R
+import com.example.feedtheneed.domain.model.Chat
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.firestore.ktx.toObject
 
-import com.example.feedtheneed.domain.model.Chat
-import com.google.firebase.firestore.FirebaseFirestore
 
 class ChatActivity : AppCompatActivity() {
-    var currentChatId = "umrwI8BQstxUW4WGkJL6"
+    var currentChatId = "newchat"
     var currentUserId = ""
     var currentChat: Chat = Chat("user1", "user2")
     private var mFirestore = FirebaseFirestore.getInstance()
@@ -71,12 +71,11 @@ class ChatActivity : AppCompatActivity() {
         var chat = Chat("user1", "user2")
 
 
-        mFirestore.collection("chat").document()
+        mFirestore.collection("chat").document(currentChatId)
             .set(chat)
-            .addOnSuccessListener { documentRef ->
-               // currentChatId = documentRef.id
-                Toast.makeText(this, "DocumentSnapshot successfully written!", Toast.LENGTH_SHORT).show()
-               // Log.d(TAG, "DocumentSnapshot successfully written! ${documentRef.id}")
+            .addOnSuccessListener {
+                //Toast.makeText(this, "DocumentSnapshot successfully written!", Toast.LENGTH_SHORT).show()
+                //Log.d(TAG, "New Chat initiated: ${documentRef.id}")
 
                 //initListView()
             }.addOnFailureListener {

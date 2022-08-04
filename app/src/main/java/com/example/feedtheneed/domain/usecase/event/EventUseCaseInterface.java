@@ -19,4 +19,8 @@ public interface EventUseCaseInterface {
     Task<QuerySnapshot> participateInEvent(String userEmail, String eventId);
 
     Task<QuerySnapshot> addUserToVolunteerEvent(String userEmail, String eventId);
+
+    Task<QuerySnapshot> getInvolvedEvents(String userEmail);
+
+    Task<QuerySnapshot> getEventDetails(String eventId);
 }
