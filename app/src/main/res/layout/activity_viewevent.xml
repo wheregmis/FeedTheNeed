@@ -9,10 +9,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+
     <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_180sdp"
-        android:id="@+id/view_pager"/>
+        android:layout_height="@dimen/_180sdp" />
     <LinearLayout
         android:layout_marginTop="@dimen/_5sdp"
         android:id="@+id/SliderDots"
