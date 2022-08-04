@@ -90,6 +90,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private FusedLocationProviderClient fusedLocationClient;
     private double latitude, longitude;
     private ArrayList<Event> nearbyEvents;
+    private ArrayList<Event> involvedEvents;
 
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
@@ -107,6 +108,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         View root = binding.getRoot();
         mMapView = (MapView) root.findViewById(R.id.mapView);
         nearbyEvents = new ArrayList<>();
+        involvedEvents = new ArrayList<>();
 
         try {
             MapsInitializer.initialize(getActivity().getApplicationContext());
@@ -252,13 +254,36 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         });
 
         // TODO: 28/07/2022 Getting Involved Projects
+        HashMap<String, String> involvedEventHashMap = new HashMap<String, String>();
 
         eventUseCase.getInvolvedEvents("get2sabin@gmail.com").addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 List<DocumentSnapshot> listEvents = task.getResult().getDocuments();
-                Log.d("Involved Events", "Events"+listEvents.toString());
+                float[] distanceBetweenUserAndEvent = new float[1];
+
+                for (DocumentSnapshot documentSnapshot: listEvents) {
+                    LatLng eventLocation = new LatLng(Double.valueOf(documentSnapshot.get("eventLat").toString()), Double.valueOf(documentSnapshot.get("eventLong").toString()));
+
+                    involvedEvents.add(documentSnapshot.toObject(Event.class));
+                    Location.distanceBetween(latitude, longitude,
+                            eventLocation.latitude, eventLocation.longitude,
+                            distanceBetweenUserAndEvent);
+
+                    // Putting value in nearby event Hashmap
+                    involvedEventHashMap.put(documentSnapshot.getString("eventId"), String.valueOf(distanceBetweenUserAndEvent[0]));
+
+                    // Creating new hashmap with distance (double) key so it will be easy to sort
+                    HashMap<Double, String> newMap = new HashMap<>();
+                    // filling new hashmap
+                    for (Map.Entry<String, String> entry : involvedEventHashMap.entrySet())
+                        newMap.put(Double.valueOf(entry.getValue()), entry.getKey());
+
+                    newMap = sortHashMapByValues(newMap);
+                }
+
+                updateInvolvedEvents();
             }
         });
 
@@ -272,6 +297,11 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         // TODO: 29/07/2022 Please handle the return types as per the need
         implementation.getTopUserBasedOnVolunteerEvent();
 
+    }
+
+    private void updateInvolvedEvents() {
+        Log.d("TAG", "" + involvedEvents.size());
+        eventsViewPager.setAdapter(new CustomViewPagerAdapter(getActivity(), tabs, involvedEvents));
     }
 
     @SuppressLint("MissingPermission")
