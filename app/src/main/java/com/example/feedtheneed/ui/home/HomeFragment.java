@@ -260,7 +260,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 //                            .position(eventLocation)
 //                            .title(documentSnapshot.get("eventName").toString()));
 
-                    setMarkerInCoordinate(eventLocation, documentSnapshot.get("eventName").toString());
+                    setMarkerInCoordinate(eventLocation, documentSnapshot.get("eventName").toString(), documentSnapshot.get("eventId").toString());
                 }
             }
         });
@@ -420,7 +420,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     }
 
     // function to set marker in a co cordinate
-    private void setMarkerInCoordinate(LatLng latLng, String text){
+    private void setMarkerInCoordinate(LatLng latLng, String text, String eventId){
         Log.i("MapsActivity", "setMarkerInCoordinate: "+latLng);
         Bitmap bitmap = null;
         try {
@@ -432,6 +432,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
         MarkerOptions options = new MarkerOptions().position(latLng)
                 .title(text)
+                .snippet(eventId)
 //                .icon(addStampToImage(bitmap)
                 .icon(createPureTextIcon(text)
                 );
@@ -441,7 +442,20 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(@NonNull Marker marker) {
-                startActivity(new Intent(getActivity(), ViewEventActivity.class));
+
+                Intent i = new Intent(getActivity(), ViewEventActivity.class);
+
+                //Create the bundle
+                Bundle bundle = new Bundle();
+
+                //Add your data to bundle
+                bundle.putString("eventId", marker.getSnippet());
+
+                //Add the bundle to the intent
+                i.putExtras(bundle);
+
+                //Fire that second activity
+                startActivity(i);
                 return true;
             }
         });

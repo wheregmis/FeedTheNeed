@@ -108,4 +108,9 @@ public class EventRepositoryImplementation implements EventRepository {
     public Task<QuerySnapshot> getInvolvedEvents(String userEmail) {
         return db.collection("event").whereArrayContains("eventParticipants", userEmail).get();
     }
+
+    @Override
+    public Task<QuerySnapshot> getEventDetails(String eventId) {
+        return db.collection("event").whereEqualTo("eventId", eventId).get();
+    }
 }
