@@ -30,6 +30,7 @@ public class HomeActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomeBinding binding;
     FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
     CircularImageView imageView;
     Toolbar toolbar;
 
@@ -45,21 +46,22 @@ public class HomeActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         //toolbar.setTitle("Add Activity");
         setSupportActionBar(toolbar);
-       /* imageView.findViewById(R.id.imageView);
+
+//        imageView.findViewById(R.id.imageView);
         firebaseAuth= FirebaseAuth.getInstance();
 
         // Initialize firebase user
-        FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
+        firebaseUser=firebaseAuth.getCurrentUser();
 
-        // Check condition
-        if(firebaseUser!=null)
-        {
-            // When firebase user is not equal to null
-            // Set image on image view
-            Glide.with(HomeActivity.this)
-                    .load(firebaseUser.getPhotoUrl())
-                    .into(imageView);
-        }*/
+//        // Check condition
+//        if(firebaseUser!=null)
+//        {
+//            // When firebase user is not equal to null
+//            // Set image on image view
+//            Glide.with(HomeActivity.this)
+//                    .load(firebaseUser.getPhotoUrl())
+//                    .into(imageView);
+//        }
         // todo have to check default action bar meny icon and setting icon
         //getSupportActionBar().setHomeAsUpIndicator(R.drawable.menubar);
 
@@ -76,6 +78,9 @@ public class HomeActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         imageView = findViewById(R.id.imageView);
+        Glide.with(HomeActivity.this)
+                .load(firebaseUser.getPhotoUrl())
+                .into(imageView);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
