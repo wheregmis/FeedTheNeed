@@ -29,6 +29,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.feedtheneed.domain.usecase.user.UserUseCaseInterface;
+import com.example.feedtheneed.domain.usecase.user.UserUserUseCase;
 import com.example.feedtheneed.presentation.chat.ChatActivity;
 import com.example.feedtheneed.CustomViewPagerAdapter;
 import com.example.feedtheneed.R;
@@ -175,6 +177,16 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
         // Initialize firebase user
         firebaseUser=firebaseAuth.getCurrentUser();
+
+        UserUseCaseInterface userUseCase = new UserUserUseCase();
+        userUseCase.getUserFromFirebase(firebaseUser.getEmail()).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.getResult().getDocuments().get(0).get("restaurant").toString().equals("true")){
+                    binding.floatAdd.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         TabLayout tabLayout = root.findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(eventsViewPager);
