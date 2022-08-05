@@ -67,7 +67,6 @@ public class LeaderboardRepoImplementation implements LeaderboardRepository {
                         }
                     });
                 }
-
             }
         });
     }
