@@ -24,6 +24,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+
 public class ViewEventActivity extends AppCompatActivity {
     ViewPager viewPager;
     LinearLayout sliderDotspanel;
@@ -39,6 +41,8 @@ public class ViewEventActivity extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
+
+    ArrayList<String> imageUrlList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +126,10 @@ public class ViewEventActivity extends AppCompatActivity {
                 eventType.setText(event.get("eventFoodType").toString());
                 eventDescription.setText(event.get("eventDescription").toString());
                 String eventDateTimeString = event.get("eventDate").toString() +" "+ event.get("eventTime").toString();
+
+                // TODO: 04/08/2022 Handle image array for sliders @Namrata Miss
+                imageUrlList = (ArrayList<String>) event.get("eventImageUrls");
+                Log.d("ViewEventActivity", "ImageUrls: "+imageUrlList);
                 eventDateTime.setText(eventDateTimeString);
             }
         });
