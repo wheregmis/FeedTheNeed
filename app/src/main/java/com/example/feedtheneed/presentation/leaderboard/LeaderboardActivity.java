@@ -19,8 +19,11 @@ public class LeaderboardActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
         tabLayout.addTab(tabLayout.newTab().setText("Tab1"));
+        tabLayout.getTabAt(0).setIcon( R.drawable.leaderboard);
         tabLayout.addTab(tabLayout.newTab().setText("Tab2"));
+        tabLayout.getTabAt(1).setIcon( R.drawable.leaderboard);
         tabLayout.addTab(tabLayout.newTab().setText("Tab3"));
+        tabLayout.getTabAt(2).setIcon( R.drawable.leaderboard);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         final LeaderboardAdapter adapter = new LeaderboardAdapter(this,getSupportFragmentManager(),
                 tabLayout.getTabCount());

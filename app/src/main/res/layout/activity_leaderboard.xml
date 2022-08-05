@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:background="@color/primary"
         app:tabSelectedTextColor="@color/assest"
+        app:tabIconTint="@color/assest"
         >
     </com.google.android.material.tabs.TabLayout>
     <androidx.viewpager.widget.ViewPager
