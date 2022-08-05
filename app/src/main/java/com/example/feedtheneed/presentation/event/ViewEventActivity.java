@@ -139,19 +139,25 @@ public class ViewEventActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //         TODO: 25/07/2022  Just for testing user participants in event
 
-//                eventUseCase.addUserToVolunteerEvent("testing@gmail.com", eventIdGlobal).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        Log.d("Document Ref", ""+task.getResult().size());
-//                    }
-//                });
-
                 eventUseCase.participateInEvent(firebaseUser.getEmail(), eventIdGlobal).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         Snackbar snackbar = Snackbar
                                 .make(view, "Successfully Added You as a Participants", Snackbar.LENGTH_LONG);
                         snackbar.show();
+                    }
+                });
+            }
+        });
+
+        findViewById(R.id.bevolunteer).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                eventUseCase.addUserToVolunteerEvent(firebaseUser.getEmail(), eventIdGlobal, view).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        Log.d("Document Ref", ""+task.getResult().size());
                     }
                 });
             }
