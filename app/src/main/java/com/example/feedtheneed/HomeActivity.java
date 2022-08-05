@@ -85,6 +85,7 @@ public class HomeActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // to test -> LeaderboardActivity
                 startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
             }
         });
