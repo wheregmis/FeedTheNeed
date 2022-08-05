@@ -1,5 +1,7 @@
 package com.example.feedtheneed.domain.usecase.event;
 
+import android.view.View;
+
 import com.example.feedtheneed.domain.model.Event;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.Task;
@@ -34,8 +36,8 @@ public class EventUseCase implements EventUseCaseInterface {
     }
 
     @Override
-    public Task<QuerySnapshot> addUserToVolunteerEvent(String userEmail, String eventId) {
-        return new VolunteerInEvent(userEmail).addUserToVolunteerEvent(eventId);
+    public Task<QuerySnapshot> addUserToVolunteerEvent(String userEmail, String eventId, View view) {
+        return new VolunteerInEvent(userEmail).addUserToVolunteerEvent(eventId, view);
     }
 
     @Override
