@@ -148,4 +148,6 @@ class ChatRepositoryImplementation: ChatRepository {
                     e -> Log.e(ContentValues.TAG, "Error writing document", e)
             }
     }
+
+
 }

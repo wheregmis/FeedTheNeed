@@ -17,7 +17,6 @@ import com.google.firebase.firestore.ktx.toObject
 
 
 class ChatActivity : AppCompatActivity() {
-    var currentChatId = ""
     var currentUserId = "SocS85cN1vetNqnssQ2WedMau2S2"
     var currentChat: Chat = Chat("user1", "user2")
 
@@ -36,14 +35,8 @@ class ChatActivity : AppCompatActivity() {
         setContentView(com.example.feedtheneed.R.layout.chat_layout)
         connectWithUI()
         connectWithFireBase()
-        //readChatById()
-        chatRepositoryImplementation.initiateANewChat("LRQvUwUFIqXKu2APtj09fWOBhPD3", "LRQvUwUFIqXKu2APtj09fWOBhPD3")
-
-        // TODO: Start a new Chat entry if the chat does not exist
-
-        // Adding recycle view
-
-
+        chatRepositoryImplementation.initiateANewChat(currentUserId, "LRQvUwUFIqXKu2APtj09fWOBhPD3")
+        readChatById()
 
     }
 
@@ -56,6 +49,7 @@ class ChatActivity : AppCompatActivity() {
             if(etMessageBody.text.toString() != null){
                 Log.d(TAG, "Got text: ${etMessageBody.text}")
                 chatRepositoryImplementation.sendANewMessage(etMessageBody.text.toString(), currentUserId)
+                etMessageBody.text.clear()
             }
         }
 
@@ -75,7 +69,7 @@ class ChatActivity : AppCompatActivity() {
 
     private fun readChatById(){
 
-        val docRef = mFirestore.collection("chat").document(currentChatId)
+        val docRef = mFirestore.collection("chat").document("ppoc7K1AIDtglKKSDm3b")
         docRef.addSnapshotListener { snapshot, e ->
             if (e != null) {
                 Log.w(TAG, "Listen failed.", e)
@@ -96,46 +90,46 @@ class ChatActivity : AppCompatActivity() {
         }
 
 
-        docRef.get()
-            .addOnSuccessListener { document ->
-                if (document != null) {
-                    // assign data to chat object
-                    Log.d(TAG, "DocumentSnapshot data: $document.data")
-                    this.currentChat = document.toObject<Chat>()!!
-                    if (this.currentChat != null) {
-                        Log.d(TAG, "DocumentSnapshot data obj: ${currentChat.fromUser}")
-                        Log.d(TAG, "DocumentSnapshot data chat history obj: ${currentChat.chatHistory}")
-                        adapter?.dataSet  = this.currentChat.chatHistory
-                        adapter?.notifyDataSetChanged()
-                    }
-                } else {
-                    Log.d(TAG, "No such document")
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.d(TAG, "get failed with ", exception)
-            }
+//        docRef.get()
+//            .addOnSuccessListener { document ->
+//                if (document != null) {
+//                    // assign data to chat object
+//                    Log.d(TAG, "DocumentSnapshot data: $document.data")
+//                    this.currentChat = document.toObject<Chat>()!!
+//                    if (this.currentChat != null) {
+//                        Log.d(TAG, "DocumentSnapshot data obj: ${currentChat.fromUser}")
+//                        Log.d(TAG, "DocumentSnapshot data chat history obj: ${currentChat.chatHistory}")
+//                        adapter?.dataSet  = this.currentChat.chatHistory
+//                        adapter?.notifyDataSetChanged()
+//                    }
+//                } else {
+//                    Log.d(TAG, "No such document")
+//                }
+//            }
+//            .addOnFailureListener { exception ->
+//                Log.d(TAG, "get failed with ", exception)
+//            }
 
     }
 
-    private fun sendNewChat(message: String, owner: Int){
-        this.currentChat.addToChatHistory(etMessageBody.text.toString(), owner)
-        Log.d(TAG, this.currentChat.toString())
-        etMessageBody.text.clear()
-
-        mFirestore.collection("chat").document(this.currentChatId)
-            .set(this.currentChat)
-            .addOnSuccessListener {
-                //Toast.makeText(this, "Message sent Success!", Toast.LENGTH_SHORT).show()
-                Log.d(TAG, "DocumentSnapshot successfully written!")
-                adapter?.dataSet  = this.currentChat.chatHistory
-                adapter?.notifyDataSetChanged()
-
-                //initListView()
-            }.addOnFailureListener {
-                    e -> Log.e(TAG, "Error writing document", e)
-            }
-    }
+//    private fun sendNewChat(message: String, owner: Int){
+//        this.currentChat.addToChatHistory(etMessageBody.text.toString(), owner)
+//        Log.d(TAG, this.currentChat.toString())
+//        etMessageBody.text.clear()
+//
+//        mFirestore.collection("chat").document(this.currentChatId)
+//            .set(this.currentChat)
+//            .addOnSuccessListener {
+//                //Toast.makeText(this, "Message sent Success!", Toast.LENGTH_SHORT).show()
+//                Log.d(TAG, "DocumentSnapshot successfully written!")
+//                adapter?.dataSet  = this.currentChat.chatHistory
+//                adapter?.notifyDataSetChanged()
+//
+//                //initListView()
+//            }.addOnFailureListener {
+//                    e -> Log.e(TAG, "Error writing document", e)
+//            }
+//    }
 
 
 }
