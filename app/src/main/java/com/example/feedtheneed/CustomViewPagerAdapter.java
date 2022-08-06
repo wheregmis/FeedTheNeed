@@ -20,12 +20,15 @@ public class CustomViewPagerAdapter extends PagerAdapter {
     private Context mContext;
     private HashMap<Integer, String> tabs;
     private ArrayList<Event> nearbyEvents;
+    private ArrayList<Event> involvedEvents;
+    private final int INVOLVED_EVENT = 1;
     RecyclerView rvNearbyEvents;
 
-    public CustomViewPagerAdapter(Context context, HashMap<Integer, String> tabs, ArrayList<Event> nearbyEvents) {
+    public CustomViewPagerAdapter(Context context, HashMap<Integer, String> tabs, ArrayList<Event> nearbyEvents, ArrayList<Event> involvedEvents) {
         mContext = context;
         this.tabs = tabs;
         this.nearbyEvents = nearbyEvents;
+        this.involvedEvents = involvedEvents;
     }
 
     @Override
@@ -34,8 +37,13 @@ public class CustomViewPagerAdapter extends PagerAdapter {
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.bottom_sheet_main_content, collection, false);
         collection.addView(layout);
 
+
         rvNearbyEvents = (RecyclerView) layout.findViewById(R.id.rvNearbyEvent);
         rvNearbyEvents.setLayoutManager(new LinearLayoutManager(mContext));
+
+        if (position == INVOLVED_EVENT) {
+            nearbyEvents = involvedEvents;
+        }
 
         rvNearbyEvents.setAdapter(new NearbyEventAdapter(mContext, nearbyEvents));
 
