@@ -18,7 +18,7 @@ import com.google.firebase.firestore.ktx.toObject
 
 class ChatActivity : AppCompatActivity() {
     var currentChatId = ""
-    var currentUserId = ""
+    var currentUserId = "SocS85cN1vetNqnssQ2WedMau2S2"
     var currentChat: Chat = Chat("user1", "user2")
 
 
@@ -55,7 +55,7 @@ class ChatActivity : AppCompatActivity() {
             // your code to perform when the user clicks on the button
             if(etMessageBody.text.toString() != null){
                 Log.d(TAG, "Got text: ${etMessageBody.text}")
-                sendNewChat(etMessageBody.text.toString(), 1)
+                chatRepositoryImplementation.sendANewMessage(etMessageBody.text.toString(), currentUserId)
             }
         }
 
@@ -70,27 +70,7 @@ class ChatActivity : AppCompatActivity() {
     }
 
 
-    /**
-     *
-     * Will Initiate new Chat with the given two users
-     *
-     * @param fromUser UserId of the user1 typically add the one who initiates the chat.
-     * @param toUser UserId of the user2 typically add the one whom the chat is intended for.
-     */
-    private fun initiateANewChat(fromUser: String, toUser: String): String{
-        var chatId = ""
-        var chat = Chat()
-        mFirestore.collection("chat").document()
-            .set(chat)
-            .addOnSuccessListener {documentRef ->
-                Log.d(TAG, "New Chat initiated: ${documentRef}")
 
-                //initListView()
-            }.addOnFailureListener {
-                    e -> Log.e(TAG, "Error writing document", e)
-            }
-        return chatId
-    }
 
 
     private fun readChatById(){
