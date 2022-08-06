@@ -1,5 +1,7 @@
 package com.example.feedtheneed.domain.usecase.event;
 
+import android.view.View;
+
 import com.example.feedtheneed.data.repository.EventRepositoryImplementation;
 import com.example.feedtheneed.domain.repository.EventRepository;
 import com.google.android.gms.tasks.Task;
@@ -14,7 +16,7 @@ public class VolunteerInEvent {
         this.userEmail = userEmail;
     }
     
-    Task<QuerySnapshot> addUserToVolunteerEvent(String eventId){
-        return eventRepository.addUserToVolunteerEvent(userEmail, eventId);
+    Task<QuerySnapshot> addUserToVolunteerEvent(String eventId, View view){
+        return eventRepository.addUserToVolunteerEvent(userEmail, eventId, view);
     }
 }

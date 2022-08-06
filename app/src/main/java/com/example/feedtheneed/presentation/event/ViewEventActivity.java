@@ -24,6 +24,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+
 public class ViewEventActivity extends AppCompatActivity {
     ViewPager viewPager;
     LinearLayout sliderDotspanel;
@@ -39,6 +41,8 @@ public class ViewEventActivity extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
+
+    ArrayList<String> imageUrlList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +126,10 @@ public class ViewEventActivity extends AppCompatActivity {
                 eventType.setText(event.get("eventFoodType").toString());
                 eventDescription.setText(event.get("eventDescription").toString());
                 String eventDateTimeString = event.get("eventDate").toString() +" "+ event.get("eventTime").toString();
+
+                // TODO: 04/08/2022 Handle image array for sliders @Namrata Miss
+                imageUrlList = (ArrayList<String>) event.get("eventImageUrls");
+                Log.d("ViewEventActivity", "ImageUrls: "+imageUrlList);
                 eventDateTime.setText(eventDateTimeString);
             }
         });
@@ -131,19 +139,25 @@ public class ViewEventActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //         TODO: 25/07/2022  Just for testing user participants in event
 
-//                eventUseCase.addUserToVolunteerEvent("testing@gmail.com", eventIdGlobal).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        Log.d("Document Ref", ""+task.getResult().size());
-//                    }
-//                });
-
                 eventUseCase.participateInEvent(firebaseUser.getEmail(), eventIdGlobal).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         Snackbar snackbar = Snackbar
                                 .make(view, "Successfully Added You as a Participants", Snackbar.LENGTH_LONG);
                         snackbar.show();
+                    }
+                });
+            }
+        });
+
+        findViewById(R.id.bevolunteer).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                eventUseCase.addUserToVolunteerEvent(firebaseUser.getEmail(), eventIdGlobal, view).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        Log.d("Document Ref", ""+task.getResult().size());
                     }
                 });
             }

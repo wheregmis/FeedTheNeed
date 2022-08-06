@@ -1,6 +1,7 @@
 package com.example.feedtheneed.data.repository;
 
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 
@@ -10,6 +11,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -89,7 +91,7 @@ public class EventRepositoryImplementation implements EventRepository {
     }
 
     @Override
-    public Task<QuerySnapshot> addUserToVolunteerEvent(String userEmail, String eventId) {
+    public Task<QuerySnapshot> addUserToVolunteerEvent(String userEmail, String eventId, View view) {
         return db.collection("event").whereEqualTo("eventId", eventId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -98,6 +100,13 @@ public class EventRepositoryImplementation implements EventRepository {
                 String volunteer = (String) task.getResult().getDocuments().get(0).get("eventVolunteer");
                 if (volunteer == null){
                     db.collection("event").document(docId).update("eventVolunteer", userEmail);
+                    Snackbar snackbar = Snackbar
+                            .make(view, "Successfully Added You as a Volunteer", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                }else{
+                    Snackbar snackbar = Snackbar
+                            .make(view, "Sorry there is already a volunteer for this event", Snackbar.LENGTH_LONG);
+                    snackbar.show();
                 }
 
             }
