@@ -4,16 +4,5 @@
     android:layout_height="match_parent"
     android:background="@drawable/splashscreen"
     android:fitsSystemWindows="false">
-   <!-- <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/assest"
-        android:layout_alignParentBottom="true"
-        android:padding="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_20sdp"
-        android:text="@string/app_name"
-        android:textStyle="bold"
-        android:textSize="@dimen/_26sdp"/>-->
+
 </RelativeLayout>

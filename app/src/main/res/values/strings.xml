@@ -33,4 +33,6 @@
     <string name="leaderboard">Leaderboard</string>
     <string name="events">Events</string>
     <string name="search_here">Search here</string>
+    <string name="next">Next</string>
+    <string name="login_with_google">Login with Google</string>
 </resources>

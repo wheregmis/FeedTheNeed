@@ -59,13 +59,17 @@
         android:layout_below="@+id/tvUserFullName"
         android:text="Continue as a Restaurant"
         />
-
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnNext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:background="@drawable/button_bg"
+        android:text="@string/next"
         android:gravity="center"
-        android:text="Next"
-        android:layout_alignParentBottom="true" />
-
+        android:textColor="@color/mainbg"
+        android:textSize="@dimen/_16sdp"
+      />
 </RelativeLayout>
