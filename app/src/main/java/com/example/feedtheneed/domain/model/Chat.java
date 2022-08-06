@@ -8,7 +8,11 @@ public class Chat {
     private String toUser;
     private ArrayList<ChatHistory> chatHistory = new ArrayList<>();
 
-    public Chat(){}
+    public Chat(){
+        this.fromUser = null;
+        this.toUser = null;
+        this.chatHistory = new ArrayList<ChatHistory>();
+    }
     public Chat(String fromUser, String toUser, ArrayList<ChatHistory> chatHistory) {
         this.fromUser = fromUser;
         this.toUser = toUser;
