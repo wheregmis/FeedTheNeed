@@ -15,6 +15,8 @@ import com.bumptech.glide.Glide;
 import com.example.feedtheneed.R;
 import com.example.feedtheneed.data.repository.AuthRepoImplementation;
 import com.example.feedtheneed.domain.repository.AuthRepository;
+import com.example.feedtheneed.domain.usecase.user.UserUseCaseInterface;
+import com.example.feedtheneed.domain.usecase.user.UserUserUseCase;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -22,6 +24,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -61,6 +65,14 @@ public class ProfileActivity extends AppCompatActivity {
             Log.d("PhotoURL", "PhotoUrl: "+firebaseUser.getPhotoUrl());
         }
 
+        UserUseCaseInterface useCase = new UserUserUseCase();
+        useCase.getUserFromFirebase(firebaseUser.getEmail()).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                DocumentSnapshot userInformation = task.getResult().getDocuments().get(0);
+                // TODO: 05/08/2022 Here you have details of the user please show these in profile activity
+            }
+        });
 
 
         btLogout.setOnClickListener(new View.OnClickListener() {
