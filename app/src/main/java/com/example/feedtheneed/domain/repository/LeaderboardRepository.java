@@ -5,7 +5,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public interface LeaderboardRepository {
 
-    void getTopRestaurantsBasedOnEventHosted();
+    Task<QuerySnapshot> getTopRestaurantsBasedOnEventHosted();
 
     Task<QuerySnapshot> getTopUserBasedOnVolunteerEvent();
 
