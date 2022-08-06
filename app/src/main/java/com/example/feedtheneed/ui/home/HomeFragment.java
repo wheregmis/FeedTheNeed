@@ -312,8 +312,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void updateInvolvedEvents() {
-        Log.d("TAG", "" + involvedEvents.size());
-        eventsViewPager.setAdapter(new CustomViewPagerAdapter(getActivity(), tabs, involvedEvents));
+        eventsViewPager.setAdapter(new CustomViewPagerAdapter(getActivity(), tabs, nearbyEvents, involvedEvents));
     }
 
     @SuppressLint("MissingPermission")
@@ -403,7 +402,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                             Log.d("Nearby Events", "Nearby Events "+newMap.toString());
                                         }
 
-                                        updateNearbyEvents();
+//                                        updateNearbyEvents();
                                     }
                                 });
                             });
@@ -416,7 +415,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void updateNearbyEvents() {
-        eventsViewPager.setAdapter(new CustomViewPagerAdapter(getActivity(), tabs, nearbyEvents));
+        eventsViewPager.setAdapter(new CustomViewPagerAdapter(getActivity(), tabs, nearbyEvents, involvedEvents));
     }
 
     // function to set marker in a co cordinate
