@@ -6,6 +6,7 @@
         <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/drawable-v24/baseline_menu.xml" value="0.135" />
         <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/drawable/actionbar_bg.xml" value="0.136" />
         <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/drawable/button_bg.xml" value="0.135" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/drawable/button_bg_dark.xml" value="0.136" />
         <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/drawable/cardview_background.xml" value="0.136" />
         <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/drawable/ic_menu_camera.xml" value="0.135" />
         <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.135" />
@@ -42,6 +43,7 @@
         <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/fragment_gallery.xml" value="0.20416666666666666" />
         <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/fragment_home.xml" value="0.20416666666666666" />
         <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/fragment_slideshow.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/gradientbackground.xml" value="0.19010416666666666" />
         <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/layout_backup.xml" value="0.20416666666666666" />
         <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/layout_event_row.xml" value="0.20416666666666666" />
         <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/nav_header_home.xml" value="0.20416666666666666" />
