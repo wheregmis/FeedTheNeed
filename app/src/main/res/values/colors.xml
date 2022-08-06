@@ -11,6 +11,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#555454</color>
+    <color name="lightgrey">#F3F2F2</color>
     <!--main colors end-->
     <color name="purple">#E1CBFC</color>
     <color name="purple_200">#FFBB86FC</color>

@@ -16,6 +16,6 @@ public class TopRestaurants extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.toprestaurant_frag, container, false);
+        return inflater.inflate(R.layout.chat_list_layout, container, false);
     }
 }
