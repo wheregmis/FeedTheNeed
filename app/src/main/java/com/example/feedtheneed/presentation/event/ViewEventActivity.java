@@ -53,7 +53,44 @@ public class ViewEventActivity extends AppCompatActivity {
 
         sliderDotspanel = (LinearLayout) findViewById(R.id.SliderDots);
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
+
+        // Initialize firebase auth
+        firebaseAuth=FirebaseAuth.getInstance();
+
+        // Initialize firebase user
+        firebaseUser=firebaseAuth.getCurrentUser();
+
+        // Initializing the components
+        eventTitle = (TextView) findViewById(R.id.event_name);
+        eventType = (TextView) findViewById(R.id.event_type);
+        eventDescription = (TextView) findViewById(R.id.description);
+        eventDateTime = (TextView) findViewById(R.id.date_time);
+        //Get the bundle
+        Bundle bundle = getIntent().getExtras();
+
+        //Extract the data…
+        eventIdGlobal = bundle.getString("eventId");
+
+        Log.d("EventIdInViewPage", "EventId"+eventIdGlobal);
+
+        EventUseCaseInterface eventUseCase = new EventUseCase();
+        eventUseCase.getEventDetails(eventIdGlobal).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                DocumentSnapshot event = task.getResult().getDocuments().get(0);
+                eventTitle.setText(event.get("eventName").toString());
+                eventType.setText(event.get("eventFoodType").toString());
+                eventDescription.setText(event.get("eventDescription").toString());
+                String eventDateTimeString = event.get("eventDate").toString() +" "+ event.get("eventTime").toString();
+
+                // TODO: 04/08/2022 Handle image array for sliders @Namrata Miss
+                imageUrlList = (ArrayList<String>) event.get("eventImageUrls");
+                Log.d("ViewEventActivity", "ImageUrls: "+imageUrlList);
+                eventDateTime.setText(eventDateTimeString);
+            }
+        });
+
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this,imageUrlList);
 
         viewPager.setAdapter(viewPagerAdapter);
 
@@ -97,43 +134,6 @@ public class ViewEventActivity extends AppCompatActivity {
 
             }
         });
-
-        // Initialize firebase auth
-        firebaseAuth=FirebaseAuth.getInstance();
-
-        // Initialize firebase user
-        firebaseUser=firebaseAuth.getCurrentUser();
-
-        // Initializing the components
-        eventTitle = (TextView) findViewById(R.id.event_name);
-        eventType = (TextView) findViewById(R.id.event_type);
-        eventDescription = (TextView) findViewById(R.id.description);
-        eventDateTime = (TextView) findViewById(R.id.date_time);
-        //Get the bundle
-        Bundle bundle = getIntent().getExtras();
-
-        //Extract the data…
-        eventIdGlobal = bundle.getString("eventId");
-
-        Log.d("EventIdInViewPage", "EventId"+eventIdGlobal);
-
-        EventUseCaseInterface eventUseCase = new EventUseCase();
-        eventUseCase.getEventDetails(eventIdGlobal).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                DocumentSnapshot event = task.getResult().getDocuments().get(0);
-                eventTitle.setText(event.get("eventName").toString());
-                eventType.setText(event.get("eventFoodType").toString());
-                eventDescription.setText(event.get("eventDescription").toString());
-                String eventDateTimeString = event.get("eventDate").toString() +" "+ event.get("eventTime").toString();
-
-                // TODO: 04/08/2022 Handle image array for sliders @Namrata Miss
-                imageUrlList = (ArrayList<String>) event.get("eventImageUrls");
-                Log.d("ViewEventActivity", "ImageUrls: "+imageUrlList);
-                eventDateTime.setText(eventDateTimeString);
-            }
-        });
-
         findViewById(R.id.event_participant).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
