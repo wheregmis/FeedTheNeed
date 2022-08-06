@@ -1,5 +1,6 @@
 package com.example.feedtheneed.presentation.event;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,19 +37,18 @@ public class ViewEventActivity extends AppCompatActivity {
     private TextView eventType;
     private TextView eventDateTime;
     private TextView eventDescription;
-
     private String eventIdGlobal;
-
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
 
     ArrayList<String> imageUrlList = new ArrayList<>();
-
+    Context context;
+    ViewPagerAdapter viewPagerAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_viewevent);
-
+        context=ViewEventActivity.this;
         viewPager = (ViewPager) findViewById(R.id.view_pager);
 
         sliderDotspanel = (LinearLayout) findViewById(R.id.SliderDots);
@@ -87,30 +87,10 @@ public class ViewEventActivity extends AppCompatActivity {
                 imageUrlList = (ArrayList<String>) event.get("eventImageUrls");
                 Log.d("ViewEventActivity", "ImageUrls: "+imageUrlList);
                 eventDateTime.setText(eventDateTimeString);
+                callViewAdapter(context,imageUrlList);
             }
         });
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this,imageUrlList);
-
-        viewPager.setAdapter(viewPagerAdapter);
-
-        dotscount = viewPagerAdapter.getCount();
-        dots = new ImageView[dotscount];
-
-        for(int i = 0; i < dotscount; i++){
-
-            dots[i] = new ImageView(this);
-            dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.non_active_dot));
-
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-            params.setMargins(8, 0, 8, 0);
-
-            sliderDotspanel.addView(dots[i], params);
-
-        }
-
-        dots[0].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -164,5 +144,29 @@ public class ViewEventActivity extends AppCompatActivity {
         });
 
     }
+
+    private void callViewAdapter(Context context,ArrayList<String> imageUrlList) {
+        viewPagerAdapter = new ViewPagerAdapter(context,imageUrlList);
+        viewPager.setAdapter(viewPagerAdapter);
+        dotscount = viewPagerAdapter.getCount();
+
+        dots = new ImageView[dotscount];
+
+        for(int i = 0; i < dotscount; i++){
+
+            dots[i] = new ImageView(context);
+            dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.non_active_dot));
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+            params.setMargins(8, 0, 8, 0);
+
+            sliderDotspanel.addView(dots[i], params);
+
+        }
+
+        dots[0].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
+    }
+
 
 }
