@@ -61,6 +61,7 @@ public class ViewPagerAdapter extends PagerAdapter {
         }
         ViewPager vp = (ViewPager) container;
         vp.addView(view, 0);
+
         return view;
 
     }
@@ -71,6 +72,5 @@ public class ViewPagerAdapter extends PagerAdapter {
         ViewPager vp = (ViewPager) container;
         View view = (View) object;
         vp.removeView(view);
-
     }
 }

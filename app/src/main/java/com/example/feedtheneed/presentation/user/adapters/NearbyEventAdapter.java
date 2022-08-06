@@ -56,4 +56,6 @@ public class NearbyEventAdapter extends RecyclerView.Adapter<NearbyEventAdapter.
             eventName = itemView.findViewById(R.id.eventName);
         }
     }
+
+
 }
