@@ -26,12 +26,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 public class ProfileActivity extends AppCompatActivity {
 
     // Initialize variable
-    ImageView ivImage;
-    TextView tvName;
+    CircularImageView ivImage;
+    TextView tvName,mail,user_name;
+    ImageView img;
     Button btLogout;
     FirebaseAuth firebaseAuth;
 
@@ -43,6 +45,9 @@ public class ProfileActivity extends AppCompatActivity {
         // Assign variable
         ivImage=findViewById(R.id.iv_image);
         tvName=findViewById(R.id.tv_name);
+        user_name=findViewById(R.id.user_name);
+        img=findViewById(R.id.img);
+        mail=findViewById(R.id.mail);
         btLogout=findViewById(R.id.bt_logout);
 
         // Initialize firebase auth
@@ -60,7 +65,14 @@ public class ProfileActivity extends AppCompatActivity {
                     .load(firebaseUser.getPhotoUrl())
                     .into(ivImage);
             // set name on text view
-            tvName.setText(firebaseUser.getDisplayName());
+            if(firebaseUser.getPhoneNumber().equals(""))
+            {
+                tvName.setText(firebaseUser.getDisplayName());
+                img.setImageResource(R.drawable.ic_baseline_person_24);
+            }
+            else {tvName.setText(firebaseUser.getPhoneNumber()); img.setImageResource(R.drawable.ic_baseline_phone_24);}
+            user_name.setText(firebaseUser.getDisplayName());
+            mail.setText(firebaseUser.getEmail());
 
             Log.d("PhotoURL", "PhotoUrl: "+firebaseUser.getPhotoUrl());
         }
