@@ -30,7 +30,7 @@ class ChatViewAdapter(var dataSet: ArrayList<ChatHistory>) :
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.chat_message_item, viewGroup, false)
+            .inflate(R.layout.chat_messsage_list_item, viewGroup, false)
 
         return ViewHolder(view)
     }

@@ -14,9 +14,14 @@ import com.example.feedtheneed.domain.model.Chat
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.firestore.ktx.toObject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 
-class ChatActivity : AppCompatActivity() {
+class ChatActivity : AppCompatActivity(), CoroutineScope {
     var currentUserId = "SocS85cN1vetNqnssQ2WedMau2S2"
     var currentChat: Chat = Chat("user1", "user2")
 
@@ -31,13 +36,30 @@ class ChatActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
 
 
+    private var job: Job = Job()
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
+
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.feedtheneed.R.layout.chat_layout)
+        setContentView(R.layout.chat_message_layout)
         connectWithUI()
         connectWithFireBase()
-        chatRepositoryImplementation.initiateANewChat(currentUserId, "LRQvUwUFIqXKu2APtj09fWOBhPD3")
-        //startListeningToChatUpdates(chatRepositoryImplementation.getCurrentChatId())
+
+        var chatId:String = intent.getStringExtra("chatId").toString()
+
+
+        launch {
+            chatId = chatRepositoryImplementation.checkIfChatExists(
+                currentUserId, "LRQvUwUFIqXKu2APtj09fWOBhPD3")
+            updateChatList(chatId)
+        }
 
     }
 
@@ -67,7 +89,7 @@ class ChatActivity : AppCompatActivity() {
 
 
 
-    fun startListeningToChatUpdates(chatId: String){
+    private fun startListeningToChatUpdates(chatId: String){
         val docRef = mFirestore.collection("chat").document(chatId)
         docRef.addSnapshotListener { snapshot, e ->
             if (e != null) {
@@ -90,12 +112,11 @@ class ChatActivity : AppCompatActivity() {
         }
 
 
-
-
-
     }
 
 
-
+    private fun updateChatList(chatId: String) {
+        startListeningToChatUpdates(chatId)
+    }
 
 }

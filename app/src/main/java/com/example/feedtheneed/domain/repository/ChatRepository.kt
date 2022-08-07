@@ -4,11 +4,12 @@ import com.example.feedtheneed.domain.model.Chat
 import com.example.feedtheneed.domain.model.ChatListItem
 
 interface ChatRepository {
-    fun initiateANewChat(fromUser: String, toUser: String)
+    suspend fun initiateANewChat(fromUser: String, toUser: String)
     fun getChatById(chatId: String): Chat
     fun getUserChats(userId: String): ArrayList<ChatListItem>
-    fun checkIfChatExists(fromUser: String, toUser: String)
+    suspend fun checkIfChatExists(fromUser: String, toUser: String): String
     fun sendANewMessage(message: String, currentUserId: String)
     fun getCurrentChatId(): String
-    fun getChatListForUserId(userId: String)
+    suspend fun getChatListForUserId(userId: String): ArrayList<ChatListItem>
+    fun getCurrentChatList(): ArrayList<ChatListItem>
 }

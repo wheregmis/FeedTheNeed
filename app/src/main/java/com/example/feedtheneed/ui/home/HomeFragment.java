@@ -129,7 +129,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         binding.fabList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), ChatListActivity.class));
+                startActivity(new Intent(getActivity(), ChatActivity.class));
             }
         });
         sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {

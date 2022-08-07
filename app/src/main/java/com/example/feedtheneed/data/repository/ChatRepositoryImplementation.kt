@@ -6,10 +6,12 @@ import com.example.feedtheneed.domain.model.Chat
 import com.example.feedtheneed.domain.model.ChatListItem
 import com.example.feedtheneed.domain.model.User
 import com.example.feedtheneed.domain.repository.ChatRepository
+import com.example.feedtheneed.presentation.chat.ChatActivity
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.toObject
+import kotlinx.coroutines.tasks.await
 
 class ChatRepositoryImplementation: ChatRepository {
     private val TAG = this.javaClass.canonicalName
@@ -34,7 +36,7 @@ class ChatRepositoryImplementation: ChatRepository {
      * @param fromUser UserId of the user1 typically add the one who initiates the chat.
      * @param toUser UserId of the user2 typically add the one whom the chat is intended for.
      */
-    override fun initiateANewChat(fromUser: String, toUser: String) {
+    override suspend fun initiateANewChat(fromUser: String, toUser: String) {
         checkIfChatExists(fromUser, toUser)
     }
 
@@ -65,49 +67,69 @@ class ChatRepositoryImplementation: ChatRepository {
      * @param fromUser UserId of the user1 typically add the one who initiates the chat.
      * @param toUser UserId of the user2 typically add the one whom the chat is intended for.
      */
-    override fun checkIfChatExists(fromUser: String, toUser: String) {
+    override suspend fun checkIfChatExists(fromUser: String, toUser: String) : String{
         // As of current implementation chat data is centralized for two users
-        val queryChatPrimary = chatCollection.whereEqualTo("fromUser", fromUser)
-            .whereEqualTo("toUser", toUser).get()
-        val queryChatSecondary = chatCollection.whereEqualTo("fromUser", fromUser)
-            .whereEqualTo("toUser", toUser).get()
-
-        queryChatPrimary.addOnSuccessListener { documents ->
-            if(documents.isEmpty ){
-                queryChatSecondary.addOnSuccessListener { documentsSec ->
-                    if(documentsSec.isEmpty){
-                        Log.d(TAG, "Creating new Chat Record")
-                        createNewChat(fromUser, toUser)
-                    }else{
-                        Log.d(TAG, "Checking Secondary Docs")
-                        for (document in documentsSec) {
-                            Log.d(TAG, "Secondary Documents")
-                            Log.d(TAG, "${document.id} => ${document.data}")
-                            updateCurrentChatData(document)
-                            return@addOnSuccessListener
-                        }
-                    }
-
+        return try {
+            val queryChatPrimary = chatCollection.whereEqualTo("fromUser", fromUser)
+                .whereEqualTo("toUser", toUser).get().await()
+            val queryChatSecondary = chatCollection.whereEqualTo("fromUser", fromUser)
+                .whereEqualTo("toUser", toUser).get().await()
+            if(!queryChatPrimary.isEmpty || !queryChatSecondary.isEmpty){
+                for (document in (queryChatPrimary + queryChatSecondary)){
+                    currentChatId = document.id
+                    this.currentChat = document.toObject<Chat>()!!
                 }
-                    .addOnFailureListener { exception ->
-                        Log.w(TAG, "Error getting documents: ", exception)
-                    }
             }else{
-                Log.d(TAG, "Checking Primary Docs")
-                for (document in documents) {
-                    Log.d(TAG, "Primary Documents")
-                    Log.d(TAG, "${document.id} => ${document.data}")
-                    updateCurrentChatData(document)
-                    return@addOnSuccessListener
-                }
+                var chat = Chat(fromUser, toUser)
+                chatCollection.document().set(chat).await()
+                var chatCreated = checkIfChatExists(fromUser, toUser)
+                Log.d(TAG, "New Chat Entry Created: $chatCreated")
 
             }
 
+            currentChatId
+        }catch (e: java.lang.Exception){
+            Log.e(TAG, "Failed to upload: ${e.message.orEmpty()}")
+            return "" // or you can rethrow or return null if you want
+        }
 
-            }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents: ", exception)
-            }
+
+//        queryChatPrimary.addOnSuccessListener { documents ->
+//            if(documents.isEmpty ){
+//                queryChatSecondary.addOnSuccessListener { documentsSec ->
+//                    if(documentsSec.isEmpty){
+//                        Log.d(TAG, "Creating new Chat Record")
+//                        createNewChat(fromUser, toUser)
+//                    }else{
+//                        Log.d(TAG, "Checking Secondary Docs")
+//                        for (document in documentsSec) {
+//                            Log.d(TAG, "Secondary Documents")
+//                            Log.d(TAG, "${document.id} => ${document.data}")
+//                            updateCurrentChatData(document)
+//                            return@addOnSuccessListener
+//                        }
+//                    }
+//
+//                }
+//                    .addOnFailureListener { exception ->
+//                        Log.w(TAG, "Error getting documents: ", exception)
+//                    }
+//            }else{
+//                Log.d(TAG, "Checking Primary Docs")
+//                for (document in documents) {
+//                    Log.d(TAG, "Primary Documents")
+//                    Log.d(TAG, "${document.id} => ${document.data}")
+//                    updateCurrentChatData(document)
+//                    return@addOnSuccessListener
+//                }
+//
+//            }
+//
+//
+//            }
+//            .addOnFailureListener { exception ->
+//                Log.w(TAG, "Error getting documents: ", exception)
+//            }
 
 
         Log.d(TAG, "Document Check done and Updated")
@@ -115,18 +137,7 @@ class ChatRepositoryImplementation: ChatRepository {
 
     }
 
-    /**
-     *
-     * Updates current chat data stored within the data repo
-     *
-     * @param document document snapshot with chat data
-     */
-    private fun updateCurrentChatData(document: DocumentSnapshot){
-        currentChatId = document.id
-        this.currentChat = document.toObject<Chat>()!!
 
-
-    }
 
     /**
      *
@@ -162,27 +173,55 @@ class ChatRepositoryImplementation: ChatRepository {
 
 
 
-    override fun getChatListForUserId(userId: String) {
-        val queryChatPrimary = chatCollection.whereEqualTo("fromUser", userId).get()
-        val queryChatSecondary = chatCollection.whereEqualTo("toUser", userId).get()
 
-        queryChatPrimary
-            .addOnSuccessListener { documentsPrim ->
-                populateChatToChatItem(documentsPrim)
 
-             }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents: ", exception)
+    override suspend fun getChatListForUserId(userId: String): ArrayList<ChatListItem> {
+
+        return try {
+            var userChatList: ArrayList<ChatListItem> = ArrayList()
+            val queryChatPrimary = chatCollection.whereEqualTo("fromUser", userId).get().await()
+            val queryChatSecondary = chatCollection.whereEqualTo("toUser", userId).get().await()
+            for (document in (queryChatPrimary + queryChatSecondary)){
+                val chatDoc = document.toObject<Chat>()
+                val chatDocToUserData = userCollection.document(chatDoc.toUser).get().await().toObject<User>()
+                val chatDocFromUserData = userCollection.document(chatDoc.fromUser).get().await().toObject<User>()
+
+                val chatListItem = ChatListItem(document.id,
+                    chatDoc.fromUser,
+                    chatDocFromUserData!!.userFullName,
+                    chatDoc.toUser,
+                    chatDocToUserData!!.userFullName
+                )
+                userChatList.add(chatListItem)
             }
+            userChatList
+        } catch(e: Exception) {
+            Log.e(TAG, "Failed to upload: ${e.message.orEmpty()}")
+            return ArrayList() // or you can rethrow or return null if you want
+        }
 
-            queryChatSecondary.addOnSuccessListener { documentsPrim ->
-                populateChatToChatItem(documentsPrim)
-            }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents: ", exception)
-            }
+//
+////        queryChatPrimary
+//            .addOnSuccessListener { documentsPrim ->
+//                populateChatToChatItem(documentsPrim)
+//
+//             }
+//            .addOnFailureListener { exception ->
+//                Log.w(TAG, "Error getting documents: ", exception)
+//            }
+//
+//            queryChatSecondary.addOnSuccessListener { documentsPrim ->
+//                populateChatToChatItem(documentsPrim)
+//            }
+//            .addOnFailureListener { exception ->
+//                Log.w(TAG, "Error getting documents: ", exception)
+//            }
 
 
+    }
+
+    override fun getCurrentChatList() : ArrayList<ChatListItem>{
+        return this.currentChatList
     }
 
 
@@ -190,17 +229,17 @@ class ChatRepositoryImplementation: ChatRepository {
         for (chatDocument in chatDocument) {
             val chatTemp = chatDocument.toObject<Chat>()
 
-            Log.d(TAG, "Query From User: ${chatTemp.fromUser}")
+            Log.d(TAG, "Query From User:${chatTemp.fromUser}")
             userCollection.document(chatTemp.fromUser).get()
                 .addOnSuccessListener { fromUserDocument ->
                     if (fromUserDocument != null) {
-                        Log.d(TAG, "User data: ${fromUserDocument}")
+                        Log.d(TAG, "User data:${fromUserDocument.data}")
                         val fromUserTemp = fromUserDocument.toObject<User>()
-                        Log.d(TAG, "Query To User: ${chatTemp.toUser}")
+                        Log.d(TAG, "Query To User:${chatTemp.toUser}")
                         userCollection.document(chatTemp.toUser).get()
                             .addOnSuccessListener { toUserDocument ->
                                 if (toUserDocument != null) {
-                                    Log.d(TAG, "User data: ${toUserDocument.data}")
+                                    Log.d(TAG, "User data:${toUserDocument.data}")
 
                                     val toUserTemp = toUserDocument.toObject<User>()
 
@@ -217,9 +256,11 @@ class ChatRepositoryImplementation: ChatRepository {
                                         currentChatList.add(chatListItem)
                                     }
                                     Log.d(TAG, "Added to current Chat List $currentChatList")
+
                                 } else {
                                     Log.d(TAG, "No such document")
                                 }
+
                             }
                             .addOnFailureListener { exception ->
                                 Log.d(TAG, "get failed with ", exception)
