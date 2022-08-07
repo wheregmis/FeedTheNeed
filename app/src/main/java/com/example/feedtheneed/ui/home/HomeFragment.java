@@ -41,6 +41,7 @@ import com.example.feedtheneed.domain.usecase.event.EventUseCase;
 import com.example.feedtheneed.domain.usecase.event.EventUseCaseInterface;
 import com.example.feedtheneed.presentation.event.AddEventActivity;
 import com.example.feedtheneed.presentation.event.ViewEventActivity;
+import com.example.feedtheneed.presentation.user.AdditionalInformationActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -57,6 +58,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -182,9 +184,20 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         userUseCase.getUserFromFirebase(firebaseUser.getEmail()).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.getResult().getDocuments().get(0).get("restaurant").toString().equals("true")){
-                    binding.floatAdd.setVisibility(View.VISIBLE);
+                if (task.getResult().size() > 0){
+                    if (task.getResult().getDocuments().get(0).get("restaurant").toString().equals("true")){
+                        binding.floatAdd.setVisibility(View.VISIBLE);
+                    }
+                }else{
+                    startActivity(new Intent(getActivity(), AdditionalInformationActivity.class));
                 }
+
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                startActivity(new Intent(getActivity(), AdditionalInformationActivity.class));
             }
         });
 
