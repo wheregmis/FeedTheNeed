@@ -20,8 +20,8 @@ public class LeaderboardRepoImplementation implements LeaderboardRepository {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
-    public void getTopRestaurantsBasedOnEventHosted() {
-        db.collection("event").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+    public Task<QuerySnapshot> getTopRestaurantsBasedOnEventHosted() {
+        return db.collection("event").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
