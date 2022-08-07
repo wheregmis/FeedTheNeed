@@ -184,6 +184,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.getResult().getDocuments().get(0).get("restaurant").toString().equals("true")){
                     binding.floatAdd.setVisibility(View.VISIBLE);
+                }else{
+                    binding.floatChatbot.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -192,8 +194,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         tabLayout.setupWithViewPager(eventsViewPager);
         tabs = MyTabbedView.getInstance().getTabs();
         eventsViewPager = (ViewPager) root.findViewById(R.id.eventsViewPager);
-
-
+        
         return root;
     }
 
