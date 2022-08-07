@@ -32,7 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     // Initialize variable
     CircularImageView ivImage;
-    TextView tvName,mail,user_name;
+    TextView tvName,mail,user_name, isRestaurant;
     ImageView img;
     Button btLogout;
     FirebaseAuth firebaseAuth;
@@ -49,6 +49,8 @@ public class ProfileActivity extends AppCompatActivity {
         img=findViewById(R.id.img);
         mail=findViewById(R.id.mail);
         btLogout=findViewById(R.id.bt_logout);
+        isRestaurant=findViewById(R.id.user_type);
+
 
         // Initialize firebase auth
         firebaseAuth=FirebaseAuth.getInstance();
@@ -71,7 +73,7 @@ public class ProfileActivity extends AppCompatActivity {
                 img.setImageResource(R.drawable.ic_baseline_person_24);
             }
             else {tvName.setText(firebaseUser.getPhoneNumber()); img.setImageResource(R.drawable.ic_baseline_phone_24);}
-            user_name.setText(firebaseUser.getDisplayName());
+//            user_name.setText(firebaseUser.getDisplayName());
             mail.setText(firebaseUser.getEmail());
 
             Log.d("PhotoURL", "PhotoUrl: "+firebaseUser.getPhotoUrl());
@@ -83,6 +85,12 @@ public class ProfileActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 DocumentSnapshot userInformation = task.getResult().getDocuments().get(0);
                 // TODO: 05/08/2022 Here you have details of the user please show these in profile activity
+                user_name.setText(userInformation.get("userFullName").toString());
+                if (userInformation.get("restaurant").toString().equalsIgnoreCase("true")){
+                    isRestaurant.setText("Restaurant Representative");
+                }else{
+                    isRestaurant.setText("Normal User");
+                }
             }
         });
 
