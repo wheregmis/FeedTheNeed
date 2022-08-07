@@ -4,9 +4,11 @@ import android.content.ContentValues
 import android.util.Log
 import com.example.feedtheneed.domain.model.Chat
 import com.example.feedtheneed.domain.model.ChatListItem
+import com.example.feedtheneed.domain.model.User
 import com.example.feedtheneed.domain.repository.ChatRepository
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.toObject
 
 class ChatRepositoryImplementation: ChatRepository {
@@ -14,9 +16,15 @@ class ChatRepositoryImplementation: ChatRepository {
 
     private val mFirestore = FirebaseFirestore.getInstance()
     private val chatCollection = mFirestore.collection("chat")
-    private var isDocumentCheckDone = 0
+    private val userCollection = mFirestore.collection("users")
+
+
+    // User Related Variables
     private var currentChat:Chat = Chat()
     private lateinit  var currentChatId: String
+    private  var currentChatList: ArrayList<ChatListItem> = ArrayList()
+
+
 
 
     /**
@@ -142,11 +150,91 @@ class ChatRepositoryImplementation: ChatRepository {
         mFirestore.collection("chat").document(this.currentChatId)
             .set(this.currentChat)
             .addOnSuccessListener {
-                //Toast.makeText(this, "Message sent Success!", Toast.LENGTH_SHORT).show()
                 Log.d(ContentValues.TAG, "Message sent Successfully")
             }.addOnFailureListener {
                     e -> Log.e(ContentValues.TAG, "Error writing document", e)
             }
+    }
+
+    override fun getCurrentChatId(): String{
+        return this.currentChatId
+    }
+
+
+
+    override fun getChatListForUserId(userId: String) {
+        val queryChatPrimary = chatCollection.whereEqualTo("fromUser", userId).get()
+        val queryChatSecondary = chatCollection.whereEqualTo("toUser", userId).get()
+
+        queryChatPrimary
+            .addOnSuccessListener { documentsPrim ->
+                populateChatToChatItem(documentsPrim)
+
+             }
+            .addOnFailureListener { exception ->
+                Log.w(TAG, "Error getting documents: ", exception)
+            }
+
+            queryChatSecondary.addOnSuccessListener { documentsPrim ->
+                populateChatToChatItem(documentsPrim)
+            }
+            .addOnFailureListener { exception ->
+                Log.w(TAG, "Error getting documents: ", exception)
+            }
+
+
+    }
+
+
+    private fun populateChatToChatItem(chatDocument: QuerySnapshot){
+        for (chatDocument in chatDocument) {
+            val chatTemp = chatDocument.toObject<Chat>()
+
+            Log.d(TAG, "Query From User: ${chatTemp.fromUser}")
+            userCollection.document(chatTemp.fromUser).get()
+                .addOnSuccessListener { fromUserDocument ->
+                    if (fromUserDocument != null) {
+                        Log.d(TAG, "User data: ${fromUserDocument}")
+                        val fromUserTemp = fromUserDocument.toObject<User>()
+                        Log.d(TAG, "Query To User: ${chatTemp.toUser}")
+                        userCollection.document(chatTemp.toUser).get()
+                            .addOnSuccessListener { toUserDocument ->
+                                if (toUserDocument != null) {
+                                    Log.d(TAG, "User data: ${toUserDocument.data}")
+
+                                    val toUserTemp = toUserDocument.toObject<User>()
+
+                                    val chatListItem = toUserTemp?.let {
+                                        fromUserTemp?.let { it1 ->
+                                            ChatListItem(chatDocument.id,
+                                                chatTemp.fromUser,
+                                                it1.userFullName,
+                                                chatTemp.toUser,
+                                                it.userFullName)
+                                        }
+                                    }
+                                    if (chatListItem != null) {
+                                        currentChatList.add(chatListItem)
+                                    }
+                                    Log.d(TAG, "Added to current Chat List $currentChatList")
+                                } else {
+                                    Log.d(TAG, "No such document")
+                                }
+                            }
+                            .addOnFailureListener { exception ->
+                                Log.d(TAG, "get failed with ", exception)
+                            }
+
+                    } else {
+                        Log.d(TAG, "No such document")
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.d(TAG, "get failed with ", exception)
+                }
+
+
+        }
     }
 
 

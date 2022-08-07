@@ -1,8 +1,9 @@
 package com.example.feedtheneed.domain.model
 
-class ChatListItem(
-    var toUser: String,
-    var fromUser: String,
-    var toUserName: String,
-    var chatId: String, // trailing comma
+data class ChatListItem(
+    var chatId: String,
+    var fromUserId: String,
+    var fromUserName: String,
+    var toUserId: String,
+    var toUserName: String
 )

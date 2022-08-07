@@ -28,6 +28,7 @@ class ChatActivity : AppCompatActivity() {
     // UI Elements here
     lateinit var btnSend: Button
     lateinit var etMessageBody: EditText
+    lateinit var recyclerView: RecyclerView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,16 +37,15 @@ class ChatActivity : AppCompatActivity() {
         connectWithUI()
         connectWithFireBase()
         chatRepositoryImplementation.initiateANewChat(currentUserId, "LRQvUwUFIqXKu2APtj09fWOBhPD3")
-        readChatById()
+        //startListeningToChatUpdates(chatRepositoryImplementation.getCurrentChatId())
 
     }
 
 
     private fun connectWithUI(){
-         btnSend = findViewById<Button>(R.id.btn_send)
-         etMessageBody = findViewById<EditText>(com.example.feedtheneed.R.id.et_message_input)
+         btnSend = findViewById(R.id.btn_send)
+         etMessageBody = findViewById(R.id.et_message_input)
          btnSend.setOnClickListener {
-            // your code to perform when the user clicks on the button
             if(etMessageBody.text.toString() != null){
                 Log.d(TAG, "Got text: ${etMessageBody.text}")
                 chatRepositoryImplementation.sendANewMessage(etMessageBody.text.toString(), currentUserId)
@@ -53,7 +53,7 @@ class ChatActivity : AppCompatActivity() {
             }
         }
 
-        val recyclerView = findViewById<RecyclerView>(R.id.rv_messages)
+        recyclerView = findViewById(R.id.rv_messages)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapter = ChatViewAdapter( this.currentChat.chatHistory)
         recyclerView.adapter = adapter
@@ -67,9 +67,8 @@ class ChatActivity : AppCompatActivity() {
 
 
 
-    private fun readChatById(){
-
-        val docRef = mFirestore.collection("chat").document("ppoc7K1AIDtglKKSDm3b")
+    fun startListeningToChatUpdates(chatId: String){
+        val docRef = mFirestore.collection("chat").document(chatId)
         docRef.addSnapshotListener { snapshot, e ->
             if (e != null) {
                 Log.w(TAG, "Listen failed.", e)
@@ -89,6 +88,7 @@ class ChatActivity : AppCompatActivity() {
                 Log.d(TAG, "Current data: null")
             }
         }
+
 
 
 

@@ -9,4 +9,6 @@ interface ChatRepository {
     fun getUserChats(userId: String): ArrayList<ChatListItem>
     fun checkIfChatExists(fromUser: String, toUser: String)
     fun sendANewMessage(message: String, currentUserId: String)
+    fun getCurrentChatId(): String
+    fun getChatListForUserId(userId: String)
 }
