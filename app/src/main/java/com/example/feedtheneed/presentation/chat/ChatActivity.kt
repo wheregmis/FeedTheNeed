@@ -22,7 +22,7 @@ import kotlin.coroutines.CoroutineContext
 
 
 class ChatActivity : AppCompatActivity(), CoroutineScope {
-    var currentUserId = "SocS85cN1vetNqnssQ2WedMau2S2"
+    var currentUserId = "yZiAeAdxV49PkwYaNKSk"
     var currentChat: Chat = Chat("user1", "user2")
 
 
@@ -57,7 +57,7 @@ class ChatActivity : AppCompatActivity(), CoroutineScope {
 
         launch {
             chatId = chatRepositoryImplementation.checkIfChatExists(
-                currentUserId, "LRQvUwUFIqXKu2APtj09fWOBhPD3")
+                currentUserId, "jKwsV8VysdLFkdkC8VsM")
             updateChatList(chatId)
         }
 

@@ -1,5 +1,6 @@
 package com.example.feedtheneed.presentation.chat
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -43,6 +44,7 @@ class ChatListActivity : AppCompatActivity(), CoroutineScope {
         launch {
             val result =  chatRepositoryImplementation.getChatListForUserId(
                 "yZiAeAdxV49PkwYaNKSk")
+            Log.d(TAG, "Got the chat list: $result")
             updateChatList(result) // onResult is called on the main thread
         }
 

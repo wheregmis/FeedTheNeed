@@ -142,11 +142,13 @@ class ChatRepositoryImplementation: ChatRepository {
     override suspend fun getChatListForUserId(userId: String): ArrayList<ChatListItem> {
 
         return try {
+            Log.d(TAG, "Quering for user: $userId")
             var userChatList: ArrayList<ChatListItem> = ArrayList()
             val queryChatPrimary = chatCollection.whereEqualTo("fromUser", userId).get().await()
             val queryChatSecondary = chatCollection.whereEqualTo("toUser", userId).get().await()
             for (document in (queryChatPrimary + queryChatSecondary)){
                 val chatDoc = document.toObject<Chat>()
+                Log.d(TAG, "Got maching chat: $chatDoc")
                 val chatDocToUserData = userCollection.document(chatDoc.toUser).get().await().toObject<User>()
                 val chatDocFromUserData = userCollection.document(chatDoc.fromUser).get().await().toObject<User>()
                 var chatDisplayName = ""
