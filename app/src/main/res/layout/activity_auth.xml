@@ -21,7 +21,6 @@
         android:layout_width="match_parent"
         android:layout_height="275dp"
         tools:srcCompat="@drawable/ic_login"
-
         />
 
     <Button
@@ -35,7 +34,7 @@
         android:layout_marginBottom="16dp"
         android:backgroundTint="#FFFFFF"
         android:drawableLeft="@drawable/googleg_standard_color_18"
-        android:text="Login with Google"
+        android:text="@string/login_with_google"
         android:textColor="#514F4F" />
 
 </RelativeLayout>

@@ -29,10 +29,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.feedtheneed.domain.usecase.user.UserUseCaseInterface;
+import com.example.feedtheneed.domain.usecase.user.UserUserUseCase;
 import com.example.feedtheneed.presentation.chat.ChatActivity;
 import com.example.feedtheneed.CustomViewPagerAdapter;
 import com.example.feedtheneed.R;
+import com.example.feedtheneed.data.repository.LeaderboardRepoImplementation;
 import com.example.feedtheneed.databinding.FragmentHomeBinding;
+import com.example.feedtheneed.domain.model.Event;
 import com.example.feedtheneed.domain.usecase.event.EventUseCase;
 import com.example.feedtheneed.domain.usecase.event.EventUseCaseInterface;
 import com.example.feedtheneed.presentation.chat.ChatListActivity;
@@ -88,6 +92,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     LocationRequest mLocationRequest;
     private FusedLocationProviderClient fusedLocationClient;
     private double latitude, longitude;
+    private ArrayList<Event> nearbyEvents;
+    private ArrayList<Event> involvedEvents;
 
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
@@ -104,6 +110,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         mMapView = (MapView) root.findViewById(R.id.mapView);
+        nearbyEvents = new ArrayList<>();
+        involvedEvents = new ArrayList<>();
 
         try {
             MapsInitializer.initialize(getActivity().getApplicationContext());
@@ -171,11 +179,20 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         // Initialize firebase user
         firebaseUser=firebaseAuth.getCurrentUser();
 
+        UserUseCaseInterface userUseCase = new UserUserUseCase();
+        userUseCase.getUserFromFirebase(firebaseUser.getEmail()).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.getResult().getDocuments().get(0).get("restaurant").toString().equals("true")){
+                    binding.floatAdd.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
         TabLayout tabLayout = root.findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(eventsViewPager);
         tabs = MyTabbedView.getInstance().getTabs();
         eventsViewPager = (ViewPager) root.findViewById(R.id.eventsViewPager);
-        eventsViewPager.setAdapter(new CustomViewPagerAdapter(getActivity(), tabs));
 
 
         return root;
@@ -244,11 +261,59 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 //                            .position(eventLocation)
 //                            .title(documentSnapshot.get("eventName").toString()));
 
-                    setMarkerInCoordinate(eventLocation, documentSnapshot.get("eventName").toString());
+                    setMarkerInCoordinate(eventLocation, documentSnapshot.get("eventName").toString(), documentSnapshot.get("eventId").toString());
                 }
             }
         });
 
+        // TODO: 28/07/2022 Getting Involved Projects
+        HashMap<String, String> involvedEventHashMap = new HashMap<String, String>();
+
+        eventUseCase.getInvolvedEvents("get2sabin@gmail.com").addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                List<DocumentSnapshot> listEvents = task.getResult().getDocuments();
+                float[] distanceBetweenUserAndEvent = new float[1];
+
+                for (DocumentSnapshot documentSnapshot: listEvents) {
+                    LatLng eventLocation = new LatLng(Double.valueOf(documentSnapshot.get("eventLat").toString()), Double.valueOf(documentSnapshot.get("eventLong").toString()));
+
+                    involvedEvents.add(documentSnapshot.toObject(Event.class));
+                    Location.distanceBetween(latitude, longitude,
+                            eventLocation.latitude, eventLocation.longitude,
+                            distanceBetweenUserAndEvent);
+
+                    // Putting value in nearby event Hashmap
+                    involvedEventHashMap.put(documentSnapshot.getString("eventId"), String.valueOf(distanceBetweenUserAndEvent[0]));
+
+                    // Creating new hashmap with distance (double) key so it will be easy to sort
+                    HashMap<Double, String> newMap = new HashMap<>();
+                    // filling new hashmap
+                    for (Map.Entry<String, String> entry : involvedEventHashMap.entrySet())
+                        newMap.put(Double.valueOf(entry.getValue()), entry.getKey());
+
+                    newMap = sortHashMapByValues(newMap);
+                }
+
+                updateInvolvedEvents();
+            }
+        });
+
+        // TODO: 29/07/2022 Leaderboard Testing
+        // TODO: 29/07/2022 please handle the return type of those function as per need
+
+        LeaderboardRepoImplementation implementation = new LeaderboardRepoImplementation();
+        implementation.getTopRestaurantsBasedOnEventHosted();
+
+        // TODO: 29/07/2022 Leaderboard Testing
+        // TODO: 29/07/2022 Please handle the return types as per the need
+        implementation.getTopUserBasedOnVolunteerEvent();
+
+    }
+
+    private void updateInvolvedEvents() {
+        eventsViewPager.setAdapter(new CustomViewPagerAdapter(getActivity(), tabs, nearbyEvents, involvedEvents));
     }
 
     @SuppressLint("MissingPermission")
@@ -259,7 +324,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             return;
         }
         mMap.setMyLocationEnabled(true);
-        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        //mMap.getUiSettings().setMyLocationButtonEnabled(false);
         startLocationUpdates();
     }
 
@@ -312,15 +377,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         Log.d("Nearby Event", "Nearby Event"+task.getResult().getDocuments().toString());
 
-//
-
-
                                         List<DocumentSnapshot> listEvents = task.getResult().getDocuments();
                                         float[] distanceBetweenUserAndEvent = new float[1];
 
                                         for (DocumentSnapshot documentSnapshot: listEvents) {
                                             LatLng eventLocation = new LatLng(Double.valueOf(documentSnapshot.get("eventLat").toString()), Double.valueOf(documentSnapshot.get("eventLong").toString()));
 
+                                            nearbyEvents.add(documentSnapshot.toObject(Event.class));
                                             Location.distanceBetween(latitude, longitude,
                                                     eventLocation.latitude, eventLocation.longitude,
                                                     distanceBetweenUserAndEvent);
@@ -334,10 +397,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                             for(Map.Entry<String,String> entry : nearbyEventHashMap.entrySet())
                                                 newMap.put(Double.valueOf(entry.getValue()), entry.getKey());
 
-                                            // Printing nearby events in debug console
-                                            Log.d("Nearby Events", "Nearby Events "+sortHashMapByValues(newMap).toString());
+                                            newMap = sortHashMapByValues(newMap);
 
+                                            // Printing nearby events in debug console
+                                            Log.d("Nearby Events", "Nearby Events "+newMap.toString());
                                         }
+
+//                                        updateNearbyEvents();
                                     }
                                 });
                             });
@@ -349,8 +415,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
+    private void updateNearbyEvents() {
+        eventsViewPager.setAdapter(new CustomViewPagerAdapter(getActivity(), tabs, nearbyEvents, involvedEvents));
+    }
+
     // function to set marker in a co cordinate
-    private void setMarkerInCoordinate(LatLng latLng, String text){
+    private void setMarkerInCoordinate(LatLng latLng, String text, String eventId){
         Log.i("MapsActivity", "setMarkerInCoordinate: "+latLng);
         Bitmap bitmap = null;
         try {
@@ -362,6 +432,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
         MarkerOptions options = new MarkerOptions().position(latLng)
                 .title(text)
+                .snippet(eventId)
 //                .icon(addStampToImage(bitmap)
                 .icon(createPureTextIcon(text)
                 );
@@ -371,7 +442,20 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(@NonNull Marker marker) {
-                startActivity(new Intent(getActivity(), ViewEventActivity.class));
+
+                Intent i = new Intent(getActivity(), ViewEventActivity.class);
+
+                //Create the bundle
+                Bundle bundle = new Bundle();
+
+                //Add your data to bundle
+                bundle.putString("eventId", marker.getSnippet());
+
+                //Add the bundle to the intent
+                i.putExtras(bundle);
+
+                //Fire that second activity
+                startActivity(i);
                 return true;
             }
         });

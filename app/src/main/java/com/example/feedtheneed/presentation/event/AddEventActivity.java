@@ -54,6 +54,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.UUID;
@@ -65,13 +67,18 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     private TextView timeview;
     private TextView eventName;
     private TextView eventHost;
+    private TextView eventFoodType;
+    private TextView eventTotalParticipants;
     StorageReference childRef, imagesRef,storageRef;
     Uri imageUri;
     private TextView eventDescription;
     private int year, month, day,hour,minute;
     FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
     GoogleMap nMap;
     LatLng eventLocation;
+    ArrayList<Uri> imagesEncodedList = new ArrayList<Uri>();
+    ArrayList<String> imagesUploaded = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +90,8 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         eventHost = (TextView) findViewById(R.id.eventHost);
         eventDescription = (TextView) findViewById(R.id.eventDescription);
         timeview = (TextView) findViewById(R.id.timeview);
+        eventFoodType = (TextView) findViewById(R.id.food_type);
+        eventTotalParticipants = (TextView) findViewById(R.id.participants_number);
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
         // Create a child reference
@@ -111,25 +120,9 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         // Initialize firebase auth
         firebaseAuth=FirebaseAuth.getInstance();
         // Initialize firebase user
-        FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
-
-        UserUseCaseInterface userUseCase = new UserUserUseCase();
-        userUseCase.getUserFromFirebase(firebaseUser.getEmail()).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                eventHost.setText(task.getResult().getDocuments().get(0).get("userFullName").toString());
-                eventHost.setEnabled(false);
-                eventLocation = new LatLng(Double.valueOf(task.getResult().getDocuments().get(0).get("userLat").toString()), Double.valueOf(task.getResult().getDocuments().get(0).get("userLong").toString()));
-
-                nMap.addMarker(new MarkerOptions()
-                        .position(eventLocation)
-                        .title("Event Location"));
-
-                nMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eventLocation, 11));
+        firebaseUser=firebaseAuth.getCurrentUser();
 
 
-            }
-        });
     }
 
     // method to set up map fragment
@@ -180,14 +173,14 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         Log.d("image","selected");
         if(resultCode == RESULT_OK && data!=null){
             String[] filePathColumn = { MediaStore.Images.Media.DATA };
-            ArrayList<String> imagesEncodedList = new ArrayList<String>();
+
             String imageEncoded;
             if(data.getClipData() != null) {
                 int count = data.getClipData().getItemCount(); //evaluate the count before the for loop --- otherwise, the count is evaluated every loop.
                 for(int i = 0; i < count; i++) {
                    imageUri = data.getClipData().getItemAt(i).getUri();
 
-//                imagesEncodedList.add(imageUri);
+                imagesEncodedList.add(imageUri);
                     //do something with the image (save it to some directory or whatever you need to do with it here)
                 }
             }
@@ -224,57 +217,82 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
                 .append(minutes));
     }
     public void createEvent(View view){
-        Event event =
-        new Event(UUID.randomUUID().toString(),eventName.getText().toString(),eventHost.getText().toString(), eventDescription.getText().toString(),
-                dateview.getText().toString(),timeview.getText().toString(), String.valueOf(eventLocation.latitude), String.valueOf(eventLocation.longitude), null);
-
-        EventUseCaseInterface eventUseCase = new EventUseCase();
-        eventUseCase.addEventToFirebase(event);
 
 
-//        //         TODO: 25/07/2022  Just for testing user participants in event
-//        eventUseCase.participateInEvent("get2sabin@gmail.com", "0cd3cefb-b439-4338-a267-d694ca67aa09").addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                Log.d("Document Ref", ""+task.getResult().size());
-//            }
-//        });
-
-        eventUseCase.addUserToVolunteerEvent("testing@gmail.com", "1").addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                Log.d("Document Ref", ""+task.getResult().size());
-            }
-        });
-
-        // TODO: 27/07/2022 Uncomment Below line to add image upload feature 
+        // TODO: 27/07/2022 Uncomment Below line to add image upload feature
 
 //        StorageReference riversRef = storageRef.child("images/"+imageUri.getLastPathSegment());
 //        UploadTask uploadTask = riversRef.putFile(imageUri);
-//
-//// Register observers to listen for when the download is done or if it fails
-//        uploadTask.addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception exception) {
-//                // Handle unsuccessful uploads
-//                Log.d("failure to upload","failed " + exception.toString());
-//            }
-//        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-//                Log.d("success to upload","success");
-//                // ...
-//            }
-//        });
-        //ViewEventActivity -> to check view event
-        startActivity(new Intent(this, HomeActivity.class));
+
+        for(int i=0;i<imagesEncodedList.size();i++) {
+            StorageReference riversRef = storageRef.child("images/" + imagesEncodedList.get(i).getLastPathSegment());
+//            imagesUploaded.add(riversRef.getRoot().toString() + riversRef.getPath());
+//            Log.d("image List", imagesUploaded.toString());
+            UploadTask uploadTask = riversRef.putFile(imageUri);
+
+            // Register observers to listen for when the download is done or if it fails
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                    Log.d("failure to upload", "failed " + exception.toString());
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                    Log.d("success to upload", "success");
+                    // ...
+                   taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+
+                            imagesUploaded.add(task.getResult().toString());
+
+                            // TODO: 04/08/2022 Please update the image urls below
+
+                            // TODO: 04/08/2022 Append value inside
+                            Event event =
+                                    new Event(UUID.randomUUID().toString(),eventName.getText().toString(),eventHost.getText().toString(), eventDescription.getText().toString(),
+                                            dateview.getText().toString(),timeview.getText().toString(), String.valueOf(eventLocation.latitude), String.valueOf(eventLocation.longitude), null, eventFoodType.getText().toString(), eventTotalParticipants.getText().toString(), imagesUploaded);
+
+                            EventUseCaseInterface eventUseCase = new EventUseCase();
+                            eventUseCase.addEventToFirebase(event);
+
+                            //ViewEventActivity -> to check view event
+                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                        }
+                    });
+
+                }
+            });
+
+        }
+
     }
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         nMap = googleMap;
         nMap.clear();
+
+        UserUseCaseInterface userUseCase = new UserUserUseCase();
+        userUseCase.getUserFromFirebase(firebaseUser.getEmail()).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                eventHost.setText(task.getResult().getDocuments().get(0).get("userFullName").toString());
+                eventHost.setEnabled(false);
+                eventLocation = new LatLng(Double.valueOf(task.getResult().getDocuments().get(0).get("userLat").toString()), Double.valueOf(task.getResult().getDocuments().get(0).get("userLong").toString()));
+
+                nMap.addMarker(new MarkerOptions()
+                        .position(eventLocation)
+                        .title("Event Location"));
+
+                nMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eventLocation, 11));
+
+
+            }
+        });
 
     }
 }
