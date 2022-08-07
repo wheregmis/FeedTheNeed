@@ -5,5 +5,6 @@ data class ChatListItem(
     var fromUserId: String,
     var fromUserName: String,
     var toUserId: String,
-    var toUserName: String
+    var toUserName: String,
+    var displayName: String
 )

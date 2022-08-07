@@ -52,7 +52,8 @@ class ChatListViewAdapter(var dataSet: ArrayList<ChatListItem>) :
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.textView.text = dataSet[position].toUserName
+
+        viewHolder.textView.text = dataSet[position].displayName
         viewHolder.itemView.setOnClickListener(View.OnClickListener {
             Log.d(TAG, "clicked the view: ${dataSet[position]}")
             val intent = Intent(viewHolder.itemView.context, ChatActivity::class.java)
