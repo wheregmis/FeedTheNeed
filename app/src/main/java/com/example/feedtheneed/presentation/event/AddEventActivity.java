@@ -35,6 +35,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -218,56 +219,90 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     }
     public void createEvent(View view){
 
-
+        boolean isValidated = true;
         // TODO: 27/07/2022 Uncomment Below line to add image upload feature
 
+        Log.d("Add Event Validation", "createEvent: "+eventName.getText().toString().length());
+        if ((int)eventName.getText().toString().length() == 0){
+            eventName.setError("Please input event name !!");
+            eventName.requestFocus();
+            isValidated = false;
+        }
+        if ((int)eventDescription.getText().toString().length() == 0){
+            eventDescription.setError("Please input event description !!");
+            eventDescription.requestFocus();
+            isValidated = false;
+        }
+        if ((int)eventFoodType.getText().toString().length() == 0){
+            eventFoodType.setError("Please input event food type !!");
+            eventFoodType.requestFocus();
+            isValidated = false;
+        }
+        if ((int)eventTotalParticipants.getText().toString().length() == 0){
+            eventTotalParticipants.setError("Please input event participants limit !!");
+            eventTotalParticipants.requestFocus();
+            isValidated = false;
+        }
+        if (imagesEncodedList.size() < 1){
+            Snackbar snackbar = Snackbar
+                    .make(view, "Please select some images for the event !!", Snackbar.LENGTH_LONG);
+            snackbar.show();
+            isValidated = false;
+        }
+        if(isValidated){
 //        StorageReference riversRef = storageRef.child("images/"+imageUri.getLastPathSegment());
 //        UploadTask uploadTask = riversRef.putFile(imageUri);
 
-        for(int i=0;i<imagesEncodedList.size();i++) {
-            StorageReference riversRef = storageRef.child("images/" + imagesEncodedList.get(i).getLastPathSegment());
+            for(int i=0;i<imagesEncodedList.size();i++) {
+                StorageReference riversRef = storageRef.child("images/" + imagesEncodedList.get(i).getLastPathSegment());
 //            imagesUploaded.add(riversRef.getRoot().toString() + riversRef.getPath());
 //            Log.d("image List", imagesUploaded.toString());
-            UploadTask uploadTask = riversRef.putFile(imageUri);
+                UploadTask uploadTask = riversRef.putFile(imageUri);
 
-            // Register observers to listen for when the download is done or if it fails
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle unsuccessful uploads
-                    Log.d("failure to upload", "failed " + exception.toString());
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                    Log.d("success to upload", "success");
-                    // ...
-                   taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Uri> task) {
+                // Register observers to listen for when the download is done or if it fails
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                        Log.d("failure to upload", "failed " + exception.toString());
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                        Log.d("success to upload", "success");
+                        // ...
+                        taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Uri> task) {
 
-                            imagesUploaded.add(task.getResult().toString());
+                                imagesUploaded.add(task.getResult().toString());
 
-                            // TODO: 04/08/2022 Please update the image urls below
+                                // TODO: 04/08/2022 Please update the image urls below
 
-                            // TODO: 04/08/2022 Append value inside
-                            Event event =
-                                    new Event(UUID.randomUUID().toString(),eventName.getText().toString(),eventHost.getText().toString(), eventDescription.getText().toString(),
-                                            dateview.getText().toString(),timeview.getText().toString(), String.valueOf(eventLocation.latitude), String.valueOf(eventLocation.longitude), null, eventFoodType.getText().toString(), eventTotalParticipants.getText().toString(), imagesUploaded);
+                                // TODO: 04/08/2022 Append value inside
+                                Event event =
+                                        new Event(UUID.randomUUID().toString(),eventName.getText().toString(),eventHost.getText().toString(), eventDescription.getText().toString(),
+                                                dateview.getText().toString(),timeview.getText().toString(), String.valueOf(eventLocation.latitude), String.valueOf(eventLocation.longitude), null, eventFoodType.getText().toString(), eventTotalParticipants.getText().toString(), imagesUploaded);
 
-                            EventUseCaseInterface eventUseCase = new EventUseCase();
-                            eventUseCase.addEventToFirebase(event);
+                                EventUseCaseInterface eventUseCase = new EventUseCase();
+                                eventUseCase.addEventToFirebase(event);
 
-                            //ViewEventActivity -> to check view event
-                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                        }
-                    });
+                                //ViewEventActivity -> to check view event
+                                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                            }
+                        });
 
-                }
-            });
+                    }
+                });
 
+            }
+        } else {
+//            Snackbar snackbar = Snackbar
+//                    .make(view, "Cannot process your event at the moment please try later !!", Snackbar.LENGTH_LONG);
+//            snackbar.show();
         }
+
 
     }
 
