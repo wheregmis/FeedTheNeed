@@ -4,6 +4,62 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../layout/custom_preview.xml" value="0.10925925925925926" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/drawable-v24/baseline_menu.xml" value="0.135" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/drawable/actionbar_bg.xml" value="0.136" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/drawable/button_bg.xml" value="0.135" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/drawable/button_bg_dark.xml" value="0.136" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/drawable/cardview_background.xml" value="0.136" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/drawable/ic_menu_camera.xml" value="0.135" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.135" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.135" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/drawable/image_background.xml" value="0.136" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/drawable/input_background.xml" value="0.135" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/drawable/non_active_dot.xml" value="0.136" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/drawable/rounded_background.xml" value="0.135" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/drawable/side_nav_bar.xml" value="0.135" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/active_dot.xml" value="0.19010416666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/activity_add_event.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/activity_additional_information.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/activity_auth.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/activity_food_rating.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/activity_home.xml" value="0.1" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/activity_leaderboard.xml" value="0.19010416666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/activity_leaderboard_fragment.xml" value="0.19010416666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/activity_leaderboard_tabs.xml" value="0.19010416666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/activity_maps.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/activity_profile.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/activity_splash.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/activity_viewevent.xml" value="0.23861852433281006" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/app_bar_home.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/app_bar_main.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/bottom_sheet_layout.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/bottom_sheet_main_content.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/chat_layout.xml" value="0.27289048473967686" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/chat_list_layout.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/chat_message_layout.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/chat_messsage_list_item.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/chat_people_list_item.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/chat_people_list_layout.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/content_home.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/content_main.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/content_tab_layout_demo.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/custom_layout.xml" value="0.19010416666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/custom_tab.xml" value="0.19010416666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/fragment_gallery.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/fragment_home.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/fragment_slideshow.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/gradientbackground.xml" value="0.19010416666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/layout_backup.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/layout_event_row.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/nav_header_home.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/nav_header_main.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/restaurantbased_list_layout.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/layout/toprestaurant_frag.xml" value="0.19010416666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/menu/activity_main_drawer.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/menu/home.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/menu/main.xml" value="0.20416666666666666" />
+        <entry key="..\:/lambton/term2/android/Feed/app/src/main/res/mipmap-anydpi-v26/logo.xml" value="0.136" />
         <entry key="app/src/main/res/drawable-v24/baseline_menu.xml" value="0.115" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_android_black_24dp.xml" value="0.1145" />

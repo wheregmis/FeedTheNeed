@@ -5,6 +5,7 @@ import com.example.feedtheneed.domain.model.Event;
 import com.example.feedtheneed.domain.repository.EventRepository;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class AddEventToFirebase {
     Event event;

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.feedtheneed.R
 import com.example.feedtheneed.data.repository.ChatRepositoryImplementation
 import com.example.feedtheneed.domain.model.ChatListItem
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -22,6 +23,9 @@ class ChatListActivity : AppCompatActivity(), CoroutineScope {
     lateinit var recyclerView: RecyclerView
     lateinit var currentChatList: ArrayList<ChatListItem>
 
+    var firebaseAuth = FirebaseAuth.getInstance()
+    var firebaseUser = firebaseAuth.currentUser;
+    var currentUserId = ""
     private var job: Job = Job()
 
     override val coroutineContext: CoroutineContext
@@ -42,8 +46,11 @@ class ChatListActivity : AppCompatActivity(), CoroutineScope {
         currentChatList = chatRepositoryImplementation.getCurrentChatList()
         connectWithUI()
         launch {
+            currentUserId = chatRepositoryImplementation.getUserIdByEmail(firebaseUser?.email!!)
             val result =  chatRepositoryImplementation.getChatListForUserId(
-                "yZiAeAdxV49PkwYaNKSk")
+                currentUserId)
+            Log.d(TAG, "searching for user email: ${firebaseUser?.email!!}")
+            Log.d(TAG, "searching for user Id: $currentUserId")
             Log.d(TAG, "Got the chat list: $result")
             updateChatList(result) // onResult is called on the main thread
         }
@@ -65,6 +72,13 @@ class ChatListActivity : AppCompatActivity(), CoroutineScope {
     }
 
     private fun updateChatList(result: ArrayList<ChatListItem>) {
+        for (chatList in result){
+            if(currentUserId.equals(chatList.fromUserId)){
+                chatList.displayName = chatList.toUserName
+            }else{
+                chatList.displayName = chatList.fromUserName
+            }
+        }
         adapter?.dataSet  = result
         adapter?.notifyDataSetChanged()
     }

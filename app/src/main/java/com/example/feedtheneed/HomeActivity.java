@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.feedtheneed.domain.model.Event;
 import com.example.feedtheneed.presentation.event.AddEventActivity;
+import com.example.feedtheneed.presentation.event.ViewEventActivity;
 import com.example.feedtheneed.presentation.user.ProfileActivity;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.Task;
@@ -133,6 +134,36 @@ public class HomeActivity extends AppCompatActivity {
                 findViewById(R.id.search);
         textView.setAdapter(adapter);
         updateEventList();
+
+        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String eventName = EVENTS.get(i);
+                Event selectedEvent = null;
+                for (Event event: eventList) {
+                    if (event.getEventName().equals(eventName)) {
+                        selectedEvent = event;
+                        break;
+                    }
+                }
+
+                if (selectedEvent != null) {
+                    Intent intent = new Intent(HomeActivity.this, ViewEventActivity.class);
+
+                    //Create the bundle
+                    Bundle bundle = new Bundle();
+
+                    //Add your data to bundle
+                    bundle.putString("eventId", selectedEvent.getEventId());
+
+                    //Add the bundle to the intent
+                    intent.putExtras(bundle);
+
+                    //Fire that second activity
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     private void updateEventList() {
@@ -156,12 +187,6 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
 
     @Override
     public boolean onSupportNavigateUp() {
