@@ -25,7 +25,7 @@ import kotlin.coroutines.CoroutineContext
 
 
 class ChatActivity : AppCompatActivity(), CoroutineScope {
-    var currentUserId = "yZiAeAdxV49PkwYaNKSk"
+    var currentUserId = ""
     var currentChat: Chat = Chat("user1", "user2")
 
 //        imageView.findViewById(R.id.imageView);
@@ -63,6 +63,7 @@ class ChatActivity : AppCompatActivity(), CoroutineScope {
 
 
 
+
         var chatId:String = intent.getStringExtra("chatId").toString()
         var toUserId:String = intent.getStringExtra("toUserId").toString()
         chatInfo = intent.getSerializableExtra("chatInfo") as? ChatListItem
@@ -74,6 +75,8 @@ class ChatActivity : AppCompatActivity(), CoroutineScope {
 
 
         launch {
+            currentUserId = chatRepositoryImplementation.getUserIdByEmail(firebaseUser?.email!!);
+
             if(chatInfo === null){
                 var toUserInfo = chatRepositoryImplementation.getUserById(toUserId)
                 var fromUserInfo = chatRepositoryImplementation.getUserById(currentUserId)
@@ -87,8 +90,6 @@ class ChatActivity : AppCompatActivity(), CoroutineScope {
                             toUserInfo.userFullName)
                     }
                 }
-            }else{
-                toUserId = chatInfo!!.toUserId
             }
             if(chatId === null){
                 currentUserId = firebaseUser?.email?.let {
@@ -98,8 +99,11 @@ class ChatActivity : AppCompatActivity(), CoroutineScope {
                 }!!
 
             }
+
+
             chatId = chatRepositoryImplementation.checkIfChatExists(
-                    currentUserId, toUserId)
+                chatInfo!!.fromUserId, chatInfo!!.toUserId)
+
             Log.d(TAG, "created new chat with Id: $chatId")
             connectWithUI()
             connectWithFireBase()

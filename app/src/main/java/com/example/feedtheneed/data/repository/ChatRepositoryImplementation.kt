@@ -94,6 +94,7 @@ class ChatRepositoryImplementation: ChatRepository {
                 for (document in (queryChatPrimary + queryChatSecondary)){
                     currentChatId = document.id
                     this.currentChat = document.toObject<Chat>()!!
+                    Log.d(TAG, "Current chat is retrieved: ${this.currentChat}")
                 }
             }else{
                 var chat = Chat(fromUser, toUser)
@@ -129,9 +130,14 @@ class ChatRepositoryImplementation: ChatRepository {
     override fun sendANewMessage(message: String, currentUserId: String, currentChatId:String) {
         var owner = 0
         // define ownerId
-        if(currentChat.fromUser === currentUserId){
+        Log.d(TAG, "current User Id: $currentUserId")
+        Log.d(TAG, "current From Id: ${currentChat.fromUser}")
+        Log.d(TAG, "current Chat Id: $currentChatId")
+        if(currentChat.fromUser.equals(currentUserId)){
+            Log.d(TAG, "This is from User")
             owner = 1
         }else{
+            Log.d(TAG, "This is to User")
             owner = 2
         }
 
@@ -167,14 +173,24 @@ class ChatRepositoryImplementation: ChatRepository {
             for (document in (queryChatPrimary + queryChatSecondary)){
                 val chatDoc = document.toObject<Chat>()
                 Log.d(TAG, "Got maching chat: $chatDoc")
-                val chatDocToUserData = userCollection.document(chatDoc.toUser).get().await().toObject<User>()
-                val chatDocFromUserData = userCollection.document(chatDoc.fromUser).get().await().toObject<User>()
+                Log.d(TAG, "from user: ${chatDoc.fromUser}")
+                Log.d(TAG, "to user: ${chatDoc.toUser}")
+                val chatDocToUserData = userCollection.document(chatDoc.toUser.trim()).get().await().toObject<User>()
+                val chatDocFromUserData = userCollection.document(chatDoc.fromUser.trim()).get().await().toObject<User>()
                 var chatDisplayName = ""
                 if(userId === chatDoc.fromUser){
+                    Log.d(TAG,"Adding display to To user" )
                     chatDisplayName = chatDocToUserData!!.userFullName
                 }else{
+                    Log.d(TAG,"Adding display to From user" )
                     chatDisplayName = chatDocFromUserData!!.userFullName
                 }
+                Log.d(TAG,"chat list item 1: ${document.id} " )
+                Log.d(TAG,"chat list item 2: ${chatDoc.fromUser} " )
+                Log.d(TAG,"chat list item 3: ${chatDocFromUserData!!.userFullName} " )
+                Log.d(TAG,"chat list item 4: ${chatDoc.toUser} " )
+                Log.d(TAG,"chat list item 5: ${chatDocToUserData!!.userFullName} " )
+                Log.d(TAG,"chat list item 6: ${chatDisplayName} " )
                 val chatListItem = ChatListItem(document.id,
                     chatDoc.fromUser,
                     chatDocFromUserData!!.userFullName,
@@ -182,6 +198,8 @@ class ChatRepositoryImplementation: ChatRepository {
                     chatDocToUserData!!.userFullName,
                     chatDisplayName
                 )
+
+                Log.d(TAG,"chat list item 7: $chatListItem " )
                 userChatList.add(chatListItem)
             }
             userChatList

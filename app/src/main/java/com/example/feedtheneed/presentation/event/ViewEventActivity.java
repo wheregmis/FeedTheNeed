@@ -16,8 +16,10 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.feedtheneed.R;
+import com.example.feedtheneed.domain.model.Event;
 import com.example.feedtheneed.domain.usecase.event.EventUseCase;
 import com.example.feedtheneed.domain.usecase.event.EventUseCaseInterface;
+import com.example.feedtheneed.presentation.chat.ChatActivity;
 import com.example.feedtheneed.presentation.rating.FoodRatingActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -54,6 +56,9 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
     ArrayList<String> imageUrlList = new ArrayList<>();
     Context context;
     ViewPagerAdapter viewPagerAdapter;
+
+    String eventHostId = "";
+    String eventParticipantId = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +92,8 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
         //Extract the data…
         eventIdGlobal = bundle.getString("eventId");
 
+
+
         Log.d("EventIdInViewPage", "EventId"+eventIdGlobal);
 
         EventUseCaseInterface eventUseCase = new EventUseCase();
@@ -98,6 +105,10 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
                 eventType.setText(event.get("eventFoodType").toString());
                 eventDescription.setText(event.get("eventDescription").toString());
                 String eventDateTimeString = event.get("eventDate").toString() +" "+ event.get("eventTime").toString();
+
+                // adding hacks
+//                eventHostId = event.get("eventHostId").toString();
+//                eventParticipantId = event.get("eventVolunteerId").toString();
 
                 // TODO: 04/08/2022 Handle image array for sliders @Namrata Miss
                 imageUrlList = (ArrayList<String>) event.get("eventImageUrls");
@@ -209,18 +220,30 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
         findViewById(R.id.chat_restaurant).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ViewEventActivity.this, ChatActivity.class);
-                intent.putExtra("toUserId", "jKwsV8VysdLFkdkC8VsM");
-                startActivity(intent);
+                if(eventHostId != null){
+                    Intent intent = new Intent(ViewEventActivity.this, ChatActivity.class);
+                    intent.putExtra("toUserId", "yZiAeAdxV49PkwYaNKSk");
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(), "No Host has been added to this event", Toast.LENGTH_SHORT);
+                }
+
             }
         });
 
         findViewById(R.id.chat_volunteer).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ViewEventActivity.this, ChatActivity.class);
-                intent.putExtra("toUserId", "jKwsV8VysdLFkdkC8VsM");
-                startActivity(intent);
+
+                if(eventParticipantId != null){
+                    Intent intent = new Intent(ViewEventActivity.this, ChatActivity.class);
+                    intent.putExtra("toUserId", "sOdadrwcL8t9LUihkIqW");
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(), "No participants has been added to this event", Toast.LENGTH_SHORT);
+                }
+
+
             }
         });
 
