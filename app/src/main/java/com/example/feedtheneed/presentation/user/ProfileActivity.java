@@ -1,5 +1,6 @@
 package com.example.feedtheneed.presentation.user;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,11 +13,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.feedtheneed.HomeActivity;
 import com.example.feedtheneed.R;
 import com.example.feedtheneed.data.repository.AuthRepoImplementation;
 import com.example.feedtheneed.domain.repository.AuthRepository;
 import com.example.feedtheneed.domain.usecase.user.UserUseCaseInterface;
 import com.example.feedtheneed.domain.usecase.user.UserUserUseCase;
+import com.example.feedtheneed.presentation.authentication.AuthActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -94,7 +97,8 @@ public class ProfileActivity extends AppCompatActivity {
                 authRepository.signOut(ProfileActivity.this).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        finish();
+                        startActivity(new Intent(getApplicationContext(), AuthActivity.class)
+                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                     }
                 });
             }

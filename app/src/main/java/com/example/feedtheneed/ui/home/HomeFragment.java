@@ -29,8 +29,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.feedtheneed.HomeActivity;
 import com.example.feedtheneed.domain.usecase.user.UserUseCaseInterface;
 import com.example.feedtheneed.domain.usecase.user.UserUserUseCase;
+import com.example.feedtheneed.presentation.authentication.AuthActivity;
 import com.example.feedtheneed.presentation.chat.ChatActivity;
 import com.example.feedtheneed.CustomViewPagerAdapter;
 import com.example.feedtheneed.R;
@@ -126,6 +128,14 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         bottom_sheet = root.findViewById(R.id.lvBottomSheetBehaviour);
         sheetBehavior = BottomSheetBehavior.from(bottom_sheet);
         ivBottomSheet = root.findViewById(R.id.mazimizeBottomSheet);
+
+//        if(firebaseUser==null)
+//        {
+//            // When user already sign in
+//            // redirect to profile activity
+//            startActivity(new Intent(getContext(), HomeActivity.class)
+//                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+//        }
 
         binding.floatAdd.setOnClickListener(new View.OnClickListener() {
             @Override
