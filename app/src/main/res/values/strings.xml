@@ -41,4 +41,5 @@
     <string name="user_additional_information_confirmation">User Additional Information Confirmation</string>
     <string name="display_name">Display Name</string>
     <string name="continue_as_a_restaurant">Continue as a Restaurant</string>
+    <string name="enter_message_here">Enter message here</string>
 </resources>

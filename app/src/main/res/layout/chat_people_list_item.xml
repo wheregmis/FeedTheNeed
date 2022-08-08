@@ -10,27 +10,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:padding="5dp">
         <com.mikhaellopez.circularimageview.CircularImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/profile"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:background="@drawable/ic_baseline_person_24"
             />
         <TextView
             android:id="@+id/tv_chat_person"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_margin="@dimen/_5sdp"
             android:text="Person 1"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16ssp"
+            />
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:layout_gravity="right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/chat" />
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:background="@drawable/chatt" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
