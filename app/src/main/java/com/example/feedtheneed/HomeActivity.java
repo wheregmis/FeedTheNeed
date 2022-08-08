@@ -1,10 +1,13 @@
 package com.example.feedtheneed;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.feedtheneed.presentation.event.AddEventActivity;
@@ -12,6 +15,7 @@ import com.example.feedtheneed.presentation.user.ProfileActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -33,6 +37,7 @@ public class HomeActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
     CircularImageView imageView;
     Toolbar toolbar;
+    SearchView mSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +51,24 @@ public class HomeActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         //toolbar.setTitle("Add Activity");
         setSupportActionBar(toolbar);
+        mSearchView = toolbar.findViewById(R.id.search);
+        mSearchView.setQueryHint("Search here");
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        mSearchView.setSearchableInfo(searchManager
+                .getSearchableInfo(this.getComponentName()));
+        mSearchView.setMaxWidth(Integer.MAX_VALUE);
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Toast.makeText(HomeActivity.this, newText, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
 //        imageView.findViewById(R.id.imageView);
         firebaseAuth= FirebaseAuth.getInstance();
 

@@ -2,6 +2,8 @@ package com.example.feedtheneed.ui.home;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -21,14 +23,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
@@ -90,6 +95,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private ImageView ivBottomSheet;
     private BottomSheetDialog dialog;
     private ViewPager eventsViewPager;
+    private ArrayAdapter mArrayAdapter;
 
     private GoogleMap mMap;
     private MapView mMapView;
@@ -116,6 +122,27 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         mMapView = (MapView) root.findViewById(R.id.mapView);
         nearbyEvents = new ArrayList<>();
         involvedEvents = new ArrayList<>();
+
+//        searchView.setActivated(true);
+//        searchView.onActionViewExpanded();
+//        searchView.setIconified(false);
+//        searchView.clearFocus();
+
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                Toast.makeText(getActivity(), query, Toast.LENGTH_SHORT).show();
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//
+//                Toast.makeText(getActivity(), newText, Toast.LENGTH_SHORT).show();
+//                return false;
+//            }
+//        });
+
 
         try {
             MapsInitializer.initialize(getActivity().getApplicationContext());
@@ -599,10 +626,29 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-
+        SearchView searchView;
+        SearchManager searchManager = (SearchManager)getActivity().
+                getSystemService(Context.SEARCH_SERVICE);
         inflater.inflate(R.menu.event_search, menu);
+        MenuItem mSearch = menu.findItem(R.id.app_bar_search);
 
-        MenuItem searchItem = menu.findItem(R.id.app_bar_search);
-        final SearchView searchView = (SearchView)
+        SearchView mSearchView = (SearchView) mSearch.getActionView();
+        mSearchView.setQueryHint("Search here");
+        mSearchView.setSearchableInfo(searchManager
+                .getSearchableInfo(getActivity().getComponentName()));
+        mSearchView.setMaxWidth(Integer.MAX_VALUE);
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(getActivity(), query, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+//                adapter.getFilter().filter(newText);
+                Toast.makeText(getActivity(), newText, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
     }
 }
