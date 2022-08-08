@@ -25,6 +25,7 @@
         android:id="@+id/tvStarInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="number"
         android:textSize="16sp"
         android:layout_below="@+id/textStarInput"
         />

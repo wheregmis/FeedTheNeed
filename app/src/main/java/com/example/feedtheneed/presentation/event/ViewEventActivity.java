@@ -148,9 +148,24 @@ public class ViewEventActivity extends AppCompatActivity {
         findViewById(R.id.btnSubmit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), FoodRatingActivity.class));
+
+                Intent i = new Intent(context, FoodRatingActivity.class);
+
+                //Create the bundle
+                Bundle bundle = new Bundle();
+
+                //Add your data to bundle
+                bundle.putString("eventId", eventIdGlobal);
+
+                //Add the bundle to the intent
+                i.putExtras(bundle);
+
+                //Fire that second activity
+                context.startActivity(i);
+
             }
         });
+
 
     }
 
