@@ -65,6 +65,7 @@
             android:name=".MapsActivity"
             android:exported="true"
             android:label="@string/title_activity_maps" />
+
         <activity
             android:name=".presentation.event.AddEventActivity"
             android:exported="true"
