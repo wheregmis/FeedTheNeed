@@ -58,7 +58,7 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginBottom="@dimen/_5sdp"
         android:background="@drawable/button_bg"
-        android:text="@string/next"
+        android:text="Rate"
         android:gravity="center"
         android:textColor="@color/mainbg"
         android:textSize="@dimen/_16sdp"

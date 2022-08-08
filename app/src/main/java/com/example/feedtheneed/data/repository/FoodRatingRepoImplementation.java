@@ -23,6 +23,8 @@ public class FoodRatingRepoImplementation {
         foodRating.put("restaurantId", restaurantId);
         foodRating.put("userId", userId);
         foodRating.put("comment", comment);
+        foodRating.put("status", "Positive Sentiment");
+        foodRating.put("sentimentScore", "");
 
         return db.collection("ratings")
                 .add(foodRating)

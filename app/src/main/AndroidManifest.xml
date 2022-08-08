@@ -18,7 +18,7 @@
         android:theme="@style/Theme.FeedTheNeed"
         tools:targetApi="31">
         <activity
-            android:name=".FoodRatingActivity"
+            android:name=".presentation.rating.FoodRatingActivity"
             android:exported="false" />
         <activity
             android:name=".SplashActivity"
