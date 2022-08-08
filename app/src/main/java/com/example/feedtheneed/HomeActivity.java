@@ -133,6 +133,24 @@ public class HomeActivity extends AppCompatActivity {
                 findViewById(R.id.search);
         textView.setAdapter(adapter);
         updateEventList();
+
+        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String eventName = EVENTS.get(i);
+                Event selectedEvent = null;
+                for (Event event: eventList) {
+                    if (event.getEventName().equals(eventName)) {
+                        selectedEvent = event;
+                        break;
+                    }
+                }
+
+                if (selectedEvent != null) {
+
+                }
+            }
+        });
     }
 
     private void updateEventList() {
