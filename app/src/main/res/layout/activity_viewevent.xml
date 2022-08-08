@@ -150,7 +150,7 @@
             </LinearLayout>
         </LinearLayout>
     <LinearLayout
-        android:id="@+id/lay2"
+        android:id="@+id/layout_both"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">

@@ -120,6 +120,11 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
                 if (obj.contains(firebaseUser.getEmail())){
                     findViewById(R.id.event_participant).setVisibility(View.INVISIBLE);
                 }
+
+                if ((!event.get("eventVolunteer").equals("") || !event.get("eventVolunteer").equals(null)) && obj.contains(firebaseUser.getEmail())){
+                    // TODO: 08/08/2022 Edit here to hide the white space 
+                    findViewById(R.id.layout_both).setVisibility(View.INVISIBLE);
+                }
             }
         });
 
