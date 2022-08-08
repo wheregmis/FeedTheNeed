@@ -33,6 +33,7 @@
             android:layout_gravity="right"
             android:layout_width="@dimen/_25sdp"
             android:layout_height="@dimen/_25sdp"
+            android:layout_margin="@dimen/_3sdp"
             android:background="@drawable/chatt" />
 
     </LinearLayout>
