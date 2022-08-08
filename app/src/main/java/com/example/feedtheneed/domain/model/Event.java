@@ -17,9 +17,14 @@ public class Event implements Serializable {
     private String eventParticipantsCount;
     private ArrayList<String> eventParticipants;
     private ArrayList<String> eventImageUrls;
+    public String eventHostId = "";
+    public String eventVolunteerId = "";
 
 
-    public Event(String eventId, String eventName, String eventHost, String eventDescription, String eventDate, String eventTime, String eventLat, String eventLong, ArrayList<String> eventParticipants, String eventFoodType, String eventParticipantsCount, ArrayList<String> eventImageUrls) {
+    public Event(String eventId, String eventName, String eventHost,
+                 String eventDescription, String eventDate, String eventTime,
+                 String eventLat, String eventLong, ArrayList<String> eventParticipants,
+                 String eventFoodType, String eventParticipantsCount, ArrayList<String> eventImageUrls) {
         this.eventId = eventId;
         this.eventName = eventName;
         this.eventHost = eventHost;

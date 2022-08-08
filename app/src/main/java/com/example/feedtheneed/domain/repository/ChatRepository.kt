@@ -8,7 +8,7 @@ interface ChatRepository {
     fun getChatById(chatId: String): Chat
     fun getUserChats(userId: String): ArrayList<ChatListItem>
     suspend fun checkIfChatExists(fromUser: String, toUser: String): String
-    fun sendANewMessage(message: String, currentUserId: String)
+    fun sendANewMessage(message: String, currentUserId: String, currentChatId: String)
     fun getCurrentChatId(): String
     suspend fun getChatListForUserId(userId: String): ArrayList<ChatListItem>
     fun getCurrentChatList(): ArrayList<ChatListItem>

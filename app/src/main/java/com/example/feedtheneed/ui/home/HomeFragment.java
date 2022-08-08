@@ -38,11 +38,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.feedtheneed.HomeActivity;
 import com.example.feedtheneed.domain.usecase.user.UserUseCaseInterface;
 import com.example.feedtheneed.domain.usecase.user.UserUserUseCase;
-import com.example.feedtheneed.presentation.authentication.AuthActivity;
-import com.example.feedtheneed.presentation.chat.ChatActivity;
 import com.example.feedtheneed.CustomViewPagerAdapter;
 import com.example.feedtheneed.R;
 import com.example.feedtheneed.data.repository.LeaderboardRepoImplementation;
@@ -180,6 +177,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         binding.fabList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Incase of opening chat activity direct
+//                Intent intent = new Intent(getContext(), ChatActivity.class);
+//                intent.putExtra("toUserId", "jKwsV8VysdLFkdkC8VsM");
+//                startActivity(intent);
+
+
                 startActivity(new Intent(getActivity(), ChatListActivity.class));
             }
         });

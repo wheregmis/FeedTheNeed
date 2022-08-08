@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="fabList" type="id" />
-    <item name="tv_chat" type="id" />
 </resources>

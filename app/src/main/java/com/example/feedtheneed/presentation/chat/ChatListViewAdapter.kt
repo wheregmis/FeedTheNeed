@@ -3,6 +3,7 @@ package com.example.feedtheneed.presentation.chat
 import android.app.PendingIntent.getActivity
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -43,9 +44,7 @@ class ChatListViewAdapter(var dataSet: ArrayList<ChatListItem>) :
 
         return ViewHolder(view)
     }
-    private fun onItemClick(position: Int) {
-       Log.d(TAG, "Recycle view clicked!")
-    }
+
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
@@ -53,11 +52,13 @@ class ChatListViewAdapter(var dataSet: ArrayList<ChatListItem>) :
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
 
+
         viewHolder.textView.text = dataSet[position].displayName
         viewHolder.itemView.setOnClickListener(View.OnClickListener {
             Log.d(TAG, "clicked the view: ${dataSet[position]}")
             val intent = Intent(viewHolder.itemView.context, ChatActivity::class.java)
             intent.putExtra("chatId", dataSet[position].chatId)
+            intent.putExtra("chatInfo", dataSet[position] )
             viewHolder.itemView.context.startActivity(intent)
 
         })
