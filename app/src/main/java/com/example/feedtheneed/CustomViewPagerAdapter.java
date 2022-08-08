@@ -44,7 +44,6 @@ public class CustomViewPagerAdapter extends PagerAdapter {
         if (position == INVOLVED_EVENT) {
             nearbyEvents = involvedEvents;
         }
-
         rvNearbyEvents.setAdapter(new NearbyEventAdapter(mContext, nearbyEvents));
 
         return layout;

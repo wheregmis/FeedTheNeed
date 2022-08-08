@@ -1,5 +1,5 @@
 <resources>
-   <!-- //MAPS_API_KEY=AIzaSyDDqHH7cDDp4J8eM1zb6SbYFa1Npi474yE-->
+    <!-- //MAPS_API_KEY=AIzaSyDDqHH7cDDp4J8eM1zb6SbYFa1Npi474yE-->
     <string name="app_name">Feed The Need</string>
     <string name="MAPS_API_KEY">AIzaSyBGx7fGc6cYOR4tVHN51l5WHW3FuWXZTMI</string>
     <string name="title_activity_maps">MapsActivity</string>
