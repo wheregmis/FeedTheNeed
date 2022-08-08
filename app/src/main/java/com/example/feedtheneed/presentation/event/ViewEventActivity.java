@@ -19,6 +19,12 @@ import com.example.feedtheneed.R;
 import com.example.feedtheneed.domain.usecase.event.EventUseCase;
 import com.example.feedtheneed.domain.usecase.event.EventUseCaseInterface;
 import com.example.feedtheneed.presentation.rating.FoodRatingActivity;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -29,7 +35,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class ViewEventActivity extends AppCompatActivity {
+public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCallback {
     ViewPager viewPager;
     LinearLayout sliderDotspanel;
     private int dotscount;
@@ -42,6 +48,8 @@ public class ViewEventActivity extends AppCompatActivity {
     private String eventIdGlobal;
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
+    private GoogleMap mMap;
+    private LatLng eventLatLng;
 
     ArrayList<String> imageUrlList = new ArrayList<>();
     Context context;
@@ -51,6 +59,12 @@ public class ViewEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_viewevent);
         context=ViewEventActivity.this;
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
         viewPager = (ViewPager) findViewById(R.id.view_pager);
 
         sliderDotspanel = (LinearLayout) findViewById(R.id.SliderDots);
@@ -214,4 +228,16 @@ public class ViewEventActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        mMap = googleMap;
+        if (eventLatLng != null){
+            mMap.addMarker(new MarkerOptions()
+                    .position(eventLatLng)
+                    .title("Event Location"));
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eventLatLng, 11));
+
+        }
+    }
 }

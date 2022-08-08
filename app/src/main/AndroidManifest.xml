@@ -16,14 +16,18 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.FeedTheNeed"
+        android:configChanges="orientation"
+        android:screenOrientation="locked"
         tools:targetApi="31">
         <activity
             android:name=".presentation.rating.FoodRatingActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SplashActivity"
             android:exported="true"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.FeedTheNeed.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,14 +37,17 @@
         </activity>
         <activity
             android:name=".presentation.chat.ChatListActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".presentation.chat.ChatActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".HomeActivity"
             android:exported="false"
             android:label="@string/title_activity_home"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.FeedTheNeed.NoActionBar" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
@@ -60,19 +67,23 @@
         <activity
             android:name=".presentation.authentication.AuthActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:label="@string/app_name"></activity>
         <activity
             android:name=".MapsActivity"
             android:exported="true"
-            android:label="@string/title_activity_maps" />
+            android:label="@string/title_activity_maps"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".presentation.event.AddEventActivity"
             android:exported="true"
-            android:label="@string/add_event" />
+            android:label="@string/add_event"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".presentation.user.AdditionalInformationActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_maps" />
         <activity
             android:name=".presentation.user.ProfileActivity"

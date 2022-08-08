@@ -38,4 +38,7 @@
     <string name="logout">Logout</string>
     <string name="no_of_star">No of Star</string>
     <string name="comment">Comment</string>
+    <string name="user_additional_information_confirmation">User Additional Information Confirmation</string>
+    <string name="display_name">Display Name</string>
+    <string name="continue_as_a_restaurant">Continue as a Restaurant</string>
 </resources>
