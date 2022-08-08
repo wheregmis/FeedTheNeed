@@ -169,7 +169,7 @@
                     <ImageView
                         android:layout_width="@dimen/_25sdp"
                         android:layout_height="@dimen/_25sdp"
-                        android:src="@drawable/ic_baseline_email_24"/>
+                        android:src="@drawable/ic_baseline_supervised_user_circle_24"/>
                     <TextView
                         android:textStyle="bold"
                         android:id="@+id/user_type"
