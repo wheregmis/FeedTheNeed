@@ -5,59 +5,77 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.feedtheneed.R
+import com.example.feedtheneed.data.repository.ChatRepositoryImplementation
 import com.example.feedtheneed.domain.model.Chat
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.firestore.ktx.toObject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 
-class ChatActivity : AppCompatActivity() {
-    var currentChatId = "newchat"
-    var currentUserId = ""
+class ChatActivity : AppCompatActivity(), CoroutineScope {
+    var currentUserId = "yZiAeAdxV49PkwYaNKSk"
     var currentChat: Chat = Chat("user1", "user2")
+
+
     private var mFirestore = FirebaseFirestore.getInstance()
+    private val chatRepositoryImplementation = ChatRepositoryImplementation()
     var adapter: ChatViewAdapter? = null
 
     // UI Elements here
     lateinit var btnSend: Button
     lateinit var etMessageBody: EditText
+    lateinit var recyclerView: RecyclerView
 
+
+    private var job: Job = Job()
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
+
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.feedtheneed.R.layout.chat_layout)
+        setContentView(R.layout.chat_message_layout)
         connectWithUI()
         connectWithFireBase()
-        //readChatById()
-        initiateANewChat()
 
-        // TODO: Start a new Chat entry if the chat does not exist
-
-        // Adding recycle view
+        var chatId:String = intent.getStringExtra("chatId").toString()
 
 
+        launch {
+            chatId = chatRepositoryImplementation.checkIfChatExists(
+                currentUserId, "jKwsV8VysdLFkdkC8VsM")
+            updateChatList(chatId)
+        }
 
     }
 
 
     private fun connectWithUI(){
-         btnSend = findViewById<Button>(R.id.btn_send)
-         etMessageBody = findViewById<EditText>(com.example.feedtheneed.R.id.et_message_input)
+         btnSend = findViewById(R.id.btn_send)
+         etMessageBody = findViewById(R.id.et_message_input)
          btnSend.setOnClickListener {
-            // your code to perform when the user clicks on the button
             if(etMessageBody.text.toString() != null){
                 Log.d(TAG, "Got text: ${etMessageBody.text}")
-                sendNewChat(etMessageBody.text.toString(), 1)
+                chatRepositoryImplementation.sendANewMessage(etMessageBody.text.toString(), currentUserId)
+                etMessageBody.text.clear()
             }
-
         }
 
-        val recyclerView = findViewById<RecyclerView>(R.id.rv_messages)
+        recyclerView = findViewById(R.id.rv_messages)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapter = ChatViewAdapter( this.currentChat.chatHistory)
         recyclerView.adapter = adapter
@@ -67,65 +85,38 @@ class ChatActivity : AppCompatActivity() {
         mFirestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
     }
 
-    private fun initiateANewChat(){
-        var chat = Chat("user1", "user2")
 
 
-        mFirestore.collection("chat").document(currentChatId)
-            .set(chat)
-            .addOnSuccessListener {
-                //Toast.makeText(this, "DocumentSnapshot successfully written!", Toast.LENGTH_SHORT).show()
-                //Log.d(TAG, "New Chat initiated: ${documentRef.id}")
 
-                //initListView()
-            }.addOnFailureListener {
-                    e -> Log.e(TAG, "Error writing document", e)
-            }
-    }
 
-    private fun readChatById(){
-
-        val docRef = mFirestore.collection("chat").document(currentChatId)
-        docRef.get()
-            .addOnSuccessListener { document ->
-                if (document != null) {
-                    // assign data to chat object
-                    Log.d(TAG, "DocumentSnapshot data: $document.data")
-                    this.currentChat = document.toObject<Chat>()!!
-                    if (this.currentChat != null) {
-                        Log.d(TAG, "DocumentSnapshot data obj: ${currentChat.fromUser}")
-                        Log.d(TAG, "DocumentSnapshot data chat history obj: ${currentChat.chatHistory}")
-                        adapter?.dataSet  = this.currentChat.chatHistory
-                        adapter?.notifyDataSetChanged()
-                    }
-                } else {
-                    Log.d(TAG, "No such document")
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.d(TAG, "get failed with ", exception)
+    private fun startListeningToChatUpdates(chatId: String){
+        val docRef = mFirestore.collection("chat").document(chatId)
+        docRef.addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                Log.w(TAG, "Listen failed.", e)
+                return@addSnapshotListener
             }
 
-    }
-
-    private fun sendNewChat(message: String, owner: Int){
-        this.currentChat.addToChatHistory(etMessageBody.text.toString(), owner)
-        Log.d(TAG, this.currentChat.toString())
-        etMessageBody.text.clear()
-
-        mFirestore.collection("chat").document(this.currentChatId)
-            .set(this.currentChat)
-            .addOnSuccessListener {
-                //Toast.makeText(this, "Message sent Success!", Toast.LENGTH_SHORT).show()
-                Log.d(TAG, "DocumentSnapshot successfully written!")
+            if (snapshot != null && snapshot.exists()) {
+                Log.d(TAG, "Current data: ${snapshot.data}")
+                this.currentChat = Chat()
+                currentChat = snapshot.toObject<Chat>()!!
+                Log.d(TAG, "DocumentSnapshot data obj: ${currentChat.fromUser}")
+                Log.d(TAG, "DocumentSnapshot data chat history obj: ${currentChat.chatHistory}")
                 adapter?.dataSet  = this.currentChat.chatHistory
                 adapter?.notifyDataSetChanged()
 
-                //initListView()
-            }.addOnFailureListener {
-                    e -> Log.e(TAG, "Error writing document", e)
+            } else {
+                Log.d(TAG, "Current data: null")
             }
+        }
+
+
     }
 
+
+    private fun updateChatList(chatId: String) {
+        startListeningToChatUpdates(chatId)
+    }
 
 }

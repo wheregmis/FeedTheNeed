@@ -59,6 +59,7 @@ public class User {
         this.userEmail = userEmail;
     }
 
+    public User(){}
     public User(String userFullName, String userEmail) {
         this.userFullName = userFullName;
         this.userEmail = userEmail;
