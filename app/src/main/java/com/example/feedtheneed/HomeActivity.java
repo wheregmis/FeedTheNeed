@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.feedtheneed.domain.model.Event;
 import com.example.feedtheneed.presentation.event.AddEventActivity;
+import com.example.feedtheneed.presentation.event.ViewEventActivity;
 import com.example.feedtheneed.presentation.user.ProfileActivity;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.Task;
@@ -147,7 +148,19 @@ public class HomeActivity extends AppCompatActivity {
                 }
 
                 if (selectedEvent != null) {
+                    Intent intent = new Intent(HomeActivity.this, ViewEventActivity.class);
 
+                    //Create the bundle
+                    Bundle bundle = new Bundle();
+
+                    //Add your data to bundle
+//                    bundle.putString("eventId", selectedEvent.getEventId());
+
+                    //Add the bundle to the intent
+                    intent.putExtras(bundle);
+
+                    //Fire that second activity
+                    startActivity(intent);
                 }
             }
         });
