@@ -112,21 +112,22 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
 
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eventLatLng, 11));
                 }
-                ArrayList<String> obj = (ArrayList<String>) task.getResult().getDocuments().get(0).get("eventParticipants");
 
-                if ((!event.get("eventVolunteer").equals("") || !event.get("eventVolunteer").equals(null)) && obj.contains(firebaseUser.getEmail())){
+                if (event.get("eventVolunteer") != "" || event.get("eventVolunteer") != null){
+                    findViewById(R.id.bevolunteer).setVisibility(View.GONE);
+                }
+                ArrayList<String> obj = (ArrayList<String>) task.getResult().getDocuments().get(0).get("eventParticipants");
+                if (obj.contains(firebaseUser.getEmail())){
+                    findViewById(R.id.event_participant).setVisibility(View.GONE);
+                }
+
+                if ((event.get("eventVolunteer") != "" || event.get("eventVolunteer") != null) && obj.contains(firebaseUser.getEmail())){
                     // TODO: 08/08/2022 Edit here to hide the white space 
                     findViewById(R.id.layout_both).setVisibility(View.GONE);
                 }
                 else
                 {
                     findViewById(R.id.layout_both).setVisibility(View.VISIBLE);
-                    if (!event.get("eventVolunteer").equals("") || !event.get("eventVolunteer").equals(null)){
-                        findViewById(R.id.bevolunteer).setVisibility(View.GONE);
-                    }
-                    if (obj.contains(firebaseUser.getEmail())){
-                        findViewById(R.id.event_participant).setVisibility(View.GONE);
-                    }
                 }
             }
         });
