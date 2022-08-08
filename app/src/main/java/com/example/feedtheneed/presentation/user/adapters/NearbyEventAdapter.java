@@ -83,7 +83,7 @@ public class NearbyEventAdapter extends RecyclerView.Adapter<NearbyEventAdapter.
 
         @Override
         public void onClick(View view) {
-            Toast.makeText(view.getContext(), "position = " + getLayoutPosition(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(view.getContext(), "position = " + getLayoutPosition(), Toast.LENGTH_SHORT).show();
             Intent i = new Intent(context, ViewEventActivity.class);
 
             //Create the bundle
