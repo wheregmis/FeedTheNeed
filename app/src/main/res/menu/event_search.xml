@@ -9,4 +9,10 @@
         app:showAsAction="ifRoom|withText"
         app:actionViewClass="android.widget.SearchView"
         />
+
+    <item
+        android:id="@+id/app_bar_menu_share"
+        android:title="Share"
+        app:showAsAction="never"
+        app:actionProviderClass="androidx.appcompat.widget.ShareActionProvider"/>
 </menu>

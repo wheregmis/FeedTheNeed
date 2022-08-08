@@ -3,20 +3,37 @@ package com.example.feedtheneed;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.feedtheneed.domain.model.Event;
 import com.example.feedtheneed.presentation.event.AddEventActivity;
 import com.example.feedtheneed.presentation.user.ProfileActivity;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.ShareActionProvider;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuItemCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -27,7 +44,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.feedtheneed.databinding.ActivityHomeBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.mikhaellopez.circularimageview.CircularImageView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -38,6 +65,11 @@ public class HomeActivity extends AppCompatActivity {
     CircularImageView imageView;
     Toolbar toolbar;
     SearchView mSearchView;
+    AutoCompleteTextView autoCompleteTextView;
+    MultiAutoCompleteTextView multiAutoCompleteTextView;
+    ArrayList<Event> eventList = new ArrayList<>();
+
+    private static final ArrayList<String> EVENTS = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,24 +83,7 @@ public class HomeActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         //toolbar.setTitle("Add Activity");
         setSupportActionBar(toolbar);
-        mSearchView = toolbar.findViewById(R.id.search);
-        mSearchView.setQueryHint("Search here");
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        mSearchView.setSearchableInfo(searchManager
-                .getSearchableInfo(this.getComponentName()));
-        mSearchView.setMaxWidth(Integer.MAX_VALUE);
-        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(HomeActivity.this, query, Toast.LENGTH_SHORT).show();
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
 //        imageView.findViewById(R.id.imageView);
         firebaseAuth= FirebaseAuth.getInstance();
 
@@ -112,14 +127,41 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, EVENTS);
+        AutoCompleteTextView textView = (AutoCompleteTextView)
+                findViewById(R.id.search);
+        textView.setAdapter(adapter);
+        updateEventList();
     }
 
-   /* @Override
+    private void updateEventList() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("event").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                List<DocumentSnapshot> listEvents = value.getDocuments();
+
+//                // iterating through the array
+                for (DocumentSnapshot documentSnapshot: listEvents) {
+                    LatLng eventLocation = new LatLng(Double.valueOf(documentSnapshot.get("eventLat").toString()), Double.valueOf(documentSnapshot.get("eventLong").toString()));
+
+                    eventList.add(documentSnapshot.toObject(Event.class));
+                }
+
+                for (Event event: eventList) {
+                    EVENTS.add(event.getEventName());
+                }
+            }
+        });
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
         return true;
-    }*/
+    }
 
     @Override
     public boolean onSupportNavigateUp() {
