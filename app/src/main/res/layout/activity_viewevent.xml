@@ -7,7 +7,7 @@
     android:background="@color/white">
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <androidx.viewpager.widget.ViewPager
@@ -201,5 +201,24 @@
         </LinearLayout>
     </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:background="@drawable/button_bg"
+            android:text="Rate this restaurant"
+            android:gravity="center"
+            android:textColor="@color/mainbg"
+            android:textSize="@dimen/_16sdp"
+            />
+    </LinearLayout>
+
 </RelativeLayout>
+
 </ScrollView>

@@ -1,6 +1,7 @@
 package com.example.feedtheneed.presentation.event;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.feedtheneed.R;
 import com.example.feedtheneed.domain.usecase.event.EventUseCase;
 import com.example.feedtheneed.domain.usecase.event.EventUseCaseInterface;
+import com.example.feedtheneed.presentation.rating.FoodRatingActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -140,6 +142,13 @@ public class ViewEventActivity extends AppCompatActivity {
                         Log.d("Document Ref", ""+task.getResult().size());
                     }
                 });
+            }
+        });
+
+        findViewById(R.id.btnSubmit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), FoodRatingActivity.class));
             }
         });
 

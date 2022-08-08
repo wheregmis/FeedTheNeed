@@ -40,6 +40,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -95,15 +96,31 @@ public class AdditionalInformationActivity extends AppCompatActivity implements 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                insertDataToFirebase().addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                        // Redirect user to dashboard
-                        startActivity(new Intent(AdditionalInformationActivity.this
-                                , HomeActivity.class)
-                                );
-                    }
-                });
+                boolean isValidated = true;
+
+                if(txtDisplayName.getText().toString().length() == 0){
+                    txtDisplayName.setError("Please input event participants limit !!");
+                    txtDisplayName.requestFocus();
+                    isValidated = false;
+                }
+                if (userLatLng == null ){
+                    Snackbar snackbar = Snackbar
+                            .make(view, "Please click on a map to select the location !!", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                    isValidated = false;
+                }
+                if (isValidated){
+                    insertDataToFirebase().addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                            // Redirect user to dashboard
+                            startActivity(new Intent(AdditionalInformationActivity.this
+                                    , HomeActivity.class)
+                            );
+                        }
+                    });
+                }
+
 
 
             }
@@ -118,7 +135,7 @@ public class AdditionalInformationActivity extends AppCompatActivity implements 
             isRestaurantVariable = false;
         }
 
-        userLatLng = new LatLng(43.6532, -79.38);
+        //userLatLng = new LatLng(43.6532, -79.38);
 
         User user = new User(
                 firebaseUser.getUid(),
