@@ -10,7 +10,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public interface EventRepository {
     
-    Task<DocumentReference> createEvent(Event event);
+    Task<QuerySnapshot> createEvent(Event event);
 
     void updateEvent();
 
