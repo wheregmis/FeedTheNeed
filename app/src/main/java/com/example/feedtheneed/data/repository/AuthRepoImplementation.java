@@ -52,7 +52,6 @@ public class AuthRepoImplementation implements AuthRepository {
                     Toast.makeText(context, "Logout successful", Toast.LENGTH_SHORT).show();
 
 //                    // Finish activity
-//                    finish();
                 }
             }
         });

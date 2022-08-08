@@ -1,5 +1,5 @@
 <resources>
-   <!-- //MAPS_API_KEY=AIzaSyDDqHH7cDDp4J8eM1zb6SbYFa1Npi474yE-->
+    <!-- //MAPS_API_KEY=AIzaSyDDqHH7cDDp4J8eM1zb6SbYFa1Npi474yE-->
     <string name="app_name">Feed The Need</string>
     <string name="MAPS_API_KEY">AIzaSyBGx7fGc6cYOR4tVHN51l5WHW3FuWXZTMI</string>
     <string name="title_activity_maps">MapsActivity</string>
@@ -36,4 +36,9 @@
     <string name="next">Next</string>
     <string name="login_with_google">Login with Google</string>
     <string name="logout">Logout</string>
+    <string name="no_of_star">No of Star</string>
+    <string name="comment">Comment</string>
+    <string name="user_additional_information_confirmation">User Additional Information Confirmation</string>
+    <string name="display_name">Display Name</string>
+    <string name="continue_as_a_restaurant">Continue as a Restaurant</string>
 </resources>

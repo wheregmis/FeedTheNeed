@@ -38,8 +38,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.feedtheneed.HomeActivity;
 import com.example.feedtheneed.domain.usecase.user.UserUseCaseInterface;
 import com.example.feedtheneed.domain.usecase.user.UserUserUseCase;
+import com.example.feedtheneed.presentation.authentication.AuthActivity;
 import com.example.feedtheneed.presentation.chat.ChatActivity;
 import com.example.feedtheneed.CustomViewPagerAdapter;
 import com.example.feedtheneed.R;
@@ -51,6 +53,7 @@ import com.example.feedtheneed.domain.usecase.event.EventUseCaseInterface;
 import com.example.feedtheneed.presentation.chat.ChatListActivity;
 import com.example.feedtheneed.presentation.event.AddEventActivity;
 import com.example.feedtheneed.presentation.event.ViewEventActivity;
+import com.example.feedtheneed.presentation.user.AdditionalInformationActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -67,6 +70,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -158,6 +162,14 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         sheetBehavior = BottomSheetBehavior.from(bottom_sheet);
         ivBottomSheet = root.findViewById(R.id.mazimizeBottomSheet);
 
+//        if(firebaseUser==null)
+//        {
+//            // When user already sign in
+//            // redirect to profile activity
+//            startActivity(new Intent(getContext(), HomeActivity.class)
+//                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+//        }
+
         binding.floatAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -214,9 +226,23 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         userUseCase.getUserFromFirebase(firebaseUser.getEmail()).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.getResult().getDocuments().get(0).get("restaurant").toString().equals("true")){
-                    binding.floatAdd.setVisibility(View.VISIBLE);
+                if (task.getResult().size() > 0){
+                    if (task.getResult().getDocuments().get(0).get("restaurant").toString().equals("true")){
+                        binding.floatAdd.setVisibility(View.VISIBLE);
+                    }else{
+                    binding.floatChatbot.setVisibility(View.VISIBLE);
+                    }
+                }else{
+                    startActivity(new Intent(getActivity(), AdditionalInformationActivity.class));
+
                 }
+
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                startActivity(new Intent(getActivity(), AdditionalInformationActivity.class));
             }
         });
 
@@ -224,8 +250,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         tabLayout.setupWithViewPager(eventsViewPager);
         tabs = MyTabbedView.getInstance().getTabs();
         eventsViewPager = (ViewPager) root.findViewById(R.id.eventsViewPager);
-
-
+        
         return root;
     }
 

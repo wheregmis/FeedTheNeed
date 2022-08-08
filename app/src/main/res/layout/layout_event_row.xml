@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/_5sdp"
     android:background="@color/white">
 
     <LinearLayout
@@ -10,9 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
+        android:layout_margin="@dimen/_3sdp"
         android:background="@drawable/rounded_background"
         android:orientation="horizontal">
         <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/eventImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/ic_launcher_background"
@@ -34,12 +37,14 @@
                 android:textStyle="bold"
                 android:textSize="20sp" />
             <TextView
+                android:id="@+id/eventHost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Availability"
                 android:textColor="@color/grey"
                 android:textSize="16sp" />
             <TextView
+                android:id="@+id/eventFoodType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Food Type"
