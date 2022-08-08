@@ -90,6 +90,27 @@ public class ViewEventActivity extends AppCompatActivity {
                 Log.d("ViewEventActivity", "ImageUrls: "+imageUrlList);
                 eventDateTime.setText(eventDateTimeString);
                 callViewAdapter(context,imageUrlList);
+                eventLatLng = new LatLng(Double.valueOf(event.get("eventLat").toString()), Double.valueOf(event.get("eventLong").toString()));
+                if (mMap != null){
+                    mMap.addMarker(new MarkerOptions()
+                            .position(eventLatLng)
+                            .title("Event Location"));
+
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eventLatLng, 11));
+                }
+
+                if (!event.get("eventVolunteer").equals("") || !event.get("eventVolunteer").equals(null)){
+                    findViewById(R.id.bevolunteer).setVisibility(View.INVISIBLE);
+                }
+                ArrayList<String> obj = (ArrayList<String>) task.getResult().getDocuments().get(0).get("eventParticipants");
+                if (obj.contains(firebaseUser.getEmail())){
+                    findViewById(R.id.event_participant).setVisibility(View.INVISIBLE);
+                }
+
+                if ((!event.get("eventVolunteer").equals("") || !event.get("eventVolunteer").equals(null)) && obj.contains(firebaseUser.getEmail())){
+                    // TODO: 08/08/2022 Edit here to hide the white space 
+                    findViewById(R.id.layout_both).setVisibility(View.INVISIBLE);
+                }
             }
         });
 
