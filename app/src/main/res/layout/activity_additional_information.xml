@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
+    android:background="@color/white"
     tools:context=".presentation.user.AdditionalInformationActivity">
 
     <TextView
@@ -13,10 +14,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:text="User Additional Information Confirmation"
+        android:text="@string/user_additional_information_confirmation"
         android:layout_marginTop="20dp"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:textColor="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,18 +28,19 @@
         android:id="@+id/textViewFullName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Display Name"
-        android:layout_marginTop="30dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
         android:layout_below="@id/AdditionalInformationTitle"
-        />
+        android:layout_marginTop="30dp"
+        android:text="@string/display_name"
+        android:textColor="@color/primary"
+        android:textSize="@dimen/_16ssp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/tvUserFullName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="16sp"
+        android:textColor="@color/black"
         android:layout_below="@+id/textViewFullName"
         />
 
@@ -56,8 +59,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="16sp"
+        android:textColor="@color/grey"
         android:layout_below="@+id/tvUserFullName"
-        android:text="Continue as a Restaurant"
+        android:text="@string/continue_as_a_restaurant"
         />
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnNext"

@@ -6,36 +6,45 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
+    android:background="@color/white"
     tools:context=".presentation.rating.FoodRatingActivity">
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_300sdp"
+        android:src="@drawable/rateus"/>
 
     <TextView
         android:id="@+id/textStarInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No of Star"
-        android:layout_marginTop="30dp"
-        android:textSize="20sp"
+        android:layout_below="@+id/img"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="@string/no_of_star"
+        android:textSize="@dimen/_16ssp"
         android:textStyle="bold"
+        android:textColor="@color/primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/tvStarInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
         android:layout_below="@+id/textStarInput"
-        />
+        android:inputType="number"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_16ssp" />
 
     <TextView
         android:id="@+id/tvComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Comment"
-        android:layout_marginTop="30dp"
-        android:textSize="20sp"
+        android:text="@string/comment"
+        android:textColor="@color/primary"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:textSize="@dimen/_16ssp"
         android:textStyle="bold"
         android:layout_below="@+id/tvStarInput"
         />
@@ -44,13 +53,48 @@
         android:id="@+id/tvCommentInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textSize="@dimen/_16ssp"
         android:inputType="textMultiLine"
         android:minHeight="68dp"
+        android:textColor="@color/black"
         android:layout_below="@+id/tvComment"
         />
+    <LinearLayout
+        android:layout_below="@+id/tvCommentInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        >
+        <LinearLayout
+            android:layout_margin="@dimen/_5sdp"
+            android:id="@+id/btnSubmit"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/button_bg"
+            >
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/rating"/>
+            <TextView
+                android:gravity="center"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:textColor="@color/mainbg"
+                android:textSize="@dimen/_16sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rate"/>
+        </LinearLayout>
+    </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
+   <!-- <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,10 +102,9 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginBottom="@dimen/_5sdp"
         android:background="@drawable/button_bg"
-        android:text="Rate"
         android:gravity="center"
+        android:text="Rate"
         android:textColor="@color/mainbg"
-        android:textSize="@dimen/_16sdp"
-        />
+        android:textSize="@dimen/_16sdp" />-->
 
 </RelativeLayout>

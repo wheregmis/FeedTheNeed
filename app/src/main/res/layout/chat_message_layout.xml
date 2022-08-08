@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".presentation.chat.ChatActivity"
     >
 
@@ -30,6 +31,8 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="@dimen/_30sdp"
+            android:hint="@string/enter_message_here"
+            android:textColorHint="@color/grey"
             android:layout_gravity="center_vertical"
             android:inputType="text" />
 
@@ -38,6 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
+            android:textColor="@color/white"
             android:text="Send"/>
 
     </LinearLayout>
