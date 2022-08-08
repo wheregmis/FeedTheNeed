@@ -13,6 +13,7 @@
         android:id="@+id/rv_messages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:layout_above="@+id/input_bar" />
 
 
@@ -30,7 +31,8 @@
             android:textColor="@color/black"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_3sdp"
             android:hint="@string/enter_message_here"
             android:textColorHint="@color/grey"
             android:layout_gravity="center_vertical"
