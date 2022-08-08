@@ -6,7 +6,6 @@ import android.view.View;
 import androidx.annotation.NonNull;
 
 import com.example.feedtheneed.domain.model.Event;
-import com.example.feedtheneed.domain.model.User;
 import com.example.feedtheneed.domain.repository.EventRepository;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,44 +24,22 @@ import java.util.Map;
 public class EventRepositoryImplementation implements EventRepository {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public Task<QuerySnapshot> createEvent(Event event) {
+    public Task<DocumentReference> createEvent(Event event) {
         // Add a new document with a generated ID
-        // Adding eventhost user id and participant user id
-        // find the user
-        event.eventHostId = "";
-        event.eventVolunteerId = "";
-
-        // reading users
-        return db.collection("users").whereEqualTo("userFullName", event.getEventHost())
-                .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                event.eventHostId = queryDocumentSnapshots.getDocuments().get(0).getId();
-                if(event.getEventParticipants().get(0) != null){
-                    db.collection("users").whereEqualTo("userEmail", event.getEventParticipants().get(0)).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                        @Override
-                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                            event.eventVolunteerId = queryDocumentSnapshots.getDocuments().get(0).getId();
-                            db.collection("event")
-                                    .add(event)
-                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                        @Override
-                                        public void onSuccess(DocumentReference documentReference) {
-                                            Log.d("Authentication", "DocumentSnapshot added with ID: " + documentReference.getId());
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.w("Authentication", "Error adding document", e);
-                                        }
-                                    });
-                        }
-                    });
-                }
-
-            }
-        });
+        return db.collection("event")
+                .add(event)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d("Authentication", "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Authentication", "Error adding document", e);
+                    }
+                });
     }
 
     @Override

@@ -16,7 +16,7 @@ public class AddEventToFirebase {
         eventRepository = new EventRepositoryImplementation();
     }
 
-    Task<QuerySnapshot> addEventToFirebaseImplementation(){
+    Task<DocumentReference> addEventToFirebaseImplementation(){
         return eventRepository.createEvent(event);
     }
 }
