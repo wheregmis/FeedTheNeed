@@ -18,6 +18,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.feedtheneed.R;
 import com.example.feedtheneed.domain.usecase.event.EventUseCase;
 import com.example.feedtheneed.domain.usecase.event.EventUseCaseInterface;
+import com.example.feedtheneed.presentation.chat.ChatActivity;
 import com.example.feedtheneed.presentation.rating.FoodRatingActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -149,6 +150,25 @@ public class ViewEventActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), FoodRatingActivity.class));
+            }
+        });
+
+
+        findViewById(R.id.chat_restaurant).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ViewEventActivity.this, ChatActivity.class);
+                intent.putExtra("toUserId", "jKwsV8VysdLFkdkC8VsM");
+                startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.chat_volunteer).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ViewEventActivity.this, ChatActivity.class);
+                intent.putExtra("toUserId", "jKwsV8VysdLFkdkC8VsM");
+                startActivity(intent);
             }
         });
 

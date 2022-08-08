@@ -29,11 +29,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.feedtheneed.HomeActivity;
 import com.example.feedtheneed.domain.usecase.user.UserUseCaseInterface;
 import com.example.feedtheneed.domain.usecase.user.UserUserUseCase;
-import com.example.feedtheneed.presentation.authentication.AuthActivity;
-import com.example.feedtheneed.presentation.chat.ChatActivity;
 import com.example.feedtheneed.CustomViewPagerAdapter;
 import com.example.feedtheneed.R;
 import com.example.feedtheneed.data.repository.LeaderboardRepoImplementation;

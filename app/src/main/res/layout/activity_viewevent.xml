@@ -200,24 +200,27 @@
                 android:text="Be Volunteer"/>
         </LinearLayout>
     </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnSubmit"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:background="@drawable/button_bg"
-            android:text="Rate this restaurant"
-            android:gravity="center"
-            android:textColor="@color/mainbg"
-            android:textSize="@dimen/_16sdp"
-            />
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:background="@drawable/button_bg"
+                android:text="Rate this restaurant"
+                android:gravity="center"
+                android:textAllCaps="false"
+                android:textColor="@color/mainbg"
+                android:textSize="@dimen/_16sdp"
+                />
+        </LinearLayout>
     </LinearLayout>
+
 
 </RelativeLayout>
 
