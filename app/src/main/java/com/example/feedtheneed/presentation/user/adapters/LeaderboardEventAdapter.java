@@ -45,7 +45,7 @@ public class LeaderboardEventAdapter extends RecyclerView.Adapter<LeaderboardEve
         TextView count = holder.count;
         Leaderboard event = eventList.get(position);
         eventName.setText(event.getName());
-        count.setText("0");
+        count.setText("" + event.getCount());
     }
 
     @Override
