@@ -19,8 +19,13 @@ import com.example.feedtheneed.R;
 import com.example.feedtheneed.domain.model.Event;
 import com.example.feedtheneed.domain.usecase.event.EventUseCase;
 import com.example.feedtheneed.domain.usecase.event.EventUseCaseInterface;
-import com.example.feedtheneed.presentation.chat.ChatActivity;
 import com.example.feedtheneed.presentation.rating.FoodRatingActivity;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -31,7 +36,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class ViewEventActivity extends AppCompatActivity {
+public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCallback {
     ViewPager viewPager;
     LinearLayout sliderDotspanel;
     private int dotscount;
@@ -44,6 +49,8 @@ public class ViewEventActivity extends AppCompatActivity {
     private String eventIdGlobal;
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
+    private GoogleMap mMap;
+    private LatLng eventLatLng;
 
     ArrayList<String> imageUrlList = new ArrayList<>();
     Context context;
@@ -56,6 +63,12 @@ public class ViewEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_viewevent);
         context=ViewEventActivity.this;
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
         viewPager = (ViewPager) findViewById(R.id.view_pager);
 
         sliderDotspanel = (LinearLayout) findViewById(R.id.SliderDots);
@@ -101,6 +114,31 @@ public class ViewEventActivity extends AppCompatActivity {
                 Log.d("ViewEventActivity", "ImageUrls: "+imageUrlList);
                 eventDateTime.setText(eventDateTimeString);
                 callViewAdapter(context,imageUrlList);
+                eventLatLng = new LatLng(Double.valueOf(event.get("eventLat").toString()), Double.valueOf(event.get("eventLong").toString()));
+                if (mMap != null){
+                    mMap.addMarker(new MarkerOptions()
+                            .position(eventLatLng)
+                            .title("Event Location"));
+
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eventLatLng, 11));
+                }
+
+                if (event.get("eventVolunteer") != "" || event.get("eventVolunteer") != null){
+                    findViewById(R.id.bevolunteer).setVisibility(View.GONE);
+                }
+                ArrayList<String> obj = (ArrayList<String>) task.getResult().getDocuments().get(0).get("eventParticipants");
+                if (obj.contains(firebaseUser.getEmail())){
+                    findViewById(R.id.event_participant).setVisibility(View.GONE);
+                }
+
+                if ((event.get("eventVolunteer") != "" || event.get("eventVolunteer") != null) && obj.contains(firebaseUser.getEmail())){
+                    // TODO: 08/08/2022 Edit here to hide the white space
+                    findViewById(R.id.layout_both).setVisibility(View.GONE);
+                }
+                else
+                {
+                    findViewById(R.id.layout_both).setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -159,7 +197,21 @@ public class ViewEventActivity extends AppCompatActivity {
         findViewById(R.id.btnSubmit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), FoodRatingActivity.class));
+
+                Intent i = new Intent(context, FoodRatingActivity.class);
+
+                //Create the bundle
+                Bundle bundle = new Bundle();
+
+                //Add your data to bundle
+                bundle.putString("eventId", eventIdGlobal);
+
+                //Add the bundle to the intent
+                i.putExtras(bundle);
+
+                //Fire that second activity
+                context.startActivity(i);
+
             }
         });
 
@@ -220,4 +272,16 @@ public class ViewEventActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        mMap = googleMap;
+        if (eventLatLng != null){
+            mMap.addMarker(new MarkerOptions()
+                    .position(eventLatLng)
+                    .title("Event Location"));
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eventLatLng, 11));
+
+        }
+    }
 }

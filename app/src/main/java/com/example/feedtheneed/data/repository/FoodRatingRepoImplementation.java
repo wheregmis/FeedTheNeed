@@ -20,10 +20,10 @@ public class FoodRatingRepoImplementation {
     public Task<DocumentReference> insertFoodRatingValue(String restaurantId, String userId, String comment) {
         HashMap<String, String> foodRating = new HashMap<String, String>();
 
-        foodRating.put("restaurantId", restaurantId);
+        foodRating.put("eventId", restaurantId);
         foodRating.put("userId", userId);
         foodRating.put("comment", comment);
-        foodRating.put("status", "Positive Sentiment");
+        foodRating.put("status", "");
         foodRating.put("sentimentScore", "");
 
         return db.collection("ratings")
