@@ -128,8 +128,10 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
                     findViewById(R.id.bevolunteer).setVisibility(View.GONE);
                 }
                 ArrayList<String> obj = (ArrayList<String>) task.getResult().getDocuments().get(0).get("eventParticipants");
-                if (obj.contains(firebaseUser.getEmail())){
-                    findViewById(R.id.event_participant).setVisibility(View.GONE);
+                if (!obj.equals(null)){
+                    if (obj.contains(firebaseUser.getEmail())){
+                        findViewById(R.id.event_participant).setVisibility(View.GONE);
+                    }
                 }
 
                 if ((event.get("eventVolunteer") != "" || event.get("eventVolunteer") != null) && obj.contains(firebaseUser.getEmail())){
