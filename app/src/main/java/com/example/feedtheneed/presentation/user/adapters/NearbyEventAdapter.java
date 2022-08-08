@@ -10,12 +10,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.feedtheneed.HomeActivity;
 import com.example.feedtheneed.R;
 import com.example.feedtheneed.domain.model.Event;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.ArrayList;
 
-public class NearbyEventAdapter extends RecyclerView.Adapter<NearbyEventAdapter.ViewHolder> {
+public class NearbyEventAdapter extends RecyclerView.Adapter<NearbyEventAdapter.ViewHolder>{
     LayoutInflater inflater;
     Context mContext;
     ArrayList<Event> eventList;
@@ -37,9 +40,16 @@ public class NearbyEventAdapter extends RecyclerView.Adapter<NearbyEventAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         TextView eventName = holder.eventName;
+        TextView eventHost = holder.eventHost;
         Event event = eventList.get(position);
-
         eventName.setText(event.getEventName());
+        eventHost.setText(event.getEventHost());
+        holder.eventFoodType.setText(event.getEventFoodType());
+        if (event.getEventImageUrls().size() > 0){
+            Glide.with(mContext)
+                    .load(event.getEventImageUrls().get(0))
+                    .into(holder.eventImage);
+        }
     }
 
     @Override
@@ -47,14 +57,22 @@ public class NearbyEventAdapter extends RecyclerView.Adapter<NearbyEventAdapter.
         return eventList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+    public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView eventName;
+        TextView eventHost;
+        CircularImageView eventImage;
+        TextView eventFoodType;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             eventName = itemView.findViewById(R.id.eventName);
+            eventHost = itemView.findViewById(R.id.eventHost);
+            eventImage = itemView.findViewById(R.id.eventImage);
+            eventFoodType = itemView.findViewById(R.id.eventFoodType);
         }
+
     }
 
 
