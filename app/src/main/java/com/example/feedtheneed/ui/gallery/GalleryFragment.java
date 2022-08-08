@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
@@ -46,6 +47,7 @@ public class GalleryFragment extends Fragment {
 
         binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
 //        final TextView textView = binding.textGallery;
 //        galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
