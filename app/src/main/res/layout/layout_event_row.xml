@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/_5sdp"
     android:background="@color/white">
 
     <LinearLayout
@@ -10,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
+        android:layout_margin="@dimen/_3sdp"
         android:background="@drawable/rounded_background"
         android:orientation="horizontal">
         <com.mikhaellopez.circularimageview.CircularImageView
