@@ -33,7 +33,8 @@ public class GalleryFragment extends Fragment {
     private FragmentGalleryBinding binding;
     TabLayout tabLayout;
     ViewPager viewPager;
-    ArrayList<Leaderboard> leaderboardList;
+    ArrayList<Leaderboard> restaurantLeaderboard = new ArrayList<>();
+    ArrayList<Leaderboard> userLeaderboard = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
