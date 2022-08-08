@@ -59,7 +59,7 @@ public class FoodRatingActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         Snackbar snackbar = Snackbar
-                                .make(view, "You have successfully rated this event", Snackbar.LENGTH_SHORT);
+                                .make(view, "You have successfully rated this event", Snackbar.LENGTH_LONG);
                         snackbar.show();
 
                         Intent i = new Intent(getApplicationContext(), ViewEventActivity.class);
