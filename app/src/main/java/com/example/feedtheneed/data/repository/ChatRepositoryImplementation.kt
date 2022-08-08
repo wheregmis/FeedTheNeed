@@ -6,10 +6,7 @@ import com.example.feedtheneed.domain.model.Chat
 import com.example.feedtheneed.domain.model.ChatListItem
 import com.example.feedtheneed.domain.model.User
 import com.example.feedtheneed.domain.repository.ChatRepository
-import com.example.feedtheneed.presentation.chat.ChatActivity
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.toObject
 import kotlinx.coroutines.tasks.await
 
@@ -59,6 +56,25 @@ class ChatRepositoryImplementation: ChatRepository {
     }
 
 
+
+    suspend fun getUserIdByEmail(userEmail: String) : String{
+        val userQuery = userCollection.whereEqualTo("userEmail", userEmail).get().await()
+        return try{
+            var documentId=""
+            for(document in userQuery){
+               documentId = document.id
+            }
+            documentId
+        }catch (e: java.lang.Exception){
+            Log.e(TAG, "Failed to upload: ${e.message.orEmpty()}")
+            ""
+        }
+    }
+
+    suspend fun getUserById(userId: String): User? {
+        return userCollection.document(userId).get().await().toObject<User>()
+
+    }
     /**
      *
      * check whether there's a chat alreasy exists - will interchange from and to to get
@@ -110,7 +126,7 @@ class ChatRepositoryImplementation: ChatRepository {
      * @param message UserId of the user1 typically add the one who initiates the chat.
      * @param currentUserId UserId of the user2 typically add the one whom the chat is intended for.
      */
-    override fun sendANewMessage(message: String, currentUserId: String) {
+    override fun sendANewMessage(message: String, currentUserId: String, currentChatId:String) {
         var owner = 0
         // define ownerId
         if(currentChat.fromUser === currentUserId){
@@ -146,6 +162,8 @@ class ChatRepositoryImplementation: ChatRepository {
             var userChatList: ArrayList<ChatListItem> = ArrayList()
             val queryChatPrimary = chatCollection.whereEqualTo("fromUser", userId).get().await()
             val queryChatSecondary = chatCollection.whereEqualTo("toUser", userId).get().await()
+            Log.d(TAG, "fromUser param Query $queryChatPrimary")
+            Log.d(TAG, "toUser param Query $queryChatSecondary")
             for (document in (queryChatPrimary + queryChatSecondary)){
                 val chatDoc = document.toObject<Chat>()
                 Log.d(TAG, "Got maching chat: $chatDoc")

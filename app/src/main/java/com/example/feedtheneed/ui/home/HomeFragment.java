@@ -137,6 +137,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         binding.fabList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Incase of opening chat activity direct
+//                Intent intent = new Intent(getContext(), ChatActivity.class);
+//                intent.putExtra("toUserId", "jKwsV8VysdLFkdkC8VsM");
+//                startActivity(intent);
+
+
                 startActivity(new Intent(getActivity(), ChatListActivity.class));
             }
         });

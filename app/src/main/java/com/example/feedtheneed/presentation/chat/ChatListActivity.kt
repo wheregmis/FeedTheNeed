@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.feedtheneed.R
 import com.example.feedtheneed.data.repository.ChatRepositoryImplementation
 import com.example.feedtheneed.domain.model.ChatListItem
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -21,6 +22,9 @@ class ChatListActivity : AppCompatActivity(), CoroutineScope {
     var adapter: ChatListViewAdapter? = null
     lateinit var recyclerView: RecyclerView
     lateinit var currentChatList: ArrayList<ChatListItem>
+
+    var firebaseAuth = FirebaseAuth.getInstance()
+    var firebaseUser = firebaseAuth.currentUser;
 
     private var job: Job = Job()
 
@@ -42,8 +46,11 @@ class ChatListActivity : AppCompatActivity(), CoroutineScope {
         currentChatList = chatRepositoryImplementation.getCurrentChatList()
         connectWithUI()
         launch {
+            var currentUserId = chatRepositoryImplementation.getUserIdByEmail(firebaseUser?.email!!)
             val result =  chatRepositoryImplementation.getChatListForUserId(
-                "yZiAeAdxV49PkwYaNKSk")
+                currentUserId)
+            Log.d(TAG, "searching for user email: ${firebaseUser?.email!!}")
+            Log.d(TAG, "searching for user Id: $currentUserId")
             Log.d(TAG, "Got the chat list: $result")
             updateChatList(result) // onResult is called on the main thread
         }
