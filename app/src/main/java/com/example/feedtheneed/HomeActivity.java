@@ -154,7 +154,7 @@ public class HomeActivity extends AppCompatActivity {
                     Bundle bundle = new Bundle();
 
                     //Add your data to bundle
-//                    bundle.putString("eventId", selectedEvent.getEventId());
+                    bundle.putString("eventId", selectedEvent.getEventId());
 
                     //Add the bundle to the intent
                     intent.putExtras(bundle);
