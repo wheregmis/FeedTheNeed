@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.feedtheneed.R;
@@ -23,7 +24,7 @@ import com.google.firebase.firestore.DocumentReference;
 public class FoodRatingActivity extends AppCompatActivity {
 
     private TextView rating, comment;
-    private AppCompatButton btnSubmit;
+    private LinearLayout btnSubmit;
     private String eventIdGlobal;
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
