@@ -25,7 +25,7 @@ class ChatListActivity : AppCompatActivity(), CoroutineScope {
 
     var firebaseAuth = FirebaseAuth.getInstance()
     var firebaseUser = firebaseAuth.currentUser;
-
+    var currentUserId = ""
     private var job: Job = Job()
 
     override val coroutineContext: CoroutineContext
@@ -46,7 +46,7 @@ class ChatListActivity : AppCompatActivity(), CoroutineScope {
         currentChatList = chatRepositoryImplementation.getCurrentChatList()
         connectWithUI()
         launch {
-            var currentUserId = chatRepositoryImplementation.getUserIdByEmail(firebaseUser?.email!!)
+            currentUserId = chatRepositoryImplementation.getUserIdByEmail(firebaseUser?.email!!)
             val result =  chatRepositoryImplementation.getChatListForUserId(
                 currentUserId)
             Log.d(TAG, "searching for user email: ${firebaseUser?.email!!}")
@@ -72,6 +72,13 @@ class ChatListActivity : AppCompatActivity(), CoroutineScope {
     }
 
     private fun updateChatList(result: ArrayList<ChatListItem>) {
+        for (chatList in result){
+            if(currentUserId.equals(chatList.fromUserId)){
+                chatList.displayName = chatList.toUserName
+            }else{
+                chatList.displayName = chatList.fromUserName
+            }
+        }
         adapter?.dataSet  = result
         adapter?.notifyDataSetChanged()
     }
