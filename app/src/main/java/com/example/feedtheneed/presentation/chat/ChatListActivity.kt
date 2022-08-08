@@ -61,7 +61,7 @@ class ChatListActivity : AppCompatActivity(), CoroutineScope {
 
 
     private fun connectWithUI(){
-        recyclerView = findViewById(R.id.rv_message_people)
+        recyclerView = findViewById(R.id.rvRestaurantLeaderboard)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapter = ChatListViewAdapter( this.currentChatList)
         recyclerView.adapter = adapter

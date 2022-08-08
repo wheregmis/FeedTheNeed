@@ -24,8 +24,8 @@ public class ChatFragment extends Fragment {
         binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textGallery;
-        chatViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+//        final TextView textView = binding.textGallery;
+//        chatViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
