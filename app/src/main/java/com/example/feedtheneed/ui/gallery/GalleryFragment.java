@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.feedtheneed.LeaderboardViewPagerAdapter;
 import com.example.feedtheneed.R;
 import com.example.feedtheneed.data.repository.LeaderboardRepoImplementation;
 import com.example.feedtheneed.databinding.FragmentGalleryBinding;
@@ -27,6 +28,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class GalleryFragment extends Fragment {
 
@@ -48,7 +51,7 @@ public class GalleryFragment extends Fragment {
 //        galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         tabLayout = root.findViewById(R.id.tabLayout);
-        viewPager = root.findViewById(R.id.viewPager);
+        viewPager = root.findViewById(R.id.leaderBoardViewPager);
 
         tabLayout.addTab(tabLayout.newTab().setText("getTopRestaurantsBasedOnEventHosted"));
         tabLayout.getTabAt(0).setIcon( R.drawable.leaderboard);
@@ -76,7 +79,19 @@ public class GalleryFragment extends Fragment {
                         leaderboard.put(eventHost, count);
                     }
                 }
-                Log.d("Leaderboard", "getTopRestaurantsBasedOnEventHosted"+leaderboard);
+
+                Iterator it = leaderboard.entrySet().iterator();
+                while(it.hasNext()) {
+                    Map.Entry pair = (Map.Entry) it.next();
+                    restaurantLeaderboard.add(new Leaderboard(pair.getKey().toString(), pair.getValue().toString()));
+                }
+
+                HashMap<Integer, String>  tabs = new HashMap<>();;
+
+                tabs.put(0, "getTopRestaurantsBasedOnEventHosted");
+                tabs.put(1, "getTopUserBasedOnVolunteerEvent");
+
+                viewPager.setAdapter(new LeaderboardViewPagerAdapter(getActivity(), tabs, restaurantLeaderboard, new ArrayList<>()));
             }
         });
 
