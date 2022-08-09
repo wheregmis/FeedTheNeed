@@ -174,3 +174,4 @@ class ChatActivity : AppCompatActivity(), CoroutineScope {
     }
 
 }
+

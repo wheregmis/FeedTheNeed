@@ -1,9 +1,10 @@
 package com.example.feedtheneed.presentation.chat
 
+import android.R.attr.left
+import android.R.attr.right
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.feedtheneed.R
@@ -53,8 +54,18 @@ class ChatViewAdapter(var dataSet: ArrayList<ChatHistory>, var chatInfo: ChatLis
         }else if(dataSet[position].owner === 2){
             owner = chatInfo.toUserName
         }
-//
+        var marginLeft = 80
+        if(!chatInfo.displayName.equals(owner)){
+            marginLeft = 600
+        }
 
+        val params = RecyclerView.LayoutParams(
+            RecyclerView.LayoutParams.WRAP_CONTENT,
+            RecyclerView.LayoutParams.WRAP_CONTENT
+        )
+        params.setMargins(marginLeft, 10, 0, 10)
+        viewHolder.itemView.setLayoutParams(params)
+//
         viewHolder.textViewMessage.text = dataSet[position].message
         viewHolder.textViewOwner.text = owner
         viewHolder.textViewTime.text = getShortDate(dataSet[position].timestamp * 1000)
@@ -76,3 +87,5 @@ class ChatViewAdapter(var dataSet: ArrayList<ChatHistory>, var chatInfo: ChatLis
     }
 
 }
+
+
