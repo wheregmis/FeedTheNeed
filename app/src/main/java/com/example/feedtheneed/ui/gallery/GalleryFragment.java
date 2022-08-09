@@ -55,9 +55,9 @@ public class GalleryFragment extends Fragment {
         tabLayout = root.findViewById(R.id.tabLayout);
         viewPager = root.findViewById(R.id.leaderBoardViewPager);
 
-        tabLayout.addTab(tabLayout.newTab().setText("getTopRestaurantsBasedOnEventHosted"));
+        tabLayout.addTab(tabLayout.newTab().setText("Top Restaurant"));
         tabLayout.getTabAt(0).setIcon( R.drawable.leaderboard);
-        tabLayout.addTab(tabLayout.newTab().setText("getTopUserBasedOnVolunteerEvent"));
+        tabLayout.addTab(tabLayout.newTab().setText("Top User"));
         tabLayout.getTabAt(1).setIcon( R.drawable.leaderboard);
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -122,12 +122,12 @@ public class GalleryFragment extends Fragment {
 
                             HashMap<Integer, String>  tabs = new HashMap<>();;
 
-                            tabs.put(0, "getTopRestaurantsBasedOnEventHosted");
-                            tabs.put(1, "getTopUserBasedOnVolunteerEvent");
+                            tabs.put(0, "Top Restaurant");
+                            tabs.put(1, "Top User");
 
                             viewPager.setAdapter(new LeaderboardViewPagerAdapter(getActivity(), tabs, restaurantLeaderboard, userLeaderboard));
 
-                            Log.d("Leaderboard", "getTopUserBasedOnVolunteerEvent"+leaderboard);
+                            Log.d("Leaderboard", "Top User"+leaderboard);
                         }
                     });
                 }
