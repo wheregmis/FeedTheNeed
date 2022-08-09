@@ -70,7 +70,7 @@ public class HomeActivity extends AppCompatActivity {
     MultiAutoCompleteTextView multiAutoCompleteTextView;
     ArrayList<Event> eventList = new ArrayList<>();
 
-    private static final ArrayList<String> EVENTS = new ArrayList<>();
+    private ArrayList<String> EVENTS = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,6 +172,8 @@ public class HomeActivity extends AppCompatActivity {
         db.collection("event").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+//                EVENTS = new ArrayList<String>();
+
                 List<DocumentSnapshot> listEvents = value.getDocuments();
 
 //                // iterating through the array
@@ -182,6 +184,7 @@ public class HomeActivity extends AppCompatActivity {
                 }
 
                 for (Event event: eventList) {
+                    Log.d("TAG", " " + eventList.size());
                     EVENTS.add(event.getEventName());
                 }
             }
