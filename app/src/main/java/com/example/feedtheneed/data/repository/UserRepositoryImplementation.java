@@ -55,6 +55,24 @@ public class UserRepositoryImplementation implements UserRepository {
 
     }
 
+    public Task<QuerySnapshot> getUserFromName(String userName) {
+        return db.collection("users")
+                .whereEqualTo("userFullName", userName).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("Getting User", "Successfully retrieved the user information"+task.getResult().size());
+
+
+                        } else {
+                            Log.w("Retrieval", "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+
+    }
+
     @Override
     public void getUsers() {
 

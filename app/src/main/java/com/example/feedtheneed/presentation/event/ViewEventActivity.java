@@ -16,9 +16,12 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.feedtheneed.R;
+import com.example.feedtheneed.data.repository.UserRepositoryImplementation;
 import com.example.feedtheneed.domain.model.Event;
 import com.example.feedtheneed.domain.usecase.event.EventUseCase;
 import com.example.feedtheneed.domain.usecase.event.EventUseCaseInterface;
+import com.example.feedtheneed.domain.usecase.user.UserUseCaseInterface;
+import com.example.feedtheneed.domain.usecase.user.UserUserUseCase;
 import com.example.feedtheneed.presentation.chat.ChatActivity;
 import com.example.feedtheneed.presentation.rating.FoodRatingActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -59,6 +62,8 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
 
     String eventHostId = "";
     String eventParticipantId = "";
+    String eventVolunteer;
+    String eventHostName = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +109,10 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
                 eventTitle.setText(event.get("eventName").toString());
                 eventType.setText(event.get("eventFoodType").toString());
                 eventDescription.setText(event.get("eventDescription").toString());
+                if (event.get("eventVolunteer") != null){
+                    eventVolunteer = event.get("eventVolunteer").toString();
+                }
+                eventHostName = event.get("eventHost").toString();
                 String eventDateTimeString = event.get("eventDate").toString() +" "+ event.get("eventTime").toString();
 
                 // adding hacks
@@ -124,7 +133,7 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eventLatLng, 11));
                 }
 
-                if (event.get("eventVolunteer") != "" || event.get("eventVolunteer") != null){
+                if (event.get("eventVolunteer") != null){
                     findViewById(R.id.bevolunteer).setVisibility(View.GONE);
                 }
                 ArrayList<String> obj = (ArrayList<String>) task.getResult().getDocuments().get(0).get("eventParticipants");
@@ -220,17 +229,29 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
             }
         });
 
+        UserUseCaseInterface userUseCase = new UserUserUseCase();
+
 
         findViewById(R.id.chat_restaurant).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(eventHostId != null){
-                    Intent intent = new Intent(ViewEventActivity.this, ChatActivity.class);
-                    intent.putExtra("toUserId", "yZiAeAdxV49PkwYaNKSk");
-                    startActivity(intent);
-                }else{
-                    Toast.makeText(getApplicationContext(), "No Host has been added to this event", Toast.LENGTH_SHORT);
-                }
+
+                UserRepositoryImplementation userRepositoryImplementation = new UserRepositoryImplementation();
+                userRepositoryImplementation.getUserFromName(eventHostName).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+                        if(eventHostName != null){
+                            Intent intent = new Intent(ViewEventActivity.this, ChatActivity.class);
+                            intent.putExtra("toUserId", documentSnapshot.getId());
+                            startActivity(intent);
+                        }else{
+                            Toast.makeText(getApplicationContext(), "No Host has been added to this event", Toast.LENGTH_SHORT);
+                        }
+                    }
+                });
+
+
 
             }
         });
@@ -238,16 +259,27 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
         findViewById(R.id.chat_volunteer).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (eventVolunteer != null) {
+                    userUseCase.getUserFromFirebase(eventVolunteer).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+                            if (eventVolunteer != null) {
+                                Intent intent = new Intent(ViewEventActivity.this, ChatActivity.class);
+                                intent.putExtra("toUserId", documentSnapshot.getId());
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(getApplicationContext(), "No Volunteer has been added to this event", Toast.LENGTH_SHORT);
+                            }
+                        }
+                    });
 
-                if(eventParticipantId != null){
-                    Intent intent = new Intent(ViewEventActivity.this, ChatActivity.class);
-                    intent.putExtra("toUserId", "sOdadrwcL8t9LUihkIqW");
-                    startActivity(intent);
-                }else{
-                    Toast.makeText(getApplicationContext(), "No participants has been added to this event", Toast.LENGTH_SHORT);
+                }else {
+                    Snackbar snackbar = Snackbar
+                            .make(findViewById(android.R.id.content).getRootView(), "No Volunteer has been added to this event !!", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                    //Toast.makeText(getApplicationContext(), "No Volunteer has been added to this event", Toast.LENGTH_SHORT);
                 }
-
-
             }
         });
 

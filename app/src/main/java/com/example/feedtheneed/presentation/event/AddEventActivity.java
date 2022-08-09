@@ -283,7 +283,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
                                 // TODO: 04/08/2022 Append value inside
                                 Event event =
                                         new Event(UUID.randomUUID().toString(),eventName.getText().toString(),eventHost.getText().toString(), eventDescription.getText().toString(),
-                                                dateview.getText().toString(),timeview.getText().toString(), String.valueOf(eventLocation.latitude), String.valueOf(eventLocation.longitude), null, eventFoodType.getText().toString(), eventTotalParticipants.getText().toString(), imagesUploaded);
+                                                dateview.getText().toString(),timeview.getText().toString(), String.valueOf(eventLocation.latitude), String.valueOf(eventLocation.longitude), null, eventFoodType.getText().toString(), eventTotalParticipants.getText().toString(), imagesUploaded, null);
 
                                 EventUseCaseInterface eventUseCase = new EventUseCase();
                                 eventUseCase.addEventToFirebase(event);
