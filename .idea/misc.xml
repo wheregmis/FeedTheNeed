@@ -72,6 +72,8 @@
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.10364583333333334" />
         <entry key="app/src/main/res/layout/bottom_sheet_layout.xml" value="0.18575286865234375" />
         <entry key="app/src/main/res/layout/bottom_sheet_main_content.xml" value="0.10364583333333334" />
+        <entry key="app/src/main/res/layout/chat_message_layout.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/chat_messsage_list_item.xml" value="0.13240740740740742" />
         <entry key="app/src/main/res/layout/content_home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.10364583333333334" />

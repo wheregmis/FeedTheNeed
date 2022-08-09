@@ -88,8 +88,8 @@ class ChatRepositoryImplementation: ChatRepository {
         return try {
             val queryChatPrimary = chatCollection.whereEqualTo("fromUser", fromUser)
                 .whereEqualTo("toUser", toUser).get().await()
-            val queryChatSecondary = chatCollection.whereEqualTo("fromUser", fromUser)
-                .whereEqualTo("toUser", toUser).get().await()
+            val queryChatSecondary = chatCollection.whereEqualTo("fromUser", toUser)
+                .whereEqualTo("toUser", fromUser).get().await()
             if(!queryChatPrimary.isEmpty || !queryChatSecondary.isEmpty){
                 for (document in (queryChatPrimary + queryChatSecondary)){
                     currentChatId = document.id
@@ -165,12 +165,18 @@ class ChatRepositoryImplementation: ChatRepository {
 
         return try {
             Log.d(TAG, "Quering for user: $userId")
+            val currentChatId = ArrayList<String>()
             var userChatList: ArrayList<ChatListItem> = ArrayList()
             val queryChatPrimary = chatCollection.whereEqualTo("fromUser", userId).get().await()
             val queryChatSecondary = chatCollection.whereEqualTo("toUser", userId).get().await()
             Log.d(TAG, "fromUser param Query $queryChatPrimary")
             Log.d(TAG, "toUser param Query $queryChatSecondary")
             for (document in (queryChatPrimary + queryChatSecondary)){
+                if(currentChatId.contains(document.id)){
+                    continue
+                }else{
+                    currentChatId.add(document.id)
+                }
                 val chatDoc = document.toObject<Chat>()
                 Log.d(TAG, "Got maching chat: $chatDoc")
                 Log.d(TAG, "from user: ${chatDoc.fromUser}")
