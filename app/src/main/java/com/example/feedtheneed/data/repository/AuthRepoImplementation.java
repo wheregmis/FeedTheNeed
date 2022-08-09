@@ -34,7 +34,7 @@ public class AuthRepoImplementation implements AuthRepository {
         // Initialize firebase user
         FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
 
-        // Initialize sign in client
+        // Initialize sign in client for sign in
         googleSignInClient= GoogleSignIn.getClient(context
                 , GoogleSignInOptions.DEFAULT_SIGN_IN);
 
