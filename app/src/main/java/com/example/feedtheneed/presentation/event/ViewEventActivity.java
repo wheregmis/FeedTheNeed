@@ -267,6 +267,7 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
                             if (eventVolunteer != null) {
                                 Intent intent = new Intent(ViewEventActivity.this, ChatActivity.class);
                                 intent.putExtra("toUserId", documentSnapshot.getId());
+                                intent.putExtra("fromvol", "yes");
                                 startActivity(intent);
                             } else {
                                 Toast.makeText(getApplicationContext(), "No Volunteer has been added to this event", Toast.LENGTH_SHORT);

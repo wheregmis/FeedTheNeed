@@ -66,6 +66,7 @@ class ChatActivity : AppCompatActivity(), CoroutineScope {
 
         var chatId:String = intent.getStringExtra("chatId").toString()
         var toUserId:String = intent.getStringExtra("toUserId").toString()
+        var fromVOl:String = intent.getStringExtra("fromvol").toString()
         chatInfo = intent.getSerializableExtra("chatInfo") as? ChatListItem
         Log.d(TAG, "Received Chat Info Bundle: $chatInfo")
         Log.d(TAG, "Received chatId: $chatId")
@@ -80,16 +81,33 @@ class ChatActivity : AppCompatActivity(), CoroutineScope {
             if(chatInfo === null){
                 var toUserInfo = chatRepositoryImplementation.getUserById(toUserId)
                 var fromUserInfo = chatRepositoryImplementation.getUserById(currentUserId)
-                chatInfo = fromUserInfo?.let {
-                    toUserInfo?.let { it1 ->
-                        ChatListItem("",
-                            currentUserId,
-                            it.userFullName,
-                            toUserId,
-                            it1.userFullName,
-                            toUserInfo.userFullName)
+
+                if(fromVOl.equals("yes")){
+                    chatInfo = fromUserInfo?.let {
+                        toUserInfo?.let { it1 ->
+                            ChatListItem("",
+                                toUserId,
+                                it1.userFullName,
+                                currentUserId,
+                                it.userFullName,
+                                toUserInfo.userFullName)
+                        }
+                    }
+                }else{
+                    chatInfo = fromUserInfo?.let {
+                        toUserInfo?.let { it1 ->
+                            ChatListItem("",
+                                currentUserId,
+                                it.userFullName,
+                                toUserId,
+                                it1.userFullName,
+                                toUserInfo.userFullName)
+                        }
                     }
                 }
+
+
+                Log.d(TAG, "---Setting chatInfo: $chatInfo")
             }
             if(chatId === null){
                 currentUserId = firebaseUser?.email?.let {
@@ -105,11 +123,12 @@ class ChatActivity : AppCompatActivity(), CoroutineScope {
                 chatInfo!!.fromUserId, chatInfo!!.toUserId)
 
             Log.d(TAG, "created new chat with Id: $chatId")
+            updateChatList(chatId)
             connectWithUI()
             connectWithFireBase()
 
 
-            updateChatList(chatId)
+
         }
 
     }
@@ -123,6 +142,7 @@ class ChatActivity : AppCompatActivity(), CoroutineScope {
          btnSend.setOnClickListener {
             if(etMessageBody.text.toString() != null){
                 Log.d(TAG, "Got text: ${etMessageBody.text}")
+                Log.d(TAG, "current User ID: $currentUserId")
                 chatRepositoryImplementation.sendANewMessage(etMessageBody.text.toString(), currentUserId, this.currentChatId!!)
                 etMessageBody.text.clear()
             }

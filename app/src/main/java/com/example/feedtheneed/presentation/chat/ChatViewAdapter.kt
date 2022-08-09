@@ -1,5 +1,7 @@
 package com.example.feedtheneed.presentation.chat
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,8 +50,10 @@ class ChatViewAdapter(var dataSet: ArrayList<ChatHistory>, var chatInfo: ChatLis
         // contents of the view with that element
         var owner = ""
         if(dataSet[position].owner === 1){
+            Log.d(TAG, "Its from User setting from user name ${chatInfo.fromUserName}")
             owner = chatInfo.fromUserName
         }else if(dataSet[position].owner === 2){
+            Log.d(TAG, "Its to User setting to user name: ${chatInfo.toUserName}")
             owner = chatInfo.toUserName
         }
         var marginLeft = 80

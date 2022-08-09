@@ -137,6 +137,7 @@ class ChatRepositoryImplementation: ChatRepository {
         Log.d(TAG, "current User Id: $currentUserId")
         Log.d(TAG, "current From Id: ${currentChat.fromUser}")
         Log.d(TAG, "current Chat Id: $currentChatId")
+
         if(currentChat.fromUser.equals(currentUserId)){
             Log.d(TAG, "This is from User")
             owner = 1
