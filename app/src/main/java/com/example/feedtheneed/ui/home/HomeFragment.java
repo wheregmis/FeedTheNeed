@@ -32,6 +32,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
@@ -232,8 +233,11 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 if (task.getResult().size() > 0){
                     if (task.getResult().getDocuments().get(0).get("restaurant").toString().equals("true")){
                         binding.floatAdd.setVisibility(View.VISIBLE);
-                    }else{
-                    binding.floatChatbot.setVisibility(View.VISIBLE);
+                    }else if (task.getResult().getDocuments().get(0).get("userLat").equals(null) || task.getResult().getDocuments().get(0).get("userLat").toString().equals("")){
+                        startActivity(new Intent(getActivity(), AdditionalInformationActivity.class));
+                    }
+                    else{
+                        binding.floatChatbot.setVisibility(View.VISIBLE);
                     }
                 }else{
                     startActivity(new Intent(getActivity(), AdditionalInformationActivity.class));
@@ -610,6 +614,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     public void onResume() {
         super.onResume();
         mMapView.onResume();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
     }
     @Override
     public void onPause() {

@@ -37,6 +37,7 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/grey"
                     android:text="Description"
+                    android:visibility="gone"
                     android:textSize="@dimen/_14ssp"/>
             </LinearLayout>
             <LinearLayout
