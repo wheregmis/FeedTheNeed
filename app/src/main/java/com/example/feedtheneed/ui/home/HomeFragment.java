@@ -329,39 +329,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
-        // TODO: 28/07/2022 Getting Involved Projects
-        HashMap<String, String> involvedEventHashMap = new HashMap<String, String>();
-
-        eventUseCase.getInvolvedEvents("get2sabin@gmail.com").addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                List<DocumentSnapshot> listEvents = task.getResult().getDocuments();
-                float[] distanceBetweenUserAndEvent = new float[1];
-
-                for (DocumentSnapshot documentSnapshot: listEvents) {
-                    LatLng eventLocation = new LatLng(Double.valueOf(documentSnapshot.get("eventLat").toString()), Double.valueOf(documentSnapshot.get("eventLong").toString()));
-
-                    involvedEvents.add(documentSnapshot.toObject(Event.class));
-                    Location.distanceBetween(latitude, longitude,
-                            eventLocation.latitude, eventLocation.longitude,
-                            distanceBetweenUserAndEvent);
-
-                    // Putting value in nearby event Hashmap
-                    involvedEventHashMap.put(documentSnapshot.getString("eventId"), String.valueOf(distanceBetweenUserAndEvent[0]));
-
-                    // Creating new hashmap with distance (double) key so it will be easy to sort
-                    HashMap<Double, String> newMap = new HashMap<>();
-                    // filling new hashmap
-                    for (Map.Entry<String, String> entry : involvedEventHashMap.entrySet())
-                        newMap.put(Double.valueOf(entry.getValue()), entry.getKey());
-
-                    newMap = sortHashMapByValues(newMap);
-                }
-
-                updateInvolvedEvents();
-            }
-        });
 
         // TODO: 29/07/2022 Leaderboard Testing
         // TODO: 29/07/2022 please handle the return type of those function as per need
@@ -431,6 +398,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
 
                                 HashMap<String, String> nearbyEventHashMap = new HashMap<String, String>();
+                                HashMap<String, String> involvedEventHashMap = new HashMap<String, String>();
 
                                 // Getting nearby Events
                                 EventUseCaseInterface eventUseCase = new EventUseCase();
@@ -466,7 +434,40 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                             Log.d("Nearby Events", "Nearby Events "+newMap.toString());
                                         }
 
-//                                        updateNearbyEvents();
+// TODO: 28/07/2022 Getting Involved Projects
+                                        HashMap<String, String> involvedEventHashMap = new HashMap<String, String>();
+
+                                        eventUseCase.getInvolvedEvents(firebaseUser.getEmail()).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                Log.d("Involved Event", "Involved Event"+task.getResult().getDocuments().toString());
+                                                List<DocumentSnapshot> listEvents = task.getResult().getDocuments();
+                                                float[] distanceBetweenUserAndEvent = new float[1];
+
+                                                for (DocumentSnapshot documentSnapshot: listEvents) {
+                                                    LatLng eventLocation = new LatLng(Double.valueOf(documentSnapshot.get("eventLat").toString()), Double.valueOf(documentSnapshot.get("eventLong").toString()));
+
+                                                    involvedEvents.add(documentSnapshot.toObject(Event.class));
+                                                    Location.distanceBetween(latitude, longitude,
+                                                            eventLocation.latitude, eventLocation.longitude,
+                                                            distanceBetweenUserAndEvent);
+
+                                                    // Putting value in nearby event Hashmap
+                                                    involvedEventHashMap.put(documentSnapshot.getString("eventId"), String.valueOf(distanceBetweenUserAndEvent[0]));
+
+                                                    // Creating new hashmap with distance (double) key so it will be easy to sort
+                                                    HashMap<Double, String> newMap = new HashMap<>();
+                                                    // filling new hashmap
+                                                    for (Map.Entry<String, String> entry : involvedEventHashMap.entrySet())
+                                                        newMap.put(Double.valueOf(entry.getValue()), entry.getKey());
+
+                                                    newMap = sortHashMapByValues(newMap);
+                                                }
+
+                                                updateInvolvedEvents();
+                                            }
+                                        });
                                     }
                                 });
                             });
