@@ -87,13 +87,6 @@ public class GalleryFragment extends Fragment {
                     Map.Entry pair = (Map.Entry) it.next();
                     restaurantLeaderboard.add(new Leaderboard(pair.getKey().toString(), pair.getValue().toString()));
                 }
-
-                HashMap<Integer, String>  tabs = new HashMap<>();;
-
-                tabs.put(0, "getTopRestaurantsBasedOnEventHosted");
-                tabs.put(1, "getTopUserBasedOnVolunteerEvent");
-
-                viewPager.setAdapter(new LeaderboardViewPagerAdapter(getActivity(), tabs, restaurantLeaderboard, new ArrayList<>()));
             }
         });
 
@@ -120,6 +113,19 @@ public class GalleryFragment extends Fragment {
                                     }
                                 }
                             }
+
+                            Iterator it = leaderboard.entrySet().iterator();
+                            while(it.hasNext()) {
+                                Map.Entry pair = (Map.Entry) it.next();
+                                userLeaderboard.add(new Leaderboard(pair.getKey().toString(), pair.getValue().toString()));
+                            }
+
+                            HashMap<Integer, String>  tabs = new HashMap<>();;
+
+                            tabs.put(0, "getTopRestaurantsBasedOnEventHosted");
+                            tabs.put(1, "getTopUserBasedOnVolunteerEvent");
+
+                            viewPager.setAdapter(new LeaderboardViewPagerAdapter(getActivity(), tabs, restaurantLeaderboard, userLeaderboard));
 
                             Log.d("Leaderboard", "getTopUserBasedOnVolunteerEvent"+leaderboard);
                         }
