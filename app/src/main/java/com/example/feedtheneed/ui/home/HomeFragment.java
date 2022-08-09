@@ -615,6 +615,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     public void onResume() {
         super.onResume();
         mMapView.onResume();
+        nearbyEvents = new ArrayList<>();
+        involvedEvents = new ArrayList<>();
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
         updateAllEvents();
     }
@@ -622,6 +624,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     public void updateAllEvents() {
 
 
+        nearbyEvents = new ArrayList<>();
+        involvedEvents = new ArrayList<>();
         HashMap<String, String> nearbyEventHashMap = new HashMap<String, String>();
         HashMap<String, String> involvedEventHashMap = new HashMap<String, String>();
 
