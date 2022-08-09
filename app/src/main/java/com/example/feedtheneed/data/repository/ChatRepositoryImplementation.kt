@@ -37,6 +37,10 @@ class ChatRepositoryImplementation: ChatRepository {
         checkIfChatExists(fromUser, toUser)
     }
 
+    fun setCurrentChat(chat: Chat){
+        this.currentChat = chat
+    }
+
     private fun createNewChat(fromUser: String, toUser: String){
         var chat = Chat(fromUser, toUser)
         chatCollection.document()

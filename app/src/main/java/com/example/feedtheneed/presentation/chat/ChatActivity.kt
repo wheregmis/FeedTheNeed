@@ -154,7 +154,9 @@ class ChatActivity : AppCompatActivity(), CoroutineScope {
             if (snapshot != null && snapshot.exists()) {
                 Log.d(TAG, "Current data: ${snapshot.data}")
                 this.currentChat = Chat()
+
                 currentChat = snapshot.toObject<Chat>()!!
+                 chatRepositoryImplementation.setCurrentChat(this.currentChat)
                 Log.d(TAG, "DocumentSnapshot data obj: ${currentChat.fromUser}")
                 Log.d(TAG, "DocumentSnapshot data chat history obj: ${currentChat.chatHistory}")
                 adapter?.dataSet  = this.currentChat.chatHistory
