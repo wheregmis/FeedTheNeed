@@ -431,6 +431,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
 
                                 HashMap<String, String> nearbyEventHashMap = new HashMap<String, String>();
+                                HashMap<String, String> involvedEventHashMap = new HashMap<String, String>();
 
                                 // Getting nearby Events
                                 EventUseCaseInterface eventUseCase = new EventUseCase();
@@ -466,7 +467,27 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                             Log.d("Nearby Events", "Nearby Events "+newMap.toString());
                                         }
 
-//                                        updateNearbyEvents();
+                                        for (DocumentSnapshot documentSnapshot: listEvents) {
+                                            LatLng eventLocation = new LatLng(Double.valueOf(documentSnapshot.get("eventLat").toString()), Double.valueOf(documentSnapshot.get("eventLong").toString()));
+
+                                            involvedEvents.add(documentSnapshot.toObject(Event.class));
+                                            Location.distanceBetween(latitude, longitude,
+                                                    eventLocation.latitude, eventLocation.longitude,
+                                                    distanceBetweenUserAndEvent);
+
+                                            // Putting value in nearby event Hashmap
+                                            involvedEventHashMap.put(documentSnapshot.getString("eventId"), String.valueOf(distanceBetweenUserAndEvent[0]));
+
+                                            // Creating new hashmap with distance (double) key so it will be easy to sort
+                                            HashMap<Double, String> newMap = new HashMap<>();
+                                            // filling new hashmap
+                                            for (Map.Entry<String, String> entry : involvedEventHashMap.entrySet())
+                                                newMap.put(Double.valueOf(entry.getValue()), entry.getKey());
+
+                                            newMap = sortHashMapByValues(newMap);
+                                        }
+
+                                        updateNearbyEvents();
                                     }
                                 });
                             });
