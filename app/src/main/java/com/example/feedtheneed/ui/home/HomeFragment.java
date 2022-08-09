@@ -396,6 +396,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 11));
                                 fusedLocationClient.removeLocationUpdates(mLocationCallback);
 
+                                nearbyEvents = new ArrayList<>();
+                                involvedEvents = new ArrayList<>();
 
                                 HashMap<String, String> nearbyEventHashMap = new HashMap<String, String>();
                                 HashMap<String, String> involvedEventHashMap = new HashMap<String, String>();
