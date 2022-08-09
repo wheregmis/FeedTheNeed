@@ -226,7 +226,7 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
             public void onClick(View v) {
                 if(eventHostId != null){
                     Intent intent = new Intent(ViewEventActivity.this, ChatActivity.class);
-                    intent.putExtra("fromUserId", "yZiAeAdxV49PkwYaNKSk");
+                    intent.putExtra("toUserId", "yZiAeAdxV49PkwYaNKSk");
                     startActivity(intent);
                 }else{
                     Toast.makeText(getApplicationContext(), "No Host has been added to this event", Toast.LENGTH_SHORT);
