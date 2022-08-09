@@ -441,6 +441,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
                                             @Override
                                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                Log.d("Involved Event", "Involved Event"+task.getResult().getDocuments().toString());
                                                 List<DocumentSnapshot> listEvents = task.getResult().getDocuments();
                                                 float[] distanceBetweenUserAndEvent = new float[1];
 
