@@ -437,7 +437,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 // TODO: 28/07/2022 Getting Involved Projects
                                         HashMap<String, String> involvedEventHashMap = new HashMap<String, String>();
 
-                                        eventUseCase.getInvolvedEvents("get2sabin@gmail.com").addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        eventUseCase.getInvolvedEvents(firebaseUser.getEmail()).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 
                                             @Override
                                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
