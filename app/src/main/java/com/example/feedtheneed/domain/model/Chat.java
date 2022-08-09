@@ -1,7 +1,10 @@
 package com.example.feedtheneed.domain.model;
 
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 public class Chat {
     private String fromUser;
@@ -50,7 +53,11 @@ public class Chat {
         if(chatHistory == null){
            chatHistory = new ArrayList<>();
         }
-        long ts = System.currentTimeMillis()/1000;
+
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        long timeInMili = calendar .getTimeInMillis();
+
+        long ts = timeInMili;
         chatHistory.add(new ChatHistory(ts, message, owner));
 
     }

@@ -17,14 +17,13 @@ public class Event implements Serializable {
     private String eventParticipantsCount;
     private ArrayList<String> eventParticipants;
     private ArrayList<String> eventImageUrls;
-    public String eventHostId = "";
-    public String eventVolunteerId = "";
+    public String eventVolunteer;
 
 
     public Event(String eventId, String eventName, String eventHost,
                  String eventDescription, String eventDate, String eventTime,
                  String eventLat, String eventLong, ArrayList<String> eventParticipants,
-                 String eventFoodType, String eventParticipantsCount, ArrayList<String> eventImageUrls) {
+                 String eventFoodType, String eventParticipantsCount, ArrayList<String> eventImageUrls, String eventVolunteer) {
         this.eventId = eventId;
         this.eventName = eventName;
         this.eventHost = eventHost;
@@ -37,10 +36,20 @@ public class Event implements Serializable {
         this.eventFoodType = eventFoodType;
         this.eventParticipantsCount = eventParticipantsCount;
         this.eventImageUrls = eventImageUrls;
+        this.eventVolunteer = eventVolunteer;
     }
 
-    public Event () {
+    public Event(){
 
+    }
+
+
+    public String getEventVolunteer() {
+        return eventVolunteer;
+    }
+
+    public void setEventVolunteer(String eventVolunteer) {
+        this.eventVolunteer = eventVolunteer;
     }
 
     public ArrayList<String> getEventImageUrls() {

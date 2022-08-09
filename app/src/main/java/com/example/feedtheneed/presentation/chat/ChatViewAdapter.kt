@@ -1,7 +1,7 @@
 package com.example.feedtheneed.presentation.chat
 
-import android.R.attr.left
-import android.R.attr.right
+import android.content.ContentValues.TAG
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,8 +50,10 @@ class ChatViewAdapter(var dataSet: ArrayList<ChatHistory>, var chatInfo: ChatLis
         // contents of the view with that element
         var owner = ""
         if(dataSet[position].owner === 1){
+            Log.d(TAG, "Its from User setting from user name ${chatInfo.fromUserName}")
             owner = chatInfo.fromUserName
         }else if(dataSet[position].owner === 2){
+            Log.d(TAG, "Its to User setting to user name: ${chatInfo.toUserName}")
             owner = chatInfo.toUserName
         }
         var marginLeft = 80
@@ -68,7 +70,7 @@ class ChatViewAdapter(var dataSet: ArrayList<ChatHistory>, var chatInfo: ChatLis
 //
         viewHolder.textViewMessage.text = dataSet[position].message
         viewHolder.textViewOwner.text = owner
-        viewHolder.textViewTime.text = getShortDate(dataSet[position].timestamp * 1000)
+        viewHolder.textViewTime.text = getShortDate(dataSet[position].timestamp)
 
         //viewHolder.itemView.layoutDirection = Gravity.RIGHT
     }
@@ -79,7 +81,7 @@ class ChatViewAdapter(var dataSet: ArrayList<ChatHistory>, var chatInfo: ChatLis
     private fun getShortDate(ts:Long?):String{
         if(ts == null) return ""
         //Get instance of calendar
-        val calendar = Calendar.getInstance(Locale.getDefault())
+        val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
         //get current date from ts
         calendar.timeInMillis = ts
         //return formatted date

@@ -396,10 +396,80 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 11));
                                 fusedLocationClient.removeLocationUpdates(mLocationCallback);
 
-                                nearbyEvents = new ArrayList<>();
-                                involvedEvents = new ArrayList<>();
 
-                                updateAllEvents();
+                                HashMap<String, String> nearbyEventHashMap = new HashMap<String, String>();
+                                HashMap<String, String> involvedEventHashMap = new HashMap<String, String>();
+
+                                // Getting nearby Events
+                                EventUseCaseInterface eventUseCase = new EventUseCase();
+                                eventUseCase.getAllNearByEvents(new LatLng(latitude, longitude)).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @RequiresApi(api = Build.VERSION_CODES.N)
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        Log.d("Nearby Event", "Nearby Event"+task.getResult().getDocuments().toString());
+
+                                        List<DocumentSnapshot> listEvents = task.getResult().getDocuments();
+                                        float[] distanceBetweenUserAndEvent = new float[1];
+
+                                        for (DocumentSnapshot documentSnapshot: listEvents) {
+                                            LatLng eventLocation = new LatLng(Double.valueOf(documentSnapshot.get("eventLat").toString()), Double.valueOf(documentSnapshot.get("eventLong").toString()));
+
+                                            nearbyEvents.add(documentSnapshot.toObject(Event.class));
+                                            Location.distanceBetween(latitude, longitude,
+                                                    eventLocation.latitude, eventLocation.longitude,
+                                                    distanceBetweenUserAndEvent);
+
+                                            // Putting value in nearby event Hashmap
+                                            nearbyEventHashMap.put(documentSnapshot.getString("eventId"), String.valueOf(distanceBetweenUserAndEvent[0]));
+
+                                            // Creating new hashmap with distance (double) key so it will be easy to sort
+                                            HashMap<Double,String> newMap = new HashMap<>();
+                                            // filling new hashmap
+                                            for(Map.Entry<String,String> entry : nearbyEventHashMap.entrySet())
+                                                newMap.put(Double.valueOf(entry.getValue()), entry.getKey());
+
+                                            newMap = sortHashMapByValues(newMap);
+
+                                            // Printing nearby events in debug console
+                                            Log.d("Nearby Events", "Nearby Events "+newMap.toString());
+                                        }
+
+// TODO: 28/07/2022 Getting Involved Projects
+                                        HashMap<String, String> involvedEventHashMap = new HashMap<String, String>();
+
+                                        eventUseCase.getInvolvedEvents(firebaseUser.getEmail()).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                Log.d("Involved Event", "Involved Event"+task.getResult().getDocuments().toString());
+                                                List<DocumentSnapshot> listEvents = task.getResult().getDocuments();
+                                                float[] distanceBetweenUserAndEvent = new float[1];
+
+                                                for (DocumentSnapshot documentSnapshot: listEvents) {
+                                                    LatLng eventLocation = new LatLng(Double.valueOf(documentSnapshot.get("eventLat").toString()), Double.valueOf(documentSnapshot.get("eventLong").toString()));
+
+                                                    involvedEvents.add(documentSnapshot.toObject(Event.class));
+                                                    Location.distanceBetween(latitude, longitude,
+                                                            eventLocation.latitude, eventLocation.longitude,
+                                                            distanceBetweenUserAndEvent);
+
+                                                    // Putting value in nearby event Hashmap
+                                                    involvedEventHashMap.put(documentSnapshot.getString("eventId"), String.valueOf(distanceBetweenUserAndEvent[0]));
+
+                                                    // Creating new hashmap with distance (double) key so it will be easy to sort
+                                                    HashMap<Double, String> newMap = new HashMap<>();
+                                                    // filling new hashmap
+                                                    for (Map.Entry<String, String> entry : involvedEventHashMap.entrySet())
+                                                        newMap.put(Double.valueOf(entry.getValue()), entry.getKey());
+
+                                                    newMap = sortHashMapByValues(newMap);
+                                                }
+
+                                                updateInvolvedEvents();
+                                            }
+                                        });
+                                    }
+                                });
                             });
 
                         }
@@ -545,95 +615,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     public void onResume() {
         super.onResume();
         mMapView.onResume();
-        nearbyEvents = new ArrayList<>();
-        involvedEvents = new ArrayList<>();
-
-
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
-
-        updateAllEvents();
     }
-
-    public void updateAllEvents() {
-
-
-        nearbyEvents = new ArrayList<>();
-        involvedEvents = new ArrayList<>();
-        HashMap<String, String> nearbyEventHashMap = new HashMap<String, String>();
-        HashMap<String, String> involvedEventHashMap = new HashMap<String, String>();
-
-        // Getting nearby Events
-        EventUseCaseInterface eventUseCase = new EventUseCase();
-        eventUseCase.getAllNearByEvents(new LatLng(latitude, longitude)).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                Log.d("Nearby Event", "Nearby Event"+task.getResult().getDocuments().toString());
-
-                List<DocumentSnapshot> listEvents = task.getResult().getDocuments();
-                float[] distanceBetweenUserAndEvent = new float[1];
-
-                for (DocumentSnapshot documentSnapshot: listEvents) {
-                    LatLng eventLocation = new LatLng(Double.valueOf(documentSnapshot.get("eventLat").toString()), Double.valueOf(documentSnapshot.get("eventLong").toString()));
-
-                    nearbyEvents.add(documentSnapshot.toObject(Event.class));
-                    Location.distanceBetween(latitude, longitude,
-                            eventLocation.latitude, eventLocation.longitude,
-                            distanceBetweenUserAndEvent);
-
-                    // Putting value in nearby event Hashmap
-                    nearbyEventHashMap.put(documentSnapshot.getString("eventId"), String.valueOf(distanceBetweenUserAndEvent[0]));
-
-                    // Creating new hashmap with distance (double) key so it will be easy to sort
-                    HashMap<Double,String> newMap = new HashMap<>();
-                    // filling new hashmap
-                    for(Map.Entry<String,String> entry : nearbyEventHashMap.entrySet())
-                        newMap.put(Double.valueOf(entry.getValue()), entry.getKey());
-
-                    newMap = sortHashMapByValues(newMap);
-
-                    // Printing nearby events in debug console
-                    Log.d("Nearby Events", "Nearby Events "+newMap.toString());
-                }
-
-// TODO: 28/07/2022 Getting Involved Projects
-                HashMap<String, String> involvedEventHashMap = new HashMap<String, String>();
-
-                eventUseCase.getInvolvedEvents(firebaseUser.getEmail()).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        Log.d("Involved Event", "Involved Event"+task.getResult().getDocuments().toString());
-                        List<DocumentSnapshot> listEvents = task.getResult().getDocuments();
-                        float[] distanceBetweenUserAndEvent = new float[1];
-
-                        for (DocumentSnapshot documentSnapshot: listEvents) {
-                            LatLng eventLocation = new LatLng(Double.valueOf(documentSnapshot.get("eventLat").toString()), Double.valueOf(documentSnapshot.get("eventLong").toString()));
-
-                            involvedEvents.add(documentSnapshot.toObject(Event.class));
-                            Location.distanceBetween(latitude, longitude,
-                                    eventLocation.latitude, eventLocation.longitude,
-                                    distanceBetweenUserAndEvent);
-
-                            // Putting value in nearby event Hashmap
-                            involvedEventHashMap.put(documentSnapshot.getString("eventId"), String.valueOf(distanceBetweenUserAndEvent[0]));
-
-                            // Creating new hashmap with distance (double) key so it will be easy to sort
-                            HashMap<Double, String> newMap = new HashMap<>();
-                            // filling new hashmap
-                            for (Map.Entry<String, String> entry : involvedEventHashMap.entrySet())
-                                newMap.put(Double.valueOf(entry.getValue()), entry.getKey());
-
-                            newMap = sortHashMapByValues(newMap);
-                        }
-
-                        updateInvolvedEvents();
-                    }
-                });
-            }
-        });
-    }
-
     @Override
     public void onPause() {
         super.onPause();

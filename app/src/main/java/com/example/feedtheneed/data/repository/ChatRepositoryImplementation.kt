@@ -37,6 +37,10 @@ class ChatRepositoryImplementation: ChatRepository {
         checkIfChatExists(fromUser, toUser)
     }
 
+    fun setCurrentChat(chat: Chat){
+        this.currentChat = chat
+    }
+
     private fun createNewChat(fromUser: String, toUser: String){
         var chat = Chat(fromUser, toUser)
         chatCollection.document()
@@ -133,6 +137,7 @@ class ChatRepositoryImplementation: ChatRepository {
         Log.d(TAG, "current User Id: $currentUserId")
         Log.d(TAG, "current From Id: ${currentChat.fromUser}")
         Log.d(TAG, "current Chat Id: $currentChatId")
+
         if(currentChat.fromUser.equals(currentUserId)){
             Log.d(TAG, "This is from User")
             owner = 1
@@ -145,7 +150,7 @@ class ChatRepositoryImplementation: ChatRepository {
         Log.d(ContentValues.TAG, this.currentChat.toString())
 
         mFirestore.collection("chat").document(this.currentChatId)
-            .set(this.currentChat)
+            .update("chatHistory", currentChat.chatHistory)
             .addOnSuccessListener {
                 Log.d(ContentValues.TAG, "Message sent Successfully")
             }.addOnFailureListener {
