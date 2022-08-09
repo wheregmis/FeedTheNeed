@@ -1,7 +1,5 @@
 package com.example.feedtheneed.presentation.chat
 
-import android.R.attr.left
-import android.R.attr.right
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -79,7 +77,7 @@ class ChatViewAdapter(var dataSet: ArrayList<ChatHistory>, var chatInfo: ChatLis
     private fun getShortDate(ts:Long?):String{
         if(ts == null) return ""
         //Get instance of calendar
-        val calendar = Calendar.getInstance(Locale.getDefault())
+        val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
         //get current date from ts
         calendar.timeInMillis = ts
         //return formatted date

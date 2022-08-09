@@ -145,7 +145,7 @@ class ChatRepositoryImplementation: ChatRepository {
         Log.d(ContentValues.TAG, this.currentChat.toString())
 
         mFirestore.collection("chat").document(this.currentChatId)
-            .set(this.currentChat)
+            .update("chatHistory", currentChat.chatHistory)
             .addOnSuccessListener {
                 Log.d(ContentValues.TAG, "Message sent Successfully")
             }.addOnFailureListener {
