@@ -3,12 +3,12 @@ package com.example.feedtheneed.presentation.chat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.feedtheneed.R
 import com.example.feedtheneed.domain.model.ChatHistory
 import com.example.feedtheneed.domain.model.ChatListItem
-
 import java.util.*
 
 
@@ -53,7 +53,7 @@ class ChatViewAdapter(var dataSet: ArrayList<ChatHistory>, var chatInfo: ChatLis
         }else if(dataSet[position].owner === 2){
             owner = chatInfo.toUserName
         }
-
+//
 
         viewHolder.textViewMessage.text = dataSet[position].message
         viewHolder.textViewOwner.text = owner
