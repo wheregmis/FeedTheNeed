@@ -129,7 +129,8 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, EVENTS);
+                R.layout.spinner_bg,R.id.textView,EVENTS);
+
         AutoCompleteTextView textView = (AutoCompleteTextView)
                 findViewById(R.id.search);
         textView.setAdapter(adapter);
