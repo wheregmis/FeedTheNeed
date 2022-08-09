@@ -66,7 +66,7 @@ class ChatViewAdapter(var dataSet: ArrayList<ChatHistory>, var chatInfo: ChatLis
 //
         viewHolder.textViewMessage.text = dataSet[position].message
         viewHolder.textViewOwner.text = owner
-        viewHolder.textViewTime.text = getShortDate(dataSet[position].timestamp * 1000)
+        viewHolder.textViewTime.text = getShortDate(dataSet[position].timestamp)
 
         //viewHolder.itemView.layoutDirection = Gravity.RIGHT
     }
